@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your SwiftCart Global Store</title>
+  <title>Welcome to SwiftCart Global Store</title>
   <meta name="description" content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!">
   <meta name="keywords" content="dropshipping, trending products, electronics, wearables, audio, fast shipping, exclusive deals, online store, best gadgets, curated products, 2025">
   <meta property="og:title" content="Your Dropshipping Store - Trending Products & Fast Fulfillment" />
@@ -23,6 +23,7 @@
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <meta name="author" content="Your Dropshipping Store Team" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -51,34 +52,100 @@
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
 
 
-  <header class="bg-blue-600 p-6 text-white text-center" role="banner">
-    <h1 class="text-3xl font-bold" tabindex="0">Welcome to Your SwiftCart Globa Store</h1>
-    <p class="text-lg mt-1" tabindex="0">Handpicked Products. Fast Fulfillment.</p>
-    <nav class="mt-2" aria-label="Main Navigation">
+  <header class="relative bg-blue-600 text-white text-center" role="banner">
+    <div class="relative w-full">
+      <img src="/static/header.jpg" alt="SwiftCart Global Store Header" class="w-full h-56 sm:h-72 object-cover object-center" style="max-height:320px;" />
+      <div class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40">
+        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg" tabindex="0">Welcome to  SwiftCart Global Store</h1>
+        <p class="text-lg sm:text-xl mt-2 drop-shadow-lg" tabindex="0">Handpicked Products. Fast Fulfillment.</p>
+      </div>
+      <!-- Mobile Nav Icon -->
+      <button id="navToggle" class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded" aria-label="Open navigation menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <nav id="mainNav" class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10" aria-label="Main Navigation">
+      <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
+      <a href="/blog.html" class="mx-2 underline" aria-label="Blog">Blog</a>
       <a href="/about.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="About">About</a>
       <a href="/terms.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Terms of Service">Terms</a>
       <a href="/privacy.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Privacy Policy">Privacy</a>
       <a href="/contact.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Contact">Contact</a>
+      <button id="navClose" class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded" aria-label="Close navigation menu" style="display:none;">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </nav>
+    <script>
+      const navToggle = document.getElementById('navToggle');
+      const mainNav = document.getElementById('mainNav');
+      const navClose = document.getElementById('navClose');
+      function openNav() {
+        mainNav.style.height = '18rem';
+        mainNav.style.padding = '1.5rem 0';
+        mainNav.style.background = 'rgba(30,64,175,0.97)';
+        navClose.style.display = '';
+      }
+      function closeNav() {
+        mainNav.style.height = '0';
+        mainNav.style.padding = '0';
+        mainNav.style.background = 'rgba(30,64,175,0.97)';
+        navClose.style.display = 'none';
+      }
+      navToggle.addEventListener('click', openNav);
+      navClose.addEventListener('click', closeNav);
+      // Close nav on link click (mobile)
+      mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+      // On resize, reset nav for desktop
+      window.addEventListener('resize', () => {
+        if(window.innerWidth >= 640) {
+          mainNav.style.height = 'auto';
+          mainNav.style.padding = '0';
+          navClose.style.display = 'none';
+        } else {
+          closeNav();
+        }
+      });
+    </script>
   </header>
 
   <main class="max-w-7xl mx-auto py-8 px-4" role="main">
     <h2 class="text-2xl font-semibold mb-6" tabindex="0">Featured Products</h2>
-    <form id="filterForm" class="flex flex-wrap gap-4 mb-6" aria-label="Product Filter">
-      <input type="text" id="search" placeholder="Search products..." class="p-2 border rounded w-full sm:w-1/4" aria-label="Search products" />
-      <select id="category" multiple class="p-2 border rounded w-full sm:w-1/4 h-32" aria-label="Category">
-        <!-- Options will be populated dynamically -->
-      </select>
-      <input type="number" id="minPrice" placeholder="Min Price" class="p-2 border rounded w-full sm:w-1/4" aria-label="Minimum Price" />
-      <input type="number" id="maxPrice" placeholder="Max Price" class="p-2 border rounded w-full sm:w-1/4" aria-label="Maximum Price" />
-      <select id="sort" class="p-2 border rounded w-full sm:w-1/4" aria-label="Sort By">
-        <option value="">Sort By</option>
-        <option value="price_asc">Price: Low to High</option>
-        <option value="price_desc">Price: High to Low</option>
-        <option value="alpha_asc">Name: A-Z</option>
-        <option value="alpha_desc">Name: Z-A</option>
-      </select>
-      <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700" aria-label="Apply Filters">Filter</button>
+    <form id="filterForm" class="flex flex-wrap gap-4 mb-8" aria-label="Product Filter">
+      <!-- Search Card -->
+      <div class="w-full sm:w-1/4 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]">
+        <label for="search" class="block text-lg font-semibold text-gray-800 mb-2">🔍 Search</label>
+        <input type="text" id="search" placeholder="Search products..." class="p-2 border-2 border-pink-400 rounded w-full focus:ring-2 focus:ring-pink-400 bg-white text-gray-900" aria-label="Search products" />
+      </div>
+      <!-- Category Card -->
+      <div class="w-full sm:w-1/4 bg-gradient-to-br from-green-200 via-teal-200 to-cyan-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]">
+        <label for="category" class="block text-lg font-semibold text-gray-800 mb-2">🗂️ Category</label>
+        <select id="category" multiple class="p-2 border-2 border-teal-400 rounded w-full h-24 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900" aria-label="Category">
+          <!-- Options will be populated dynamically -->
+        </select>
+      </div>
+      <!-- Price Card -->
+      <div class="w-full sm:w-1/4 bg-gradient-to-br from-yellow-200 via-orange-200 to-pink-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]">
+        <label class="block text-lg font-semibold text-gray-800 mb-2">💲 Price</label>
+        <div class="flex gap-2 w-full">
+          <input type="number" id="minPrice" placeholder="Min" class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900" aria-label="Minimum Price" />
+          <input type="number" id="maxPrice" placeholder="Max" class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900" aria-label="Maximum Price" />
+        </div>
+      </div>
+      <!-- Sort Card -->
+      <div class="w-full sm:w-1/4 bg-gradient-to-br from-blue-200 via-indigo-200 to-purple-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]">
+        <label for="sort" class="block text-lg font-semibold text-gray-800 mb-2">↕️ Sort By</label>
+        <select id="sort" class="p-2 border-2 border-indigo-400 rounded w-full focus:ring-2 focus:ring-indigo-400 bg-white text-gray-900" aria-label="Sort By">
+          <option value="">Sort By</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="alpha_asc">Name: A-Z</option>
+          <option value="alpha_desc">Name: Z-A</option>
+        </select>
+      </div>
+      <!-- Filter Button -->
+      <div class="w-full flex justify-end mt-2">
+        <button type="submit" class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition" aria-label="Apply Filters">Filter</button>
+      </div>
     </form>
 
     <div id="spinner" class="flex justify-center items-center my-8 hidden">
@@ -213,22 +280,22 @@
           const rating = Math.round(parseFloat(p.rating));
           ratingStars = '<span class="text-yellow-400">' + '★'.repeat(rating) + '</span>' + '<span class="text-gray-300">' + '★'.repeat(5-rating) + '</span>';
         }
-        productDiv.className = "bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition border border-gray-100";
+        productDiv.className = "bg-gradient-to-br from-pink-100 via-blue-100 to-green-100 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-blue-200";
         productDiv.innerHTML = `
             <div class="relative">
-              <img src="${p.image}" alt="${highlight(p.title, searchTerm)}" class="w-full h-48 object-cover">
+              <img src="${p.image}" alt="${highlight(p.title, searchTerm)}" class="w-full h-48 object-cover rounded-t-2xl border-b-2 border-blue-100">
               <div class="absolute top-2 left-2 flex flex-wrap">${stockBadge}${categoryBadge}${shippingBadge}</div>
             </div>
-            <div class="p-4">
-              <h3 class="text-xl font-semibold mb-1 flex items-center">${highlight(p.title, searchTerm)}</h3>
+            <div class="p-4 flex flex-col justify-between min-h-[210px]">
+              <h3 class="text-xl font-bold mb-1 flex items-center text-blue-900 drop-shadow">${highlight(p.title, searchTerm)}</h3>
               <div class="flex items-center mb-2">
                 ${ratingStars}
                 <span class="ml-2 text-yellow-700 text-xs">${p.rating ? p.rating : ''}</span>
               </div>
-              <p class="text-green-600 font-bold text-lg mb-1">$${p.price}</p>
-              <p class="text-gray-600 text-sm mb-1">${p.brand ? 'Brand: <span class=\'font-semibold\'>' + highlight(p.brand, searchTerm) + '</span>' : ''}</p>
-              <p class="text-gray-600 text-sm mb-2">${p.description ? highlight(p.description.substring(0, 60) + (p.description.length > 60 ? '...' : ''), searchTerm) : ''}</p>
-              <a href="${p.url}" target="_blank" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition block text-center">Buy Now</a>
+              <p class="text-green-700 font-extrabold text-lg mb-1">$${p.price}</p>
+              <p class="text-gray-700 text-sm mb-1">${p.brand ? 'Brand: <span class=\'font-semibold\'>' + highlight(p.brand, searchTerm) + '</span>' : ''}</p>
+              <p class="text-gray-700 text-sm mb-2">${p.description ? highlight(p.description.substring(0, 60) + (p.description.length > 60 ? '...' : ''), searchTerm) : ''}</p>
+              <a href="${p.url}" target="_blank" class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-4 rounded-full shadow-md hover:from-green-500 hover:to-blue-600 font-bold text-center transition">Buy Now</a>
             </div>
         `;
         productDiv.addEventListener('click', (e) => {
