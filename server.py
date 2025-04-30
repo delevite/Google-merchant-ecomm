@@ -1,3 +1,4 @@
+ 
 from flask import Flask, send_from_directory, make_response, jsonify, request, redirect, session, render_template_string
 from flask_cors import CORS
 import os
@@ -6,9 +7,32 @@ import json
 from datetime import datetime
 from werkzeug.utils import secure_filename
 
+
 app = Flask(__name__)
 CORS(app)
 app.secret_key = os.environ.get('ADMIN_SECRET_KEY', 'changeme')  # Set a strong secret in production
+
+# Serve static legal/info pages so nav links work locally
+@app.route('/about.html')
+def about():
+    return send_from_directory(os.getcwd(), 'about.html')
+
+@app.route('/terms.html')
+def terms():
+    return send_from_directory(os.getcwd(), 'terms.html')
+
+@app.route('/privacy.html')
+def privacy():
+    return send_from_directory(os.getcwd(), 'privacy.html')
+
+@app.route('/contact.html')
+def contact():
+    return send_from_directory(os.getcwd(), 'contact.html')
+
+# Serve the generated blog index from /site/blog.html for /blog.html
+@app.route('/blog.html')
+def blog_index():
+    return send_from_directory(os.path.join(os.getcwd(), 'site'), 'blog.html')
 
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'password')
@@ -227,3 +251,8 @@ def manage_products():
                 writer.writeheader()
                 writer.writerows(products)
         return jsonify({'message': 'Product deleted.'})
+    
+    # Ensure the Flask app runs when this script is executed directly
+if __name__ == "__main__":
+    print("Starting Flask server on http://127.0.0.1:5000 ...")
+    app.run(debug=True, host="0.0.0.0", port=5000)
