@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Posts tagged: #{{ tag }} - Your Dropshipping Store</title>
+  <meta name="description" content="All blog posts tagged with '{{ tag }}' at Your Dropshipping Store." />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <header class="bg-blue-600 p-6 text-white text-center" role="banner">
+    <h1 class="text-3xl font-bold" tabindex="0">Posts tagged: #{{ tag }}</h1>
+    <nav class="mt-2" aria-label="Main Navigation">
+      <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
+      <a href="/blog.html" class="mx-2 underline" aria-label="Blog">Blog</a>
+      <a href="/about.html" class="mx-2 underline" aria-label="About">About</a>
+      <a href="/terms.html" class="mx-2 underline" aria-label="Terms of Service">Terms</a>
+      <a href="/privacy.html" class="mx-2 underline" aria-label="Privacy Policy">Privacy</a>
+      <a href="/contact.html" class="mx-2 underline" aria-label="Contact">Contact</a>
+    </nav>
+  </header>
+  <main class="flex-1 flex flex-col items-center justify-start p-4" role="main">
+    <section class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8">
+      <ul class="space-y-8">
+        {% for post in posts %}
+        <li class="border-b pb-4">
+          <a href="/{{ post.slug }}.html" class="text-xl font-bold text-blue-700 underline">{{ post.title }}</a>
+          <div class="text-sm text-gray-600 mt-1">By <a href="/author-{{ post.author }}.html" class="underline">{{ authors[post.author].name }}</a> | {{ post.date_obj.strftime('%B %d, %Y') }}</div>
+          <p class="mt-2 text-gray-700">{{ post.summary }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+  <footer class="bg-blue-600 text-white p-4 text-center mt-auto" role="contentinfo">
+    &copy; 2025 Your Dropshipping Store. All rights reserved.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Admin Dashboard</title>
+  <meta name="description" content="Admin dashboard for managing your dropshipping store product feed, uploads, and credentials.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Admin Dashboard - Dropshipping Store" />
+  <meta property="og:description" content="Admin dashboard for managing your dropshipping store product feed, uploads, and credentials." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/admin" />
+  <meta property="og:image" content="https://yourdomain.com/admin-og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Admin Dashboard - Dropshipping Store" />
+  <meta name="twitter:description" content="Admin dashboard for managing your dropshipping store product feed, uploads, and credentials." />
+  <meta name="twitter:image" content="https://yourdomain.com/admin-og-image.png" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    /* Mobile tweaks */
+    @media (max-width: 640px) {
+      header, footer { padding: 1rem !important; }
+      h1, h2, h3 { font-size: 1.1rem !important; }
+      .p-6 { padding: 1rem !important; }
+      .rounded { border-radius: 0.5rem !important; }
+      .max-w-xl, .max-w-3xl { max-width: 100% !important; }
+      .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr !important; }
+      table, thead, tbody, th, td, tr { display: block; width: 100%; }
+      th, td { box-sizing: border-box; padding: 0.5rem 0.25rem; }
+      tr { margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; }
+      nav button, nav a { display: block; margin: 0.5rem 0; }
+      form input, form button, form select { width: 100% !important; margin-bottom: 0.5rem; }
+    }
+    /* Make table scrollable horizontally on mobile */
+    .overflow-x-auto { overflow-x: auto; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <header class="bg-blue-600 p-6 text-white text-center" role="banner">
+    <h1 class="text-2xl font-bold" tabindex="0">Admin Dashboard</h1>
+    <nav class="mt-2 flex flex-wrap justify-center items-center gap-2" aria-label="Admin Navigation">
+      <button id="tabUpload" class="mx-2 underline" aria-label="Upload Feed Tab">Upload Feed</button>
+      <button id="tabHistory" class="mx-2" aria-label="Upload History Tab">Upload History</button>
+      <button id="tabProducts" class="mx-2" aria-label="Manage Products Tab">Manage Products</button>
+      <button id="tabCreds" class="mx-2" aria-label="Change Credentials Tab">Change Credentials</button>
+      <a href="/admin/logout" class="mx-2 text-red-200 underline" aria-label="Logout">Logout</a>
+      <span class="hidden sm:inline-block mx-2 text-gray-300">|</span>
+      <a href="/about.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="About">About</a>
+      <a href="/terms.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Terms of Service">Terms</a>
+      <a href="/privacy.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Privacy Policy">Privacy</a>
+      <a href="/contact.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Contact">Contact</a>
+    </nav>
+  </header>
+  <main class="flex-1 flex flex-col items-center justify-start p-4" role="main">
+    <!-- Error Message -->
+    <div id="adminErrorMsg" class="hidden text-center text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4" role="alert" aria-live="assertive"></div>
+    <!-- Upload Feed -->
+    <section id="sectionUpload" class="w-full max-w-xl bg-white p-6 rounded shadow-md mt-6" aria-labelledby="uploadHeading">
+      <h2 id="uploadHeading" class="text-xl font-semibold mb-4" tabindex="0">Upload New feed.csv</h2>
+      <form id="uploadForm" aria-label="Upload Feed Form">
+        <input type="file" id="csvFile" name="csvFile" accept=".csv" class="mb-4 p-2 border rounded w-full" required aria-label="CSV File Upload" />
+        <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 w-full" aria-label="Upload Feed">Upload</button>
+        <p id="uploadStatus" class="mt-4 text-center" aria-live="polite"></p>
+      </form>
+    </section>
+    <!-- Upload History -->
+    <section id="sectionHistory" class="w-full max-w-xl bg-white p-6 rounded shadow-md mt-6 hidden overflow-x-auto" aria-labelledby="historyHeading">
+      <h2 id="historyHeading" class="text-xl font-semibold mb-4" tabindex="0">Upload History</h2>
+      <table class="w-full text-sm border" aria-label="Upload History Table">
+        <thead><tr class="bg-gray-100"><th scope="col">Filename</th><th scope="col">User</th><th scope="col">Timestamp</th></tr></thead>
+        <tbody id="historyTable"></tbody>
+      </table>
+    </section>
+    <!-- Product Management -->
+    <section id="sectionProducts" class="w-full max-w-3xl bg-white p-6 rounded shadow-md mt-6 hidden overflow-x-auto" aria-labelledby="productsHeading">
+      <h2 id="productsHeading" class="text-xl font-semibold mb-4" tabindex="0">Manage Products</h2>
+      <button id="refreshProducts" class="mb-4 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700" aria-label="Refresh Products">Refresh</button>
+      <table class="w-full text-xs border mb-4" aria-label="Products Table">
+        <thead><tr class="bg-gray-100" id="productsHeader"></tr></thead>
+        <tbody id="productsTable"></tbody>
+      </table>
+      <h3 class="text-lg font-semibold mt-6 mb-2" tabindex="0">Add / Edit Product</h3>
+      <form id="productForm" class="grid grid-cols-2 gap-2 mb-2" aria-label="Product Form"></form>
+      <button id="saveProduct" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700" aria-label="Save Product">Save Product</button>
+      <button id="clearProduct" class="ml-2 bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-600" aria-label="Clear Product Form">Clear</button>
+      <p id="productStatus" class="mt-2 text-center" aria-live="polite"></p>
+    </section>
+    <!-- Change Credentials -->
+    <section id="sectionCreds" class="w-full max-w-xl bg-white p-6 rounded shadow-md mt-6 hidden" aria-labelledby="credsHeading">
+      <h2 id="credsHeading" class="text-xl font-semibold mb-4" tabindex="0">Change Admin Credentials</h2>
+      <form id="credsForm" aria-label="Change Credentials Form">
+        <input type="text" id="newUsername" placeholder="New Username" class="mb-4 p-2 border rounded w-full" required aria-label="New Username" />
+        <input type="password" id="newPassword" placeholder="New Password" class="mb-4 p-2 border rounded w-full" required aria-label="New Password" />
+        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 w-full" aria-label="Change Credentials">Change</button>
+        <p id="credsStatus" class="mt-4 text-center" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+  <footer class="bg-blue-600 text-white p-4 text-center mt-auto" role="contentinfo">
+    &copy; 2025 Your Dropshipping Store Admin
+  </footer>
+  <script>
+    // Tab navigation
+    const tabs = ["Upload", "History", "Products", "Creds"];
+    tabs.forEach(tab => {
+      document.getElementById('tab'+tab).onclick = () => {
+        tabs.forEach(t => document.getElementById('section'+t).classList.add('hidden'));
+        document.getElementById('section'+tab).classList.remove('hidden');
+      };
+    });
+    function showAdminError(msg) {
+      const errorDiv = document.getElementById('adminErrorMsg');
+      errorDiv.textContent = msg;
+      errorDiv.classList.remove('hidden');
+    }
+    function hideAdminError() {
+      document.getElementById('adminErrorMsg').classList.add('hidden');
+    }
+    // Wrap fetches with error handling for all admin actions
+    async function safeFetch(url, options, onSuccess, onError) {
+      hideAdminError();
+      try {
+        const res = await fetch(url, options);
+        if (!res.ok) throw new Error('Request failed');
+        const data = await res.json();
+        if (onSuccess) onSuccess(data);
+      } catch (err) {
+        if (onError) onError(err);
+        else showAdminError('An error occurred. Please check your connection or data format.');
+      }
+    }
+    // Upload Feed
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const fileInput = document.getElementById('csvFile');
+      const status = document.getElementById('uploadStatus');
+      if (!fileInput.files.length) {
+        status.textContent = 'Please select a file.';
+        status.className = 'text-red-600 mt-4 text-center';
+        return;
+      }
+      const formData = new FormData();
+      formData.append('csvFile', fileInput.files[0]);
+      status.textContent = 'Uploading...';
+      status.className = 'text-blue-600 mt-4 text-center';
+      safeFetch('/admin/upload', { method: 'POST', body: formData },
+        data => {
+          status.textContent = data.message;
+          status.className = 'text-green-600 mt-4 text-center';
+        },
+        err => {
+          status.textContent = 'Upload failed.';
+          status.className = 'text-red-600 mt-4 text-center';
+          showAdminError('Could not upload feed. Please check your connection or CSV format.');
+        }
+      );
+    });
+    // Upload History
+    async function loadHistory() {
+      safeFetch('/admin/history', {},
+        history => {
+          const table = document.getElementById('historyTable');
+          table.innerHTML = '';
+          history.reverse().forEach(h => {
+            table.innerHTML += `<tr><td>${h.filename}</td><td>${h.username}</td><td>${h.timestamp.replace('T',' ').replace('Z','')}</td></tr>`;
+          });
+        }
+      );
+    }
+    document.getElementById('tabHistory').addEventListener('click', loadHistory);
+    // Product Management
+    let productFields = [];
+    async function loadProducts() {
+      safeFetch('/admin/products', {},
+        products => {
+          const table = document.getElementById('productsTable');
+          const header = document.getElementById('productsHeader');
+          table.innerHTML = '';
+          header.innerHTML = '';
+          if (products.length) {
+            productFields = Object.keys(products[0]);
+            productFields.forEach(f => header.innerHTML += `<th>${f}</th>`);
+            header.innerHTML += '<th>Actions</th>';
+            products.forEach(p => {
+              let row = '<tr>';
+              productFields.forEach(f => row += `<td>${p[f]||''}</td>`);
+              row += `<td><button class='text-blue-600 underline' onclick='editProduct(${JSON.stringify(p).replace(/'/g,"&#39;")})'>Edit</button> <button class='text-red-600 underline' onclick='deleteProduct(\'${p.title.replace(/'/g,"&#39;")}\')'>Delete</button></td>`;
+              row += '</tr>';
+              table.innerHTML += row;
+            });
+          }
+          // Build product form
+          const form = document.getElementById('productForm');
+          form.innerHTML = '';
+          productFields.forEach(f => {
+            form.innerHTML += `<input type='text' id='form_${f}' placeholder='${f}' class='p-2 border rounded' />`;
+          });
+        }
+      );
+    }
+    document.getElementById('tabProducts').addEventListener('click', loadProducts);
+    document.getElementById('refreshProducts').addEventListener('click', loadProducts);
+    window.editProduct = function(p) {
+      productFields.forEach(f => {
+        document.getElementById('form_'+f).value = p[f]||'';
+      });
+    };
+    window.deleteProduct = async function(title) {
+      if (!confirm('Delete product: ' + title + '?')) return;
+      safeFetch('/admin/products?title='+encodeURIComponent(title), { method: 'DELETE' },
+        data => {
+          document.getElementById('productStatus').textContent = data.message;
+          loadProducts();
+        }
+      );
+    };
+    document.getElementById('saveProduct').onclick = async function() {
+      const data = {};
+      productFields.forEach(f => data[f] = document.getElementById('form_'+f).value);
+      safeFetch('/admin/products', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) },
+        resp => {
+          document.getElementById('productStatus').textContent = resp.message || resp.error;
+          loadProducts();
+        }
+      );
+    };
+    document.getElementById('clearProduct').onclick = function() {
+      productFields.forEach(f => document.getElementById('form_'+f).value = '');
+      document.getElementById('productStatus').textContent = '';
+    };
+    // Change Credentials
+    document.getElementById('credsForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('newUsername').value;
+      const pass = document.getElementById('newPassword').value;
+      const status = document.getElementById('credsStatus');
+      status.textContent = 'Updating...';
+      status.className = 'text-blue-600 mt-4 text-center';
+      safeFetch('/admin/change-credentials', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: user, password: pass }) },
+        data => {
+          status.textContent = data.message;
+          status.className = 'text-green-600 mt-4 text-center';
+          setTimeout(() => { window.location = '/admin/logout'; }, 1500);
+        },
+        err => {
+          status.textContent = 'Failed to update credentials.';
+          status.className = 'text-red-600 mt-4 text-center';
+          showAdminError('Could not update credentials. Please check your connection.');
+        }
+      );
+    });
+    // Default to upload tab
+    document.getElementById('tabUpload').click();
+  </script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Dropshipping Store</title>
+  <meta name="description" content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!">
+  <meta name="keywords" content="dropshipping, trending products, electronics, wearables, audio, fast shipping, exclusive deals, online store, best gadgets, curated products, 2025">
+  <meta property="og:title" content="Your Dropshipping Store - Trending Products & Fast Fulfillment" />
+  <meta property="og:description" content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:image" content="https://yourdomain.com/images/og-main-2025.png?v=2" />
+  <meta property="og:site_name" content="Your Dropshipping Store" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Your Dropshipping Store - Trending Products & Fast Fulfillment" />
+  <meta name="twitter:description" content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!" />
+  <meta name="twitter:image" content="https://yourdomain.com/images/og-main-2025.png?v=2" />
+  <meta name="twitter:site" content="@YourStoreHandle" />
+  <meta name="twitter:creator" content="@YourStoreHandle" />
+  <link rel="canonical" href="https://yourdomain.com/" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <meta name="author" content="Your Dropshipping Store Team" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Your Dropshipping Store",
+      "url": "https://yourdomain.com/",
+      "description": "Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Your Dropshipping Store",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://yourdomain.com/images/logo.png"
+        }
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://yourdomain.com/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+  <script type="application/ld+json" id="product-ld-json"></script>
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+
+
+  <header class="bg-blue-600 p-6 text-white text-center" role="banner">
+    <h1 class="text-3xl font-bold" tabindex="0">Welcome to Your Dropshipping Store</h1>
+    <p class="text-lg mt-1" tabindex="0">Handpicked Products. Fast Fulfillment.</p>
+    <nav class="mt-2" aria-label="Main Navigation">
+      <a href="/about.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="About">About</a>
+      <a href="/terms.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Terms of Service">Terms</a>
+      <a href="/privacy.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Privacy Policy">Privacy</a>
+      <a href="/contact.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="max-w-7xl mx-auto py-8 px-4" role="main">
+    <h2 class="text-2xl font-semibold mb-6" tabindex="0">Featured Products</h2>
+    <form id="filterForm" class="flex flex-wrap gap-4 mb-6" aria-label="Product Filter">
+      <input type="text" id="search" placeholder="Search products..." class="p-2 border rounded w-full sm:w-1/4" aria-label="Search products" />
+      <select id="category" multiple class="p-2 border rounded w-full sm:w-1/4 h-32" aria-label="Category">
+        <!-- Options will be populated dynamically -->
+      </select>
+      <input type="number" id="minPrice" placeholder="Min Price" class="p-2 border rounded w-full sm:w-1/4" aria-label="Minimum Price" />
+      <input type="number" id="maxPrice" placeholder="Max Price" class="p-2 border rounded w-full sm:w-1/4" aria-label="Maximum Price" />
+      <select id="sort" class="p-2 border rounded w-full sm:w-1/4" aria-label="Sort By">
+        <option value="">Sort By</option>
+        <option value="price_asc">Price: Low to High</option>
+        <option value="price_desc">Price: High to Low</option>
+        <option value="alpha_asc">Name: A-Z</option>
+        <option value="alpha_desc">Name: Z-A</option>
+      </select>
+      <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700" aria-label="Apply Filters">Filter</button>
+    </form>
+
+    <div id="spinner" class="flex justify-center items-center my-8 hidden">
+      <svg class="animate-spin h-10 w-10 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+      </svg>
+    </div>
+
+    <div id="errorMsg" class="hidden text-center text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4"></div>
+
+    <div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" aria-live="polite"></div>
+    <div id="pagination" class="flex justify-center mt-8 gap-2"></div>
+    <!-- Product Details Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
+        <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+        <img id="modalImage" src="" alt="" class="w-full h-64 object-cover rounded mb-4">
+        <h3 id="modalTitle" class="text-2xl font-bold mb-2"></h3>
+        <p id="modalPrice" class="text-green-600 font-bold text-lg mb-3"></p>
+        <p id="modalDescription" class="text-gray-700 mb-4"></p>
+        <div id="modalExtra" class="text-sm text-gray-600 mb-4"></div>
+        <a id="modalLink" href="#" target="_blank" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition block text-center">Buy Now</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-blue-600 text-white p-4 text-center" role="contentinfo">
+    &copy; 2025 Your Dropshipping Store. All rights reserved.
+  </footer>
+
+  <script>
+    const container = document.getElementById('products');
+    const sortSelect = document.getElementById('sort');
+    const pagination = document.getElementById('pagination');
+    const modal = document.getElementById('productModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalLink = document.getElementById('modalLink');
+    let currentPage = 1;
+    const pageSize = 6;
+    let lastQuery = '';
+    let lastProducts = [];
+
+    function renderPagination(totalPages) {
+      pagination.innerHTML = '';
+      if (totalPages <= 1) return;
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = `px-3 py-1 rounded ${i === currentPage ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 border border-blue-600'} hover:bg-blue-700 hover:text-white`;
+        btn.onclick = () => {
+          currentPage = i;
+          renderProducts(lastProducts);
+        };
+        pagination.appendChild(btn);
+      }
+    }
+
+    function showModal(product) {
+      modalImage.src = product.image;
+      modalTitle.textContent = product.title;
+      modalPrice.textContent = `$${product.price}`;
+      modalLink.href = product.url;
+      modalDescription.textContent = product.description || 'No description available.';
+      // Add brand, rating, and stock to modal
+      let details = '';
+      if (product.brand) details += `Brand: <span class="font-semibold">${product.brand}</span><br>`;
+      if (product.rating) details += `Rating: <span class="font-semibold">${product.rating} ⭐</span><br>`;
+      if (product.stock) details += `Stock: <span class="font-semibold">${product.stock}</span>`;
+      document.getElementById('modalExtra').innerHTML = details;
+      modal.classList.remove('hidden');
+    }
+
+    closeModal.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.add('hidden');
+    });
+
+    // Highlight search matches in a string
+    function highlight(text, term) {
+      if (!term) return text;
+      const re = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      return text.replace(re, '<mark class="bg-yellow-200">$1</mark>');
+    }
+
+    // Instant search: trigger search on input
+    document.getElementById('search').addEventListener('input', function() {
+      document.getElementById('filterForm').dispatchEvent(new Event('submit'));
+    });
+
+    function renderProducts(products) {
+      const sort = sortSelect.value;
+      if (sort === 'price_asc') {
+        products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+      } else if (sort === 'price_desc') {
+        products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+      } else if (sort === 'alpha_asc') {
+        products.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (sort === 'alpha_desc') {
+        products.sort((a, b) => b.title.localeCompare(a.title));
+      }
+      const totalPages = Math.ceil(products.length / pageSize) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      const pageProducts = products.slice(start, end);
+      container.innerHTML = "";
+      const searchTerm = document.getElementById('search').value.trim();
+      pageProducts.forEach((p, idx) => {
+        const productDiv = document.createElement('div');
+        // Stock badge color
+        let stockBadge = '';
+        if (p.stock) {
+          let badgeColor = 'bg-green-100 text-green-800';
+          if (p.stock.toLowerCase().includes('limited')) badgeColor = 'bg-yellow-100 text-yellow-800';
+          if (p.stock.toLowerCase().includes('out')) badgeColor = 'bg-red-100 text-red-800';
+          stockBadge = `<span class="inline-block px-2 py-1 text-xs font-semibold rounded ${badgeColor} mb-2">${p.stock}</span>`;
+        }
+        // Category badge
+        let categoryBadge = p.category ? `<span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 mb-2 ml-2">${p.category}</span>` : '';
+        // Shipping badge
+        let shippingBadge = p.shipping ? `<span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-purple-100 text-purple-800 mb-2 ml-2">${p.shipping}</span>` : '';
+        // Rating stars
+        let ratingStars = '';
+        if (p.rating) {
+          const rating = Math.round(parseFloat(p.rating));
+          ratingStars = '<span class="text-yellow-400">' + '★'.repeat(rating) + '</span>' + '<span class="text-gray-300">' + '★'.repeat(5-rating) + '</span>';
+        }
+        productDiv.className = "bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-xl transition border border-gray-100";
+        productDiv.innerHTML = `
+            <div class="relative">
+              <img src="${p.image}" alt="${highlight(p.title, searchTerm)}" class="w-full h-48 object-cover">
+              <div class="absolute top-2 left-2 flex flex-wrap">${stockBadge}${categoryBadge}${shippingBadge}</div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-semibold mb-1 flex items-center">${highlight(p.title, searchTerm)}</h3>
+              <div class="flex items-center mb-2">
+                ${ratingStars}
+                <span class="ml-2 text-yellow-700 text-xs">${p.rating ? p.rating : ''}</span>
+              </div>
+              <p class="text-green-600 font-bold text-lg mb-1">$${p.price}</p>
+              <p class="text-gray-600 text-sm mb-1">${p.brand ? 'Brand: <span class=\'font-semibold\'>' + highlight(p.brand, searchTerm) + '</span>' : ''}</p>
+              <p class="text-gray-600 text-sm mb-2">${p.description ? highlight(p.description.substring(0, 60) + (p.description.length > 60 ? '...' : ''), searchTerm) : ''}</p>
+              <a href="${p.url}" target="_blank" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition block text-center">Buy Now</a>
+            </div>
+        `;
+        productDiv.addEventListener('click', (e) => {
+          // Prevent modal on Buy Now click
+          if (e.target.tagName.toLowerCase() === 'a') return;
+          showModal(p);
+        });
+        container.appendChild(productDiv);
+      });
+      // Structured data for products
+      const productLD = products.slice(0, 12).map(p => ({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": p.title,
+        "image": p.image,
+        "description": p.description,
+        "brand": { "@type": "Brand", "name": p.brand },
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "USD",
+          "price": p.price,
+          "availability": p.stock && p.stock.toLowerCase().includes('out') ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+          "url": p.url
+        },
+        "category": p.category,
+        "aggregateRating": p.rating ? {
+          "@type": "AggregateRating",
+          "ratingValue": p.rating,
+          "reviewCount": 10
+        } : undefined
+      }));
+      document.getElementById('product-ld-json').textContent = JSON.stringify(productLD, null, 2);
+      renderPagination(totalPages);
+    }
+
+    function showSpinner(show) {
+      document.getElementById('spinner').classList.toggle('hidden', !show);
+    }
+
+    function showError(msg) {
+      const errorDiv = document.getElementById('errorMsg');
+      errorDiv.textContent = msg;
+      errorDiv.classList.remove('hidden');
+    }
+    function hideError() {
+      document.getElementById('errorMsg').classList.add('hidden');
+    }
+
+    function loadProducts(params = "") {
+      hideError();
+      showSpinner(true);
+      fetch(`/products${params}`)
+        .then(res => {
+          if (!res.ok) throw new Error('Failed to fetch products.');
+          return res.json();
+        })
+        .then(products => {
+          lastProducts = products;
+          currentPage = 1;
+          renderProducts(products);
+        })
+        .catch(err => {
+          showError('Could not load products. Please check your connection or CSV format.');
+        })
+        .finally(() => showSpinner(false));
+    }
+
+    // Dynamically populate category dropdown from CSV
+    async function populateCategories() {
+      const res = await fetch('/products');
+      const products = await res.json();
+      const categories = Array.from(new Set(products.map(p => p.category).filter(Boolean)));
+      // Example grouping: Electronics, Wearables, Audio, etc.
+      // For demo, group by first letter
+      const grouped = {};
+      categories.forEach(cat => {
+        const group = cat[0].toUpperCase();
+        if (!grouped[group]) grouped[group] = [];
+        grouped[group].push(cat);
+      });
+      const catSelect = document.getElementById('category');
+      catSelect.innerHTML = '';
+      Object.keys(grouped).sort().forEach(group => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = group;
+        grouped[group].forEach(cat => {
+          // Add icon based on category (simple emoji demo)
+          let icon = '';
+          if (cat.toLowerCase().includes('audio')) icon = '🔊 ';
+          else if (cat.toLowerCase().includes('wearable')) icon = '⌚ ';
+          else if (cat.toLowerCase().includes('electronic')) icon = '💻 ';
+          else icon = '📦 ';
+          const option = document.createElement('option');
+          option.value = cat;
+          option.innerText = icon + cat;
+          optgroup.appendChild(option);
+        });
+        catSelect.appendChild(optgroup);
+      });
+    }
+    populateCategories();
+
+    document.getElementById('filterForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const search = document.getElementById('search').value;
+      // Multi-select: get all selected categories
+      const catSelect = document.getElementById('category');
+      const selectedCats = Array.from(catSelect.selectedOptions).map(opt => opt.value);
+      const cat = selectedCats.join(',');
+      const min = document.getElementById('minPrice').value;
+      const max = document.getElementById('maxPrice').value;
+      const query = `?search=${encodeURIComponent(search)}&category=${encodeURIComponent(cat)}&min_price=${min}&max_price=${max}`;
+      loadProducts(query);
+    });
+
+    sortSelect.addEventListener('change', function() {
+      document.getElementById('filterForm').dispatchEvent(new Event('submit'));
+    });
+
+    // Initial load
+    loadProducts();
+  </script>
+
+</body>
+</html>

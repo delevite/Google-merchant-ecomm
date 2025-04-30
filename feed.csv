@@ -1,0 +1,4 @@
+title,imageURL,price,productLink,description,brand,rating,stock,category,shipping
+Wireless Earbuds,https://example.com/images/earbuds.jpg,29.99,https://example.com/product/earbuds,High-quality wireless earbuds with noise cancellation and long battery life.,SoundMagic,4.7,In Stock,Electronics,Free Shipping
+Smartwatch,https://example.com/images/watch.jpg,59.99,https://example.com/product/watch,Feature-rich smartwatch with heart rate monitor and customizable faces.,TimeTech,4.5,Limited Stock,Wearables,Standard Shipping
+Bluetooth Speaker,https://example.com/images/speaker.jpg,39.99,https://example.com/product/speaker,Portable Bluetooth speaker with deep bass and 12-hour playtime.,BassBoom,4.8,Out of Stock,Audio,Express Shipping
