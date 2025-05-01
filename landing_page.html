@@ -280,22 +280,28 @@
           const rating = Math.round(parseFloat(p.rating));
           ratingStars = '<span class="text-yellow-400">' + '★'.repeat(rating) + '</span>' + '<span class="text-gray-300">' + '★'.repeat(5-rating) + '</span>';
         }
-        productDiv.className = "bg-gradient-to-br from-pink-100 via-blue-100 to-green-100 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-blue-200";
+        productDiv.className = "bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-yellow-200";
         productDiv.innerHTML = `
-            <div class="relative">
-              <img src="${p.image}" alt="${highlight(p.title, searchTerm)}" class="w-full h-48 object-cover rounded-t-2xl border-b-2 border-blue-100">
-              <div class="absolute top-2 left-2 flex flex-wrap">${stockBadge}${categoryBadge}${shippingBadge}</div>
+            <div class='relative'>
+              <img src='${p.image}' alt='${highlight(p.title, searchTerm)}' class='w-full h-48 object-cover rounded-t-2xl border-b-2 border-yellow-100'>
+              <div class='absolute top-2 left-2 flex flex-wrap'>${stockBadge}${categoryBadge}${shippingBadge}</div>
             </div>
-            <div class="p-4 flex flex-col justify-between min-h-[210px]">
-              <h3 class="text-xl font-bold mb-1 flex items-center text-blue-900 drop-shadow">${highlight(p.title, searchTerm)}</h3>
-              <div class="flex items-center mb-2">
+            <div class='p-4 flex flex-col justify-between min-h-[210px]'>
+              <h3 class='text-xl font-extrabold mb-1 flex items-center text-pink-800 drop-shadow'>${highlight(p.title, searchTerm)}</h3>
+              <div class='flex items-center mb-2'>
                 ${ratingStars}
-                <span class="ml-2 text-yellow-700 text-xs">${p.rating ? p.rating : ''}</span>
+                <span class='ml-2 text-yellow-700 text-xs'>${p.rating ? p.rating : ''}</span>
               </div>
-              <p class="text-green-700 font-extrabold text-lg mb-1">$${p.price}</p>
-              <p class="text-gray-700 text-sm mb-1">${p.brand ? 'Brand: <span class=\'font-semibold\'>' + highlight(p.brand, searchTerm) + '</span>' : ''}</p>
-              <p class="text-gray-700 text-sm mb-2">${p.description ? highlight(p.description.substring(0, 60) + (p.description.length > 60 ? '...' : ''), searchTerm) : ''}</p>
-              <a href="${p.url}" target="_blank" class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-4 rounded-full shadow-md hover:from-green-500 hover:to-blue-600 font-bold text-center transition">Buy Now</a>
+              <p class='text-green-700 font-extrabold text-lg mb-1'>$${p.price}</p>
+              <p class='text-gray-900 text-sm mb-1'>${p.brand ? 'Brand: <span class="font-semibold">' + highlight(p.brand, searchTerm) + '</span>' : ''}</p>
+              <p class='text-gray-900 text-sm mb-2'>${p.description ? highlight(p.description.substring(0, 60) + (p.description.length > 60 ? '...' : ''), searchTerm) : ''}</p>
+              <a href='${p.url}' target='_blank' class='relative group bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 text-white py-3 px-6 rounded-full shadow-xl font-extrabold text-lg tracking-wide text-center transition-all duration-200 border-2 border-white hover:from-green-600 hover:to-purple-700 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300'>
+                <span class="inline-flex items-center gap-2">
+                  <svg class="w-5 h-5 text-white opacity-80 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A2 2 0 0 0 7.48 19h9.04a2 2 0 0 0 1.83-1.3L21 13M7 13V6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v7"/></svg>
+                  Buy Now
+                </span>
+                <span class="absolute -right-3 -top-3 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full shadow group-hover:bg-yellow-500 group-hover:text-yellow-950 transition-all">Hot</span>
+              </a>
             </div>
         `;
         productDiv.addEventListener('click', (e) => {
