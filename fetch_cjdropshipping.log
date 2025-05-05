@@ -1,0 +1,4 @@
+2025-05-05 01:25:36,986 [INFO] Scheduled CJdropshipping fetch every 6 hours.
+2025-05-05 01:25:36,986 [INFO] Starting product fetch...
+2025-05-05 01:26:32,992 [ERROR] Failed to fetch products (page 1): 401 Client Error:  for url: https://developers.cjdropshipping.com/api2.0/v1/product/list?pageNum=1&pageSize=50
+2025-05-05 01:26:33,033 [WARNING] No products fetched.
