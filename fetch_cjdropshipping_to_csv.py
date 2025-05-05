@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 import os
 import requests
 import csv
@@ -16,10 +9,109 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-# Securely load your CJdropshipping access token from environment variable
-CJ_ACCESS_TOKEN = os.environ.get('CJ_ACCESS_TOKEN')
-if not CJ_ACCESS_TOKEN:
-    raise RuntimeError("CJ_ACCESS_TOKEN environment variable not set. Please set it in your .env file.")
+
+
+# Securely load your CJdropshipping email, api_key (password), and refreshToken from environment variables
+CJ_EMAIL = os.environ.get('CJ_EMAIL', 'YOUR_EMAIL_HERE')
+CJ_API_KEY = os.environ.get('CJ_API_KEY', 'YOUR_API_KEY_HERE')
+REFRESH_TOKEN = os.environ.get('CJ_REFRESH_TOKEN', '')
+
+def fetch_access_token(email, api_key):
+    url = 'https://developers.cjdropshipping.com/api2.0/v1/authentication/getAccessToken'
+    payload = {
+        'email': email,
+        'password': api_key
+    }
+    headers = {'Content-Type': 'application/json'}
+    try:
+        resp = requests.post(url, json=payload, headers=headers, timeout=20)
+        resp.raise_for_status()
+        data = resp.json()
+        if data.get('code') == 200 and data.get('data', {}).get('accessToken'):
+            return data['data']['accessToken'], data['data']['refreshToken']
+        else:
+            raise Exception(f"Failed to get access token: {data.get('message', 'Unknown error')}")
+    except Exception as e:
+        logging.error(f"Failed to fetch access token: {e}")
+        raise
+
+def refresh_access_token(refresh_token):
+    url = 'https://developers.cjdropshipping.com/api2.0/v1/authentication/refreshAccessToken'
+    payload = {'refreshToken': refresh_token}
+    headers = {'Content-Type': 'application/json'}
+    try:
+        resp = requests.post(url, json=payload, headers=headers, timeout=20)
+        resp.raise_for_status()
+        data = resp.json()
+        if data.get('code') == 200 and data.get('data', {}).get('accessToken'):
+            return data['data']['accessToken'], data['data']['refreshToken']
+        else:
+            raise Exception(f"Failed to refresh access token: {data.get('message', 'Unknown error')}")
+    except Exception as e:
+        logging.error(f"Failed to refresh access token: {e}")
+        raise
+
+
+# Helper to check if token is expired or invalid (by making a test API call)
+def is_token_valid(token):
+    test_url = 'https://developers.cjdropshipping.com/api2.0/v1/product/list'
+    headers = {'CJ-Access-Token': token, 'Content-Type': 'application/json'}
+    params = {'pageNum': 1, 'pageSize': 1}
+    try:
+        resp = requests.post(test_url, headers=headers, json=params, timeout=10)
+        if resp.status_code == 200:
+            return True
+        # If unauthorized or token expired
+        if resp.status_code in (401, 403):
+            return False
+        # If token expired (CJ API returns code 1600002 for expired token)
+        data = resp.json()
+        if data.get('code') in (1600001, 1600002):
+            return False
+        return True
+    except Exception as e:
+        logging.warning(f"Token validity check failed: {e}")
+        return False
+
+# Main token logic: only refresh if token is missing or invalid
+def get_valid_access_token():
+    # Try refresh token if present
+    if REFRESH_TOKEN:
+        try:
+            access_token, new_refresh_token = refresh_access_token(REFRESH_TOKEN)
+            if not is_token_valid(access_token):
+                raise Exception("Refreshed token is invalid.")
+            # Optionally, update .env with new_refresh_token for next run
+            if new_refresh_token != REFRESH_TOKEN:
+                with open('.env', 'r', encoding='utf-8') as f:
+                    lines = f.readlines()
+                with open('.env', 'w', encoding='utf-8') as f:
+                    found = False
+                    for line in lines:
+                        if line.startswith('CJ_REFRESH_TOKEN='):
+                            f.write(f'CJ_REFRESH_TOKEN={new_refresh_token}\n')
+                            found = True
+                        else:
+                            f.write(line)
+                    if not found:
+                        f.write(f'CJ_REFRESH_TOKEN={new_refresh_token}\n')
+            return access_token
+        except Exception as e:
+            logging.warning(f"Refresh token failed: {e}")
+    # If no refresh token or refresh failed, get new token with email/api_key
+    try:
+        access_token, new_refresh_token = fetch_access_token(CJ_EMAIL, CJ_API_KEY)
+        if not is_token_valid(access_token):
+            raise Exception("Fetched token is invalid.")
+        # Optionally, update .env with new_refresh_token for next run
+        with open('.env', 'a', encoding='utf-8') as f:
+            f.write(f'CJ_REFRESH_TOKEN={new_refresh_token}\n')
+        return access_token
+    except Exception as e:
+        raise RuntimeError("CJdropshipping access token could not be fetched or refreshed. Check your credentials and network connection.")
+
+# Get a valid access token for use in all API calls
+CJ_ACCESS_TOKEN = get_valid_access_token()
 
 API_URL = 'https://developers.cjdropshipping.com/api2.0/v1/product/list'
 CSV_FILE = 'feed.csv'
@@ -68,6 +160,7 @@ def fetch_products(page_num=1, page_size=50):
         'pageSize': page_size
     }
     try:
+        # CJdropshipping product list endpoint expects GET, not POST
         response = requests.get(API_URL, headers=headers, params=params, timeout=20)
         response.raise_for_status()
         data = response.json()
