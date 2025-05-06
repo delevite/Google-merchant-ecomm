@@ -65,7 +65,6 @@ def fetch_access_token(email, api_key):
     except Exception as e:
         logging.error(f"Failed to fetch access token: {e}")
         raise
-def refresh_access_token(refresh_token):
 
 
 # Helper to check if token is expired or invalid (by making a test API call)
