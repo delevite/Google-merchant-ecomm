@@ -37,7 +37,6 @@ def get_env():
     return {
         'email': get_env_var('CJ_EMAIL', 'YOUR_EMAIL_HERE'),
         'api_key': get_env_var('CJ_API_KEY', 'YOUR_API_KEY_HERE'),
-        'refresh_token': get_env_var('CJ_REFRESH_TOKEN', ''),
         'access_token': get_env_var('CJ_ACCESS_TOKEN', ''),
         'access_token_expiry': get_env_var('CJ_ACCESS_TOKEN_EXPIRY', ''),
     }
@@ -56,42 +55,17 @@ def fetch_access_token(email, api_key):
         data = resp.json()
         if data.get('code') == 200 and data.get('data', {}).get('accessToken'):
             access_token = data['data']['accessToken']
-            refresh_token = data['data']['refreshToken']
             expiry = data['data'].get('accessTokenExpiryDate')
             set_env_var('CJ_ACCESS_TOKEN', access_token)
-            set_env_var('CJ_REFRESH_TOKEN', refresh_token)
             if expiry:
                 set_env_var('CJ_ACCESS_TOKEN_EXPIRY', expiry)
-            return access_token, refresh_token, expiry
+            return access_token, expiry
         else:
             raise Exception(f"Failed to get access token: {data.get('message', 'Unknown error')}")
     except Exception as e:
         logging.error(f"Failed to fetch access token: {e}")
         raise
-
-
 def refresh_access_token(refresh_token):
-    url = 'https://developers.cjdropshipping.com/api2.0/v1/authentication/refreshAccessToken'
-    payload = {'refreshToken': refresh_token}
-    headers = {'Content-Type': 'application/json'}
-    try:
-        resp = requests.post(url, json=payload, headers=headers, timeout=20)
-        resp.raise_for_status()
-        data = resp.json()
-        if data.get('code') == 200 and data.get('data', {}).get('accessToken'):
-            access_token = data['data']['accessToken']
-            refresh_token = data['data']['refreshToken']
-            expiry = data['data'].get('accessTokenExpiryDate')
-            set_env_var('CJ_ACCESS_TOKEN', access_token)
-            set_env_var('CJ_REFRESH_TOKEN', refresh_token)
-            if expiry:
-                set_env_var('CJ_ACCESS_TOKEN_EXPIRY', expiry)
-            return access_token, refresh_token, expiry
-        else:
-            raise Exception(f"Failed to refresh access token: {data.get('message', 'Unknown error')}")
-    except Exception as e:
-        logging.error(f"Failed to refresh access token: {e}")
-        raise
 
 
 # Helper to check if token is expired or invalid (by making a test API call)
@@ -110,26 +84,17 @@ def is_token_expired(expiry_str):
 # Main token logic: only refresh if token is missing or invalid
 
 # Main token logic: only refresh if token is expired
-def get_valid_access_token():
+
+# Always fetch a new access token using email and API key (never use refresh token)
+def get_fresh_access_token():
     env = get_env()
-    # If we have a non-expired access token, use it
-    if env['access_token'] and env['access_token_expiry'] and not is_token_expired(env['access_token_expiry']):
-        return env['access_token']
-    # If we have a refresh token, try to refresh
-    if env['refresh_token']:
-        try:
-            access_token, refresh_token, expiry = refresh_access_token(env['refresh_token'])
-            return access_token
-        except Exception as e:
-            logging.warning(f"Refresh token failed: {e}")
-    # Otherwise, fetch a new token with email/api_key
     try:
-        access_token, refresh_token, expiry = fetch_access_token(env['email'], env['api_key'])
+        access_token, expiry = fetch_access_token(env['email'], env['api_key'])
         return access_token
     except Exception as e:
-        raise RuntimeError("CJdropshipping access token could not be fetched or refreshed. Check your credentials and network connection.")
+        raise RuntimeError("CJdropshipping access token could not be fetched. Check your credentials and network connection.")
 
-CJ_ACCESS_TOKEN = get_valid_access_token()
+CJ_ACCESS_TOKEN = get_fresh_access_token()
 
 API_URL = 'https://developers.cjdropshipping.com/api2.0/v1/product/list'
 CSV_FILE = 'feed.csv'

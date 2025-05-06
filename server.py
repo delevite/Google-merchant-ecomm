@@ -65,9 +65,9 @@ def fetch_cj_products():
         for row in reader:
             products.append({
                 'title': row.get('title', ''),
-                'image': row.get('imageURL', ''),
+                'image': row.get('image', ''),
                 'price': row.get('price', ''),
-                'url': row.get('productLink', ''),
+                'url': row.get('url', ''),
                 'description': row.get('description', ''),
                 'brand': row.get('brand', ''),
                 'rating': row.get('rating', ''),
