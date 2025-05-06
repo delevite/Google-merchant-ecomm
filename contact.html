@@ -9,11 +9,18 @@
   <link rel="canonical" href="https://yourdomain.com/contact.html" />
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <!-- Language Toggle -->
+  <div class="absolute top-2 right-2 z-30 flex gap-2">
+    <button id="langEn" class="px-2 py-1 rounded bg-blue-700 text-white font-bold lang-btn" aria-label="English">EN</button>
+    <button id="langZh" class="px-2 py-1 rounded bg-yellow-400 text-gray-900 font-bold lang-btn" aria-label="Chinese">中文</button>
+  </div>
   <header class="relative bg-blue-600 text-white text-center" role="banner">
     <div class="relative w-full">
       <img src="/static/contact_swiftcart.png" alt="Contact SwiftCart Header" class="w-full h-56 sm:h-72 object-cover object-center" style="max-height:320px;" />
       <div class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 px-2 py-4">
         <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2" tabindex="0">Contact Us</h1>
+        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-en" tabindex="0">Contact Us</h1>
+        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-zh hidden" tabindex="0">联系我们</h1>
       </div>
       <!-- Mobile Nav Icon -->
       <button id="navToggle" class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded" aria-label="Open navigation menu">
@@ -85,10 +92,23 @@
       <div class="mt-8 text-sm text-gray-600">
         <p>This page is compliant with Google Merchant Center requirements. We respond to all inquiries within 1-2 business days. Your information is handled according to our <a href="/privacy.html" class="underline text-blue-600">Privacy Policy</a>.</p>
       </div>
+      <h2 class="text-2xl font-semibold mb-6 text-center sm:text-left lang-en">We'd love to hear from you!</h2>
+      <h2 class="text-2xl font-semibold mb-6 text-center sm:text-left lang-zh hidden">欢迎留言或咨询！</h2>
     </section>
   </main>
   <footer class="bg-blue-600 text-white p-4 text-center mt-auto" role="contentinfo">
-    &copy; 2025 Your Dropshipping Store. All rights reserved.
+    <span class="lang-en">&copy; 2025 Your Dropshipping Store. All rights reserved.</span>
+    <span class="lang-zh hidden">&copy; 2025 您的跨境电商店铺。保留所有权利。</span>
   </footer>
 </body>
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
+      document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('hidden', lang !== 'zh'));
+      localStorage.setItem('lang', lang);
+    }
+    document.getElementById('langEn').addEventListener('click', () => setLang('en'));
+    document.getElementById('langZh').addEventListener('click', () => setLang('zh'));
+    setLang(localStorage.getItem('lang') || 'en');
+  </script>
 </html>

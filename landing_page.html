@@ -50,14 +50,21 @@
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <!-- Language Toggle -->
+  <div class="fixed top-2 right-2 z-50 flex gap-2">
+    <button id="langEn" class="px-2 py-1 rounded bg-blue-700 text-white font-bold lang-btn" aria-label="English">EN</button>
+    <button id="langZh" class="px-2 py-1 rounded bg-yellow-400 text-gray-900 font-bold lang-btn" aria-label="Chinese">中文</button>
+  </div>
 
 
   <header class="relative bg-blue-600 text-white text-center" role="banner">
     <div class="relative w-full">
       <img src="/static/header.jpg" alt="SwiftCart Global Store Header" class="w-full h-56 sm:h-72 object-cover object-center" style="max-height:320px;" />
       <div class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40">
-        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg" tabindex="0">Welcome to  SwiftCart Global Store</h1>
-        <p class="text-lg sm:text-xl mt-2 drop-shadow-lg" tabindex="0">Handpicked Products. Fast Fulfillment.</p>
+        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-en" tabindex="0">Welcome to  SwiftCart Global Store</h1>
+        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-zh hidden" tabindex="0">欢迎来到 SwiftCart 全球商店</h1>
+        <p class="text-lg sm:text-xl mt-2 drop-shadow-lg lang-en" tabindex="0">Handpicked Products. Fast Fulfillment.</p>
+        <p class="text-lg sm:text-xl mt-2 drop-shadow-lg lang-zh hidden" tabindex="0">精选产品，极速发货，全球直达。</p>
       </div>
       <!-- Mobile Nav Icon -->
       <button id="navToggle" class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded" aria-label="Open navigation menu">
@@ -109,16 +116,22 @@
   </header>
 
   <main class="max-w-7xl mx-auto py-8 px-4" role="main">
-    <h2 class="text-2xl font-semibold mb-6" tabindex="0">Featured Products</h2>
-    <form id="filterForm" class="flex flex-wrap gap-4 mb-8" aria-label="Product Filter">
+    <h2 class="text-2xl font-semibold mb-6 text-center sm:text-left" tabindex="0">Featured Products</h2>
+    <h2 class="text-2xl font-semibold mb-6 text-center sm:text-left lang-en" tabindex="0">Featured Products</h2>
+    <h2 class="text-2xl font-semibold mb-6 text-center sm:text-left lang-zh hidden" tabindex="0">特色产品推荐</h2>
+    <form id="filterForm" class="flex flex-nowrap sm:flex-wrap gap-4 mb-8 overflow-x-auto pb-2" aria-label="Product Filter" style="-webkit-overflow-scrolling: touch;">
       <!-- Search Card -->
       <div class="w-full sm:w-1/4 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]">
         <label for="search" class="block text-lg font-semibold text-gray-800 mb-2">🔍 Search</label>
+        <label for="search" class="block text-lg font-semibold text-gray-800 mb-2 lang-en">🔍 Search</label>
+        <label for="search" class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden">🔍 搜索</label>
         <input type="text" id="search" placeholder="Search products..." class="p-2 border-2 border-pink-400 rounded w-full focus:ring-2 focus:ring-pink-400 bg-white text-gray-900" aria-label="Search products" />
       </div>
       <!-- Category Card -->
       <div class="w-full sm:w-1/4 bg-gradient-to-br from-green-200 via-teal-200 to-cyan-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]">
         <label for="category" class="block text-lg font-semibold text-gray-800 mb-2">🗂️ Category</label>
+        <label for="category" class="block text-lg font-semibold text-gray-800 mb-2 lang-en">🗂️ Category</label>
+        <label for="category" class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden">🗂️ 分类</label>
         <select id="category" multiple class="p-2 border-2 border-teal-400 rounded w-full h-24 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900" aria-label="Category">
           <!-- Options will be populated dynamically -->
         </select>
@@ -126,6 +139,8 @@
       <!-- Price Card -->
       <div class="w-full sm:w-1/4 bg-gradient-to-br from-yellow-200 via-orange-200 to-pink-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]">
         <label class="block text-lg font-semibold text-gray-800 mb-2">💲 Price</label>
+        <label class="block text-lg font-semibold text-gray-800 mb-2 lang-en">💲 Price</label>
+        <label class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden">💲 价格区间</label>
         <div class="flex gap-2 w-full">
           <input type="number" id="minPrice" placeholder="Min" class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900" aria-label="Minimum Price" />
           <input type="number" id="maxPrice" placeholder="Max" class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900" aria-label="Maximum Price" />
@@ -134,6 +149,8 @@
       <!-- Sort Card -->
       <div class="w-full sm:w-1/4 bg-gradient-to-br from-blue-200 via-indigo-200 to-purple-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]">
         <label for="sort" class="block text-lg font-semibold text-gray-800 mb-2">↕️ Sort By</label>
+        <label for="sort" class="block text-lg font-semibold text-gray-800 mb-2 lang-en">↕️ Sort By</label>
+        <label for="sort" class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden">↕️ 排序方式</label>
         <select id="sort" class="p-2 border-2 border-indigo-400 rounded w-full focus:ring-2 focus:ring-indigo-400 bg-white text-gray-900" aria-label="Sort By">
           <option value="">Sort By</option>
           <option value="price_asc">Price: Low to High</option>
@@ -145,6 +162,8 @@
       <!-- Filter Button -->
       <div class="w-full flex justify-end mt-2">
         <button type="submit" class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition" aria-label="Apply Filters">Filter</button>
+        <button type="submit" class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition lang-en" aria-label="Apply Filters">Filter</button>
+        <button type="submit" class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition lang-zh hidden" aria-label="Apply Filters">筛选</button>
       </div>
     </form>
 
@@ -156,8 +175,9 @@
     </div>
 
     <div id="errorMsg" class="hidden text-center text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4"></div>
+    <div id="errorMsgZh" class="hidden text-center text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4 lang-zh">加载产品时出错，请稍后再试。</div>
 
-    <div id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" aria-live="polite"></div>
+    <div id="products" class="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" aria-live="polite"></div>
     <div id="pagination" class="flex justify-center mt-8 gap-2"></div>
     <!-- Product Details Modal -->
     <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
@@ -174,7 +194,18 @@
   </main>
 
   <footer class="bg-blue-600 text-white p-4 text-center" role="contentinfo">
-    &copy; 2025 Your Dropshipping Store. All rights reserved.
+    <span class="lang-en">&copy; 2025 Your Dropshipping Store. All rights reserved.</span>
+    <span class="lang-zh hidden">&copy; 2025 您的跨境电商店铺。保留所有权利。</span>
+    // Language toggle logic
+    function setLang(lang) {
+      document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
+      document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('hidden', lang !== 'zh'));
+      localStorage.setItem('lang', lang);
+    }
+    document.getElementById('langEn').addEventListener('click', () => setLang('en'));
+    document.getElementById('langZh').addEventListener('click', () => setLang('zh'));
+    // On load, set language from localStorage or default to English
+    setLang(localStorage.getItem('lang') || 'en');
   </footer>
 
   <script>
@@ -242,6 +273,12 @@
       document.getElementById('filterForm').dispatchEvent(new Event('submit'));
     });
 
+    // Helper: Remove Chinese characters from a string
+    function removeChinese(text) {
+      if (!text) return '';
+      return text.replace(/[\u4e00-\u9fff]+/g, '').replace(/\[\".*?\"\]/g, '').replace(/,+/g, ',').replace(/^,|,$/g, '').trim();
+    }
+
     function renderProducts(products) {
       const sort = sortSelect.value;
       if (sort === 'price_asc') {
@@ -280,6 +317,8 @@
           const rating = Math.round(parseFloat(p.rating));
           ratingStars = '<span class="text-yellow-400">' + '★'.repeat(rating) + '</span>' + '<span class="text-gray-300">' + '★'.repeat(5-rating) + '</span>';
         }
+        // Remove Chinese from description for global users
+        let cleanDesc = removeChinese(p.description ? p.description.substring(0, 60) + (p.description.length > 60 ? '...' : '') : '');
         productDiv.className = "bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-yellow-200";
         productDiv.innerHTML = `
             <div class='relative'>
@@ -294,7 +333,7 @@
               </div>
               <p class='text-green-700 font-extrabold text-lg mb-1'>$${p.price}</p>
               <p class='text-gray-900 text-sm mb-1'>${p.brand ? 'Brand: <span class="font-semibold">' + highlight(p.brand, searchTerm) + '</span>' : ''}</p>
-              <p class='text-gray-900 text-sm mb-2'>${p.description ? highlight(p.description.substring(0, 60) + (p.description.length > 60 ? '...' : ''), searchTerm) : ''}</p>
+              <p class='text-gray-900 text-sm mb-2'>${cleanDesc}</p>
               <a href='${p.url}' target='_blank' class='relative group bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 text-white py-3 px-6 rounded-full shadow-xl font-extrabold text-lg tracking-wide text-center transition-all duration-200 border-2 border-white hover:from-green-600 hover:to-purple-700 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300'>
                 <span class="inline-flex items-center gap-2">
                   <svg class="w-5 h-5 text-white opacity-80 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A2 2 0 0 0 7.48 19h9.04a2 2 0 0 0 1.83-1.3L21 13M7 13V6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v7"/></svg>
