@@ -1,83 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Posts tagged: #gadgets - Your Dropshipping Store</title>
-  <meta name="description" content="All blog posts tagged with 'gadgets' at Your Dropshipping Store." />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-</head>
-<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
-  <header class="relative bg-blue-600 text-white text-center" role="banner">
-    <div class="relative w-full">
-      <img src="/static/blog_header.jpg" alt="SwiftCart Global Store Blog Header" class="w-full h-56 sm:h-72 object-cover object-center" style="max-height:320px;" />
-      <div class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 px-2 py-4">
-        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2" tabindex="0">Posts tagged: #gadgets</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Posts tagged: #gadgets - Your Dropshipping Store</title>
+    <meta
+      name="description"
+      content="All blog posts tagged with 'gadgets' at Your Dropshipping Store."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <style>
+      /* Remove all inline styles and use Tailwind classes only */
+    </style>
+  </head>
+  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+    <header class="relative bg-blue-600 text-white text-center" role="banner">
+      <!-- Language Toggle (optional, remove if not needed) -->
+      <div class="absolute top-2 right-2 z-30 flex gap-2">
+        <button
+          id="langEn"
+          class="px-3 py-1 rounded bg-white text-blue-700 font-semibold shadow hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          aria-label="Switch to English"
+        >
+          EN
+        </button>
+        <button
+          id="langZh"
+          class="px-3 py-1 rounded bg-white text-blue-700 font-semibold shadow hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          aria-label="切换到中文"
+        >
+          中文
+        </button>
       </div>
-      <!-- Mobile Nav Icon -->
-      <button id="navToggle" class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded" aria-label="Open navigation menu">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-    </div>
-    <nav id="mainNav" class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10" aria-label="Main Navigation">
-      <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
-      <a href="/blog.html" class="mx-2 underline font-bold" aria-label="Blog">Blog</a>
-      <a href="/about.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="About">About</a>
-      <a href="/terms.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Terms of Service">Terms</a>
-      <a href="/privacy.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Privacy Policy">Privacy</a>
-      <a href="/contact.html" class="mx-2 underline text-white hover:text-blue-200" aria-label="Contact">Contact</a>
-      <button id="navClose" class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded" aria-label="Close navigation menu" style="display:none;">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-    </nav>
-    <script>
-      const navToggle = document.getElementById('navToggle');
-      const mainNav = document.getElementById('mainNav');
-      const navClose = document.getElementById('navClose');
-      function openNav() {
-        mainNav.style.height = '18rem';
-        mainNav.style.padding = '1.5rem 0';
-        mainNav.style.background = 'rgba(30,64,175,0.97)';
-        navClose.style.display = '';
-      }
-      function closeNav() {
-        mainNav.style.height = '0';
-        mainNav.style.padding = '0';
-        mainNav.style.background = 'rgba(30,64,175,0.97)';
-        navClose.style.display = 'none';
-      }
-      navToggle.addEventListener('click', openNav);
-      navClose.addEventListener('click', closeNav);
-      // Close nav on link click (mobile)
-      mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
-      // On resize, reset nav for desktop
-      window.addEventListener('resize', () => {
-        if(window.innerWidth >= 640) {
-          mainNav.style.height = 'auto';
-          mainNav.style.padding = '0';
-          navClose.style.display = 'none';
-        } else {
-          closeNav();
+      <div class="relative w-full">
+        <img
+          src="/static/blog_header.jpg"
+          alt="SwiftCart Global Store Blog Header"
+          class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]"
+        />
+        <div
+          class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 px-2 py-4"
+        >
+          <h1
+            id="mainTitle"
+            class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2"
+            tabindex="0"
+          >
+            Posts tagged: #gadgets
+          </h1>
+        </div>
+        <!-- Mobile Nav Icon -->
+        <button
+          id="navToggle"
+          class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded"
+          aria-label="Open navigation menu"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <nav
+        id="mainNav"
+        class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10"
+        aria-label="Main Navigation"
+      >
+        <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
+        <a href="/blog.html" class="mx-2 underline font-bold" aria-label="Blog"
+          >Blog</a
+        >
+        <a
+          href="/about.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="About"
+          >About</a
+        >
+        <a
+          href="/terms.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Terms of Service"
+          >Terms</a
+        >
+        <a
+          href="/privacy.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Privacy Policy"
+          >Privacy</a
+        >
+        <a
+          href="/contact.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Contact"
+          >Contact</a
+        >
+        <button
+          id="navClose"
+          class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded hidden"
+          aria-label="Close navigation menu"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </nav>
+      <script>
+        const navToggle = document.getElementById("navToggle");
+        const mainNav = document.getElementById("mainNav");
+        const navClose = document.getElementById("navClose");
+        function openNav() {
+          mainNav.style.height = "18rem";
+          mainNav.style.padding = "1.5rem 0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
+          navClose.classList.remove("hidden");
         }
-      });
-    </script>
-  </header>
-  <main class="flex-1 flex flex-col items-center justify-start p-4" role="main">
-    <section class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8">
-      <ul class="space-y-8">
-        
-        <li class="border-b pb-4">
-          <a href="/2025-trending-products.html" class="text-xl font-bold text-blue-700 underline">2025 Trending Products for Dropshipping</a>
-          <div class="text-sm text-gray-600 mt-1">By <a href="/author-jane-smith.html" class="underline">Jane Smith</a> | April 15, 2025</div>
-          <p class="mt-2 text-gray-700">Discover the hottest products to sell in 2025, including smart gadgets, eco-friendly items, and more. Expert dropshipping tips and product ideas!</p>
-        </li>
-        
-      </ul>
-    </section>
-  </main>
-  <footer class="bg-blue-600 text-white p-4 text-center mt-auto" role="contentinfo">
-    &copy; 2025 Your Dropshipping Store. All rights reserved.
-  </footer>
-</body>
+        function closeNav() {
+          mainNav.style.height = "0";
+          mainNav.style.padding = "0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
+          navClose.classList.add("hidden");
+        }
+        navToggle.addEventListener("click", openNav);
+        navClose.addEventListener("click", closeNav);
+        mainNav
+          .querySelectorAll("a")
+          .forEach((a) => a.addEventListener("click", closeNav));
+        window.addEventListener("resize", () => {
+          if (window.innerWidth >= 640) {
+            mainNav.style.height = "auto";
+            mainNav.style.padding = "0";
+            navClose.classList.add("hidden");
+          } else {
+            closeNav();
+          }
+        });
+        // Language toggle logic (optional)
+        const langEn = document.getElementById("langEn");
+        const langZh = document.getElementById("langZh");
+        const mainTitle = document.getElementById("mainTitle");
+        function setLang(lang) {
+          document
+            .querySelectorAll(".lang-en")
+            .forEach((el) => el.classList.toggle("hidden", lang !== "en"));
+          document
+            .querySelectorAll(".lang-zh")
+            .forEach((el) => el.classList.toggle("hidden", lang !== "zh"));
+          if (lang === "en") {
+            mainTitle.textContent = "Posts tagged: #gadgets";
+          } else {
+            mainTitle.textContent = "标签文章：#gadgets";
+          }
+        }
+        langEn && langEn.addEventListener("click", () => setLang("en"));
+        langZh && langZh.addEventListener("click", () => setLang("zh"));
+        setLang("en");
+      </script>
+    </header>
+    <main
+      class="flex-1 flex flex-col items-center justify-start p-4"
+      role="main"
+    >
+      <section
+        class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8"
+      >
+        <ul class="space-y-8">
+          <li
+            class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100"
+          >
+            <a
+              href="/2025-trending-products.html"
+              class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-en"
+              >2025 Trending Products for Dropshipping</a
+            >
+            <a
+              href="/2025-trending-products.html"
+              class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-zh hidden"
+              >2025 Trending Products for Dropshipping</a
+            >
+            <div class="text-sm text-gray-600 mt-1">
+              <span class="lang-en"
+                >By
+                <a
+                  href="/author-jane-smith.html"
+                  class="underline hover:text-blue-700"
+                  >Jane Smith</a
+                >
+                | April 15, 2025</span
+              >
+              <span class="lang-zh hidden"
+                >作者
+                <a
+                  href="/author-jane-smith.html"
+                  class="underline hover:text-blue-700"
+                  >Jane Smith</a
+                >
+                ｜ 2025年04月15日</span
+              >
+            </div>
+            <div class="mt-2">
+              <a
+                href="/tag-trending.html"
+                class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                >#trending</a
+              >
+
+              <a
+                href="/tag-products.html"
+                class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                >#products</a
+              >
+
+              <a
+                href="/tag-2025.html"
+                class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                >#2025</a
+              >
+
+              <a
+                href="/tag-gadgets.html"
+                class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                >#gadgets</a
+              >
+            </div>
+            <p class="mt-2 text-gray-700 lang-en">
+              Discover the hottest products to sell in 2025, including smart
+              gadgets, eco-friendly items, and more. Expert dropshipping tips
+              and product ideas!
+            </p>
+            <p class="mt-2 text-gray-700 lang-zh hidden">
+              Discover the hottest products to sell in 2025, including smart
+              gadgets, eco-friendly items, and more. Expert dropshipping tips
+              and product ideas!
+            </p>
+
+            <span
+              class="inline-block bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded mt-2"
+              >Featured</span
+            >
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer
+      class="bg-blue-600 text-white p-6 text-center mt-auto"
+      role="contentinfo"
+    >
+      <div
+        class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4"
+      >
+        <div class="mb-2 sm:mb-0">
+          <span class="lang-en"
+            >&copy; 2025 Your Dropshipping Store. All rights reserved.</span
+          >
+          <span class="lang-zh hidden"
+            >&copy; 2025 您的跨境电商店铺。保留所有权利。</span
+          >
+        </div>
+        <div class="flex gap-4">
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener"
+            title="Facebook"
+            class="hover:text-yellow-300"
+            >Facebook</a
+          >
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener"
+            title="Twitter"
+            class="hover:text-yellow-300"
+            >Twitter</a
+          >
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener"
+            title="Instagram"
+            class="hover:text-yellow-300"
+            >Instagram</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>

@@ -1,52 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jane Smith - Author at Your Dropshipping Store</title>
-  <meta name="description" content="Read posts by Jane Smith, Jane is an e-commerce strategist and dropshipping expert with 10+ years of experience helping entrepreneurs grow their online businesses." />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-</head>
-<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
-  <header class="bg-blue-600 p-6 text-white text-center" role="banner">
-    <h1 class="text-3xl font-bold" tabindex="0">Author: Jane Smith</h1>
-    <nav class="mt-2" aria-label="Main Navigation">
-      <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
-      <a href="/blog.html" class="mx-2 underline" aria-label="Blog">Blog</a>
-      <a href="/about.html" class="mx-2 underline" aria-label="About">About</a>
-      <a href="/terms.html" class="mx-2 underline" aria-label="Terms of Service">Terms</a>
-      <a href="/privacy.html" class="mx-2 underline" aria-label="Privacy Policy">Privacy</a>
-      <a href="/contact.html" class="mx-2 underline" aria-label="Contact">Contact</a>
-    </nav>
-  </header>
-  <main class="flex-1 flex flex-col items-center justify-start p-4" role="main">
-    <section class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8">
-      <div class="flex items-center mb-6">
-        <img src="/images/author-jane.png" alt="Jane Smith" class="w-16 h-16 rounded-full mr-4" />
-        <div>
-          <h2 class="text-xl font-semibold">Jane Smith</h2>
-          <p class="text-gray-700">Jane is an e-commerce strategist and dropshipping expert with 10+ years of experience helping entrepreneurs grow their online businesses.</p>
-          <div class="mt-2">
-            <a href="https://twitter.com/janesmith" class="text-blue-500 underline mr-2">Twitter</a>
-            <a href="https://linkedin.com/in/janesmith" class="text-blue-700 underline">LinkedIn</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jane Smith - Author at Your Dropshipping Store</title>
+    <meta
+      name="description"
+      content="Read posts by Jane Smith, Jane is an e-commerce strategist and dropshipping expert with 10+ years of experience helping entrepreneurs grow their online businesses."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <style>
+      /* Remove all inline styles and use Tailwind classes only */
+    </style>
+  </head>
+  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+    <header class="relative bg-blue-600 text-white text-center" role="banner">
+      <div class="relative w-full">
+        <img
+          src="/static/blog_header.jpg"
+          alt="SwiftCart Global Store Blog Header"
+          class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]"
+        />
+        <div
+          class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 px-2 py-4"
+        >
+          <h1
+            class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2"
+            tabindex="0"
+          >
+            Author: Jane Smith
+          </h1>
+          <p class="text-lg sm:text-xl mt-2 drop-shadow-lg" tabindex="0">
+            Jane is an e-commerce strategist and dropshipping expert with 10+
+            years of experience helping entrepreneurs grow their online
+            businesses.
+          </p>
+        </div>
+        <!-- Mobile Nav Icon -->
+        <button
+          id="navToggle"
+          class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded"
+          aria-label="Open navigation menu"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <nav
+        id="mainNav"
+        class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10"
+        aria-label="Main Navigation"
+      >
+        <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
+        <a href="/blog.html" class="mx-2 underline font-bold" aria-label="Blog"
+          >Blog</a
+        >
+        <a
+          href="/about.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="About"
+          >About</a
+        >
+        <a
+          href="/terms.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Terms of Service"
+          >Terms</a
+        >
+        <a
+          href="/privacy.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Privacy Policy"
+          >Privacy</a
+        >
+        <a
+          href="/contact.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Contact"
+          >Contact</a
+        >
+        <button
+          id="navClose"
+          class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded hidden"
+          aria-label="Close navigation menu"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </nav>
+      <script>
+        const navToggle = document.getElementById("navToggle");
+        const mainNav = document.getElementById("mainNav");
+        const navClose = document.getElementById("navClose");
+        function openNav() {
+          mainNav.classList.add("h-72", "py-6", "bg-blue-800");
+          navClose.classList.remove("hidden");
+        }
+        function closeNav() {
+          mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
+          navClose.classList.add("hidden");
+        }
+        navToggle.addEventListener("click", openNav);
+        navClose.addEventListener("click", closeNav);
+        mainNav
+          .querySelectorAll("a")
+          .forEach((a) => a.addEventListener("click", closeNav));
+        window.addEventListener("resize", () => {
+          if (window.innerWidth >= 640) {
+            mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
+            navClose.classList.add("hidden");
+          } else {
+            closeNav();
+          }
+        });
+      </script>
+    </header>
+    <main
+      class="flex-1 flex flex-col items-center justify-start p-4"
+      role="main"
+    >
+      <section
+        class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8"
+      >
+        <div class="flex items-center mb-6">
+          <img
+            src="/images/author-jane.png"
+            alt="Jane Smith"
+            class="w-16 h-16 rounded-full mr-4"
+          />
+          <div>
+            <h2 class="text-xl font-semibold">Jane Smith</h2>
+            <p class="text-gray-700">
+              Jane is an e-commerce strategist and dropshipping expert with 10+
+              years of experience helping entrepreneurs grow their online
+              businesses.
+            </p>
+            <div class="mt-2">
+              <a
+                href="https://twitter.com/janesmith"
+                target="_blank"
+                rel="noopener"
+                title="Twitter"
+                class="text-blue-500 underline mr-2"
+                >Twitter</a
+              >
+              <a
+                href="https://linkedin.com/in/janesmith"
+                target="_blank"
+                rel="noopener"
+                title="LinkedIn"
+                class="text-blue-700 underline"
+                >LinkedIn</a
+              >
+            </div>
           </div>
         </div>
+        <h3 class="text-lg font-semibold mb-4">Posts by Jane Smith</h3>
+        <ul class="space-y-8">
+          <li
+            class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100"
+          >
+            <a
+              href="/2025-trending-products.html"
+              class="text-xl font-bold text-blue-700 underline hover:text-blue-900"
+              >2025 Trending Products for Dropshipping</a
+            >
+            <div class="text-sm text-gray-600 mt-1">April 15, 2025</div>
+            <p class="mt-2 text-gray-700">
+              Discover the hottest products to sell in 2025, including smart
+              gadgets, eco-friendly items, and more. Expert dropshipping tips
+              and product ideas!
+            </p>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer
+      class="bg-blue-600 text-white p-6 text-center mt-auto"
+      role="contentinfo"
+    >
+      <div
+        class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4"
+      >
+        <div class="mb-2 sm:mb-0">
+          <span>&copy; 2025 Your Dropshipping Store. All rights reserved.</span>
+        </div>
+        <div class="flex gap-4">
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener"
+            title="Facebook"
+            class="hover:text-yellow-300"
+            >Facebook</a
+          >
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener"
+            title="Twitter"
+            class="hover:text-yellow-300"
+            >Twitter</a
+          >
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener"
+            title="Instagram"
+            class="hover:text-yellow-300"
+            >Instagram</a
+          >
+        </div>
       </div>
-      <h3 class="text-lg font-semibold mb-4">Posts by Jane Smith</h3>
-      <ul class="space-y-8">
-        
-        <li class="border-b pb-4">
-          <a href="/2025-trending-products.html" class="text-xl font-bold text-blue-700 underline">2025 Trending Products for Dropshipping</a>
-          <div class="text-sm text-gray-600 mt-1">April 15, 2025</div>
-          <p class="mt-2 text-gray-700">Discover the hottest products to sell in 2025, including smart gadgets, eco-friendly items, and more. Expert dropshipping tips and product ideas!</p>
-        </li>
-        
-      </ul>
-    </section>
-  </main>
-  <footer class="bg-blue-600 text-white p-4 text-center mt-auto" role="contentinfo">
-    &copy; 2025 Your Dropshipping Store. All rights reserved.
-  </footer>
-</body>
+    </footer>
+  </body>
 </html>

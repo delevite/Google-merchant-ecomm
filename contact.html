@@ -1,114 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Us - Your Dropshipping Store</title>
-  <meta name="description" content="Contact Your Dropshipping Store for support, inquiries, or feedback. We respond promptly to all messages.">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-  <link rel="canonical" href="https://yourdomain.com/contact.html" />
-</head>
-<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
-  <!-- Language Toggle -->
-  <div class="absolute top-2 right-2 z-30 flex gap-2">
-    <button id="langEn" class="px-2 py-1 rounded bg-blue-700 text-white font-bold lang-btn" aria-label="English">EN</button>
-    <button id="langZh" class="px-2 py-1 rounded bg-yellow-400 text-gray-900 font-bold lang-btn" aria-label="Chinese">中文</button>
-  </div>
-  <header class="relative bg-blue-600 text-white text-center" role="banner">
-    <div class="relative w-full">
-      <img src="/static/contact_swiftcart.png" alt="Contact SwiftCart Header" class="w-full h-56 sm:h-72 object-cover object-center" style="max-height:320px;" />
-      <div class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 px-2 py-4">
-        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2" tabindex="0">Contact Us</h1>
-        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-en" tabindex="0">Contact Us</h1>
-        <h1 class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-zh hidden" tabindex="0">联系我们</h1>
-      </div>
-      <!-- Mobile Nav Icon -->
-      <button id="navToggle" class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded" aria-label="Open navigation menu">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Your Dropshipping Store</title>
+    <meta
+      name="description"
+      content="Contact Your Dropshipping Store for support, inquiries, or feedback. We respond promptly to all messages."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="canonical" href="https://yourdomain.com/contact.html" />
+  </head>
+  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+    <!-- Language Toggle -->
+    <div class="absolute top-2 right-2 z-30 flex gap-2">
+      <button
+        id="langEn"
+        class="px-2 py-1 rounded bg-blue-700 text-white font-bold lang-btn"
+        aria-label="English"
+      >
+        EN
+      </button>
+      <button
+        id="langZh"
+        class="px-2 py-1 rounded bg-yellow-400 text-gray-900 font-bold lang-btn"
+        aria-label="Chinese"
+      >
+        中文
       </button>
     </div>
-    <nav id="mainNav" class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10" aria-label="Main Navigation">
-      <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
-      <a href="/blog.html" class="mx-2 underline" aria-label="Blog">Blog</a>
-      <a href="/about.html" class="mx-2 underline" aria-label="About">About</a>
-      <a href="/terms.html" class="mx-2 underline" aria-label="Terms of Service">Terms</a>
-      <a href="/privacy.html" class="mx-2 underline" aria-label="Privacy Policy">Privacy</a>
-      <a href="/contact.html" class="mx-2 underline font-bold" aria-label="Contact">Contact</a>
-      <button id="navClose" class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded" aria-label="Close navigation menu" style="display:none;">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-    </nav>
-    <script>
-      const navToggle = document.getElementById('navToggle');
-      const mainNav = document.getElementById('mainNav');
-      const navClose = document.getElementById('navClose');
-      function openNav() {
-        mainNav.style.height = '18rem';
-        mainNav.style.padding = '1.5rem 0';
-        mainNav.style.background = 'rgba(30,64,175,0.97)';
-        navClose.style.display = '';
-      }
-      function closeNav() {
-        mainNav.style.height = '0';
-        mainNav.style.padding = '0';
-        mainNav.style.background = 'rgba(30,64,175,0.97)';
-        navClose.style.display = 'none';
-      }
-      navToggle.addEventListener('click', openNav);
-      navClose.addEventListener('click', closeNav);
-      // Close nav on link click (mobile)
-      mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
-      // On resize, reset nav for desktop
-      window.addEventListener('resize', () => {
-        if(window.innerWidth >= 640) {
-          mainNav.style.height = 'auto';
-          mainNav.style.padding = '0';
-          navClose.style.display = 'none';
-        } else {
-          closeNav();
+    <header class="relative bg-blue-600 text-white text-center" role="banner">
+      <div class="relative w-full">
+        <img
+          src="/static/contact_swiftcart.png"
+          alt="Contact SwiftCart Header"
+          class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]"
+        />
+        <div
+          class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 px-2 py-4"
+        >
+          <h1
+            class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2 lang-en"
+            tabindex="0"
+          >
+            Contact Us
+          </h1>
+          <h1
+            class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2 lang-zh hidden"
+            tabindex="0"
+          >
+            联系我们
+          </h1>
+        </div>
+        <!-- Mobile Nav Icon -->
+        <button
+          id="navToggle"
+          class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded"
+          aria-label="Open navigation menu"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <nav
+        id="mainNav"
+        class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10"
+        aria-label="Main Navigation"
+      >
+        <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
+        <a href="/blog.html" class="mx-2 underline" aria-label="Blog">Blog</a>
+        <a href="/about.html" class="mx-2 underline" aria-label="About"
+          >About</a
+        >
+        <a
+          href="/terms.html"
+          class="mx-2 underline"
+          aria-label="Terms of Service"
+          >Terms</a
+        >
+        <a
+          href="/privacy.html"
+          class="mx-2 underline"
+          aria-label="Privacy Policy"
+          >Privacy</a
+        >
+        <a
+          href="/contact.html"
+          class="mx-2 underline font-bold"
+          aria-label="Contact"
+          >Contact</a
+        >
+        <button
+          id="navClose"
+          class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded hidden"
+          aria-label="Close navigation menu"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </nav>
+      <script>
+        const navToggle = document.getElementById("navToggle");
+        const mainNav = document.getElementById("mainNav");
+        const navClose = document.getElementById("navClose");
+        function openNav() {
+          mainNav.style.height = "18rem";
+          mainNav.style.padding = "1.5rem 0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
+          navClose.style.display = "";
         }
-      });
-    </script>
-  </header>
-  <main class="flex-1 flex flex-col items-center justify-start p-4" role="main">
-    <section class="w-full max-w-2xl bg-white p-8 rounded shadow-md mt-6 mb-8">
-      <h2 class="text-2xl font-semibold mb-4" tabindex="0">Get in Touch</h2>
-      <p class="mb-4">We value your feedback and are here to help with any questions, concerns, or support needs. Please fill out the form below or contact us directly using the information provided.</p>
-      <form class="grid gap-4" name="contact" method="POST" action="mailto:support@yourdomain.com" enctype="text/plain" aria-label="Contact Form">
-        <label for="name" class="font-semibold">Name<span class="text-red-600">*</span></label>
-        <input type="text" id="name" name="name" required class="p-2 border rounded" aria-required="true" aria-label="Your Name" />
-        <label for="email" class="font-semibold">Email<span class="text-red-600">*</span></label>
-        <input type="email" id="email" name="email" required class="p-2 border rounded" aria-required="true" aria-label="Your Email" />
-        <label for="message" class="font-semibold">Message<span class="text-red-600">*</span></label>
-        <textarea id="message" name="message" rows="5" required class="p-2 border rounded" aria-required="true" aria-label="Your Message"></textarea>
-        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" aria-label="Send Message">Send Message</button>
-      </form>
-      <div class="mt-8">
-        <h3 class="text-lg font-semibold mb-2">Contact Information</h3>
-        <p>Email: <a href="mailto:support@yourdomain.com" class="text-blue-600 underline">support@yourdomain.com</a></p>
-        <p>Business Address: <span class="text-gray-700">123 Main Street, City, Country</span></p>
-        <p>Business Hours: <span class="text-gray-700">Mon-Fri, 9:00 AM - 6:00 PM</span></p>
-      </div>
-      <div class="mt-8 text-sm text-gray-600">
-        <p>This page is compliant with Google Merchant Center requirements. We respond to all inquiries within 1-2 business days. Your information is handled according to our <a href="/privacy.html" class="underline text-blue-600">Privacy Policy</a>.</p>
-      </div>
-      <h2 class="text-2xl font-semibold mb-6 text-center sm:text-left lang-en">We'd love to hear from you!</h2>
-      <h2 class="text-2xl font-semibold mb-6 text-center sm:text-left lang-zh hidden">欢迎留言或咨询！</h2>
-    </section>
-  </main>
-  <footer class="bg-blue-600 text-white p-4 text-center mt-auto" role="contentinfo">
-    <span class="lang-en">&copy; 2025 Your Dropshipping Store. All rights reserved.</span>
-    <span class="lang-zh hidden">&copy; 2025 您的跨境电商店铺。保留所有权利。</span>
-  </footer>
-</body>
+        function closeNav() {
+          mainNav.style.height = "0";
+          mainNav.style.padding = "0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
+          navClose.style.display = "none";
+        }
+        navToggle.addEventListener("click", openNav);
+        navClose.addEventListener("click", closeNav);
+        // Close nav on link click (mobile)
+        mainNav
+          .querySelectorAll("a")
+          .forEach((a) => a.addEventListener("click", closeNav));
+        // On resize, reset nav for desktop
+        window.addEventListener("resize", () => {
+          if (window.innerWidth >= 640) {
+            mainNav.style.height = "auto";
+            mainNav.style.padding = "0";
+            navClose.style.display = "none";
+          } else {
+            closeNav();
+          }
+        });
+      </script>
+    </header>
+    <main
+      class="flex-1 flex flex-col items-center justify-start p-4"
+      role="main"
+    >
+      <section
+        class="w-full max-w-2xl bg-white p-8 rounded shadow-md mt-6 mb-8"
+      >
+        <h2 class="text-2xl font-semibold mb-4" tabindex="0">Get in Touch</h2>
+        <p class="mb-4">
+          We value your feedback and are here to help with any questions,
+          concerns, or support needs. Please fill out the form below or contact
+          us directly using the information provided.
+        </p>
+        <form
+          class="grid gap-4"
+          name="contact"
+          method="POST"
+          action="mailto:support@yourdomain.com"
+          enctype="text/plain"
+          aria-label="Contact Form"
+        >
+          <label for="name" class="font-semibold"
+            >Name<span class="text-red-600">*</span></label
+          >
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="p-2 border rounded"
+            aria-required="true"
+            aria-label="Your Name"
+          />
+          <label for="email" class="font-semibold"
+            >Email<span class="text-red-600">*</span></label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="p-2 border rounded"
+            aria-required="true"
+            aria-label="Your Email"
+          />
+          <label for="message" class="font-semibold"
+            >Message<span class="text-red-600">*</span></label
+          >
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            class="p-2 border rounded"
+            aria-required="true"
+            aria-label="Your Message"
+          ></textarea>
+          <button
+            type="submit"
+            class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+            aria-label="Send Message"
+          >
+            Send Message
+          </button>
+        </form>
+        <div class="mt-8">
+          <h3 class="text-lg font-semibold mb-2">Contact Information</h3>
+          <ul class="...">
+            <li>
+              Contact us at
+              <a
+                href="mailto:support@swiftcart.com"
+                class="text-blue-700 underline"
+                >support@swiftcart.com</a
+              >
+            </li>
+            <li>
+              For business inquiries, email
+              <a
+                href="mailto:business@swiftcart.com"
+                class="text-blue-700 underline"
+                >business@swiftcart.com</a
+              >
+            </li>
+          </ul>
+          <p>
+            Business Address:
+            <span class="text-gray-700">123 Main Street, City, Country</span>
+          </p>
+          <p>
+            Business Hours:
+            <span class="text-gray-700">Mon-Fri, 9:00 AM - 6:00 PM</span>
+          </p>
+        </div>
+        <div class="mt-8 text-sm text-gray-600">
+          <p>
+            This page is compliant with Google Merchant Center requirements. We
+            respond to all inquiries within 1-2 business days. Your information
+            is handled according to our
+            <a href="/privacy.html" class="underline text-blue-600"
+              >Privacy Policy</a
+            >.
+          </p>
+        </div>
+        <h2
+          class="text-2xl font-semibold mb-6 text-center sm:text-left lang-en"
+        >
+          We'd love to hear from you!
+        </h2>
+        <h2
+          class="text-2xl font-semibold mb-6 text-center sm:text-left lang-zh hidden"
+        >
+          欢迎留言或咨询！
+        </h2>
+      </section>
+    </main>
+    <footer
+      class="bg-blue-600 text-white p-4 text-center mt-auto"
+      role="contentinfo"
+    >
+      <span class="lang-en"
+        >&copy; 2025 Your Dropshipping Store. All rights reserved.</span
+      >
+      <span class="lang-zh hidden"
+        >&copy; 2025 您的跨境电商店铺。保留所有权利。</span
+      >
+    </footer>
+  </body>
   <script>
     function setLang(lang) {
-      document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
-      document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('hidden', lang !== 'zh'));
-      localStorage.setItem('lang', lang);
+      document
+        .querySelectorAll(".lang-en")
+        .forEach((el) => el.classList.toggle("hidden", lang !== "en"));
+      document
+        .querySelectorAll(".lang-zh")
+        .forEach((el) => el.classList.toggle("hidden", lang !== "zh"));
+      localStorage.setItem("lang", lang);
     }
-    document.getElementById('langEn').addEventListener('click', () => setLang('en'));
-    document.getElementById('langZh').addEventListener('click', () => setLang('zh'));
-    setLang(localStorage.getItem('lang') || 'en');
+    document
+      .getElementById("langEn")
+      .addEventListener("click", () => setLang("en"));
+    document
+      .getElementById("langZh")
+      .addEventListener("click", () => setLang("zh"));
+    setLang(localStorage.getItem("lang") || "en");
   </script>
 </html>

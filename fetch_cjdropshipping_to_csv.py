@@ -118,12 +118,49 @@ def custom_category(p):
         return 'Health, Beauty and Skincare Products'
     return p.get('categoryName', '')
 
+
+# Helper: Extract Chinese name/desc from productName (list of strings)
+def extract_chinese_name(p):
+    names = p.get('productName', [])
+    if isinstance(names, list):
+        for n in names:
+            if any('\u4e00' <= c <= '\u9fff' for c in n):
+                return n
+    elif isinstance(names, str):
+        if any('\u4e00' <= c <= '\u9fff' for c in names):
+            return names
+    return ''
+
+# Helper: Generate GMC-optimized title (brand + key attributes + category, max 150 chars)
+def optimize_title(p):
+    brand = p.get('brand', '') or ''
+    en = p.get('productNameEn', '') or ''
+    cat = p.get('categoryName', '') or ''
+    # Remove duplicate words, add brand/category if missing
+    words = en.split()
+    seen = set()
+    deduped = []
+    for w in words:
+        wl = w.lower()
+        if wl not in seen:
+            deduped.append(w)
+            seen.add(wl)
+    base = ' '.join(deduped)
+    if brand and brand.lower() not in base.lower():
+        base = f"{brand} {base}"
+    if cat and cat.lower() not in base.lower():
+        base = f"{base} {cat}"
+    return base[:150]
+
 FIELD_MAPPING = {
     'title': lambda p: p.get('productNameEn', ''),
+    'title_zh': extract_chinese_name,
+    'title_optimized': optimize_title,
     'image': lambda p: p.get('productImage', ''),
     'price': lambda p: p.get('sellPrice', ''),
     'url': lambda p: f"https://app.cjdropshipping.com/product-detail/{p.get('pid', '')}",
     'description': lambda p: ', '.join(p.get('productName', [])) if isinstance(p.get('productName'), list) else p.get('productName', ''),
+    'description_zh': extract_chinese_name,
     'brand': lambda p: '',  # Not provided by CJ API
     'rating': lambda p: '',  # Not provided by CJ API
     'stock': lambda p: '',  # Not provided by CJ API
