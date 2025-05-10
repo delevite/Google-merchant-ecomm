@@ -390,7 +390,7 @@
 
       <div
         id="products"
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-md mx-auto px-1 sm:px-0"
+        class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full px-1 sm:px-0"
         aria-live="polite"
       ></div>
       <div id="pagination" class="flex justify-center mt-8 gap-2"></div>
@@ -754,6 +754,19 @@
               )
             : "";
           let descZh = p.description_zh || "";
+          // Brand display: only show if not an array or JSON string
+          let brandDisplay = "";
+          if (
+            typeof p.brand === "string" &&
+            p.brand.trim() &&
+            !p.brand.trim().startsWith("[") &&
+            !p.brand.trim().startsWith("{")
+          ) {
+            brandDisplay =
+              'Brand: <span class="font-semibold">' +
+              highlight(p.brand, searchTerm) +
+              "</span>";
+          }
           productDiv.className =
             "bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-yellow-200";
           productDiv.innerHTML = `
@@ -782,13 +795,7 @@
               <p class='text-green-700 font-extrabold text-lg mb-1'>$${
                 p.price
               }</p>
-              <p class='text-gray-900 text-sm mb-1'>${
-                p.brand
-                  ? 'Brand: <span class="font-semibold">' +
-                    highlight(p.brand, searchTerm) +
-                    "</span>"
-                  : ""
-              }</p>
+              <p class='text-gray-900 text-sm mb-1'>${brandDisplay}</p>
               <p class='text-gray-900 text-sm mb-2 lang-en'>${descEn}</p>
               <p class='text-gray-900 text-sm mb-2 lang-zh hidden'>${descZh}</p>
               <a href='${
@@ -886,29 +893,21 @@
         const categories = Array.from(
           new Set(products.map((p) => p.category).filter(Boolean))
         );
-        // Example grouping: Electronics, Wearables, Audio, etc.
-        // For demo, group by first letter
-        const grouped = {};
+        const catSelect = document.getElementById("category");
+        catSelect.innerHTML = "";
         categories.forEach((cat) => {
-          const group = cat[0].toUpperCase();
-          if (!grouped[group]) grouped[group] = [];
-          grouped[group].forEach((cat) => {
-            const optgroup = document.createElement("optgroup");
-            optgroup.label = group;
-            grouped[group].forEach((cat) => {
-              // Add icon based on category (simple emoji demo)
-              let icon = "";
-              if (cat.toLowerCase().includes("audio")) icon = "🔊 ";
-              else if (cat.toLowerCase().includes("wearable")) icon = "⌚ ";
-              else if (cat.toLowerCase().includes("electronic")) icon = "💻 ";
-              else icon = "📦 ";
-              const option = document.createElement("option");
-              option.value = cat;
-              option.innerText = icon + cat;
-              optgroup.appendChild(option);
-            });
-            catSelect.appendChild(optgroup);
-          });
+          // Add icon based on category (simple emoji demo)
+          let icon = "";
+          if (cat.toLowerCase().includes("audio")) icon = "🔊 ";
+          else if (cat.toLowerCase().includes("wearable")) icon = "⌚ ";
+          else if (cat.toLowerCase().includes("electronic")) icon = "💻 ";
+          else if (cat.toLowerCase().includes("cosplay")) icon = "🎭 ";
+          else if (cat.toLowerCase().includes("clothes")) icon = "👕 ";
+          else icon = "📦 ";
+          const option = document.createElement("option");
+          option.value = cat;
+          option.innerText = icon + cat;
+          catSelect.appendChild(option);
         });
       }
       populateCategories();
