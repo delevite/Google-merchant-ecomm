@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,9 +15,23 @@
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
     <style>
       /* Remove all inline styles and use Tailwind classes only */
+      html,
+      body {
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      .slider-scroll {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+      .slider-item {
+        scroll-snap-align: start;
+      }
     </style>
   </head>
-  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <body
+    class="bg-gray-50 font-sans min-h-screen flex flex-col overflow-x-hidden"
+  >
     <header class="relative bg-blue-600 text-white text-center" role="banner">
       <!-- Language Toggle (optional, remove if not needed) -->
       <div class="absolute top-2 right-2 z-30 flex gap-2">
@@ -82,6 +96,12 @@
         <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
         <a href="/blog.html" class="mx-2 underline font-bold" aria-label="Blog"
           >Blog</a
+        >
+        <a
+          href="/tag-products.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Products"
+          >Products</a
         >
         <a
           href="/about.html"
@@ -177,12 +197,52 @@
         langEn && langEn.addEventListener("click", () => setLang("en"));
         langZh && langZh.addEventListener("click", () => setLang("zh"));
         setLang("en");
+
+        function renderPagination(totalPages) {
+          pagination.innerHTML = "";
+          if (totalPages <= 1) return;
+          for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.textContent = i;
+            btn.className = `px-3 py-1 rounded ${
+              i === currentPage
+                ? "bg-blue-600 text-white"
+                : "bg-white text-blue-600 border border-blue-600"
+            } hover:bg-blue-700 hover:text-white`;
+            btn.onclick = () => {
+              currentPage = i;
+              renderProducts(lastProducts);
+            };
+            pagination.appendChild(btn);
+          }
+          // Always scroll pagination bar to the start (number 1) after rendering
+          pagination.scrollLeft = 0;
+        }
       </script>
     </header>
     <main
       class="flex-1 flex flex-col items-center justify-start p-4"
       role="main"
     >
+      <!-- Product Category Card for #trending -->
+      <section class="w-full max-w-2xl mx-auto mb-8">
+        <div
+          class="bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center"
+        >
+          <div class="text-5xl mb-2">🔥</div>
+          <h2 class="text-2xl font-bold mb-2">Explore #trending</h2>
+          <p class="text-gray-700 mb-4">
+            Browse all blog posts and products related to
+            <span class="font-semibold text-pink-700">#trending</span>. Discover
+            trending items, tips, and more!
+          </p>
+          <a
+            href="/tag-trending.html"
+            class="inline-block bg-pink-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-pink-700 transition"
+            >View #trending Posts</a
+          >
+        </div>
+      </section>
       <section
         class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8"
       >
@@ -285,7 +345,7 @@
             target="_blank"
             rel="noopener"
             title="Facebook"
-            class="hover:text-yellow-300"
+            class="hover:underline focus:outline-none focus:ring-2 focus:ring-white"
             >Facebook</a
           >
           <a
@@ -293,7 +353,7 @@
             target="_blank"
             rel="noopener"
             title="Twitter"
-            class="hover:text-yellow-300"
+            class="hover:underline focus:outline-none focus:ring-2 focus:ring-white"
             >Twitter</a
           >
           <a
@@ -301,8 +361,14 @@
             target="_blank"
             rel="noopener"
             title="Instagram"
-            class="hover:text-yellow-300"
+            class="hover:underline focus:outline-none focus:ring-2 focus:ring-white"
             >Instagram</a
+          >
+          <a
+            href="/contact.html"
+            class="hover:underline focus:outline-none focus:ring-2 focus:ring-white font-semibold"
+            title="Contact"
+            >Contact</a
           >
         </div>
       </div>

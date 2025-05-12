@@ -35,6 +35,14 @@
     />
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
     <link rel="canonical" href="https://yourdomain.com/about.html" />
+    <style>
+      html,
+      body {
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      /* Removed all #productSlider and related CSS */
+    </style>
   </head>
   <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
     <!-- Language Toggle -->
@@ -130,7 +138,6 @@
           id="navClose"
           class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded"
           aria-label="Close navigation menu"
-          style="display: none"
         >
           <svg
             class="w-7 h-7"
@@ -153,11 +160,11 @@
         const navClose = document.getElementById("navClose");
         function openNav() {
           mainNav.classList.add("h-72", "py-6", "bg-blue-800");
-          navClose.style.display = "";
+          navClose.classList.remove("hidden");
         }
         function closeNav() {
           mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
-          navClose.style.display = "none";
+          navClose.classList.add("hidden");
         }
         navToggle.addEventListener("click", openNav);
         navClose.addEventListener("click", closeNav);
@@ -169,7 +176,7 @@
         window.addEventListener("resize", () => {
           if (window.innerWidth >= 640) {
             mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
-            navClose.style.display = "none";
+            navClose.classList.add("hidden");
           } else {
             closeNav();
           }

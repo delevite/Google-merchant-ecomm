@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,11 +13,11 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-    <style>
-      /* Remove all inline styles and use Tailwind classes only */
-    </style>
+    <!-- Removed <style> block, use Tailwind classes only -->
   </head>
-  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <body
+    class="bg-gray-50 font-sans min-h-screen flex flex-col overflow-x-hidden"
+  >
     <header class="relative bg-blue-600 text-white text-center" role="banner">
       <div class="absolute top-2 right-2 z-30 flex gap-2">
         <button
@@ -222,12 +222,12 @@
             class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100"
           >
             <a
-              href="/2025-trending-products.html"
+              href="site/2025-trending-products.html"
               class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-en"
               >2025 Trending Products for Dropshipping</a
             >
             <a
-              href="/2025-trending-products.html"
+              href="site/2025-trending-products.html"
               class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-zh hidden"
               >2025 Trending Products for Dropshipping</a
             >
@@ -253,13 +253,13 @@
             </div>
             <div class="mt-2">
               <a
-                href="/tag-trending.html"
+                href="site/tag-trending.html"
                 class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
                 >#trending</a
               >
 
               <a
-                href="/tag-products.html"
+                href="site/tag-products.html"
                 class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
                 >#products</a
               >
@@ -321,16 +321,16 @@
               .map(
                 (p) =>
                   `<li class='bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100'>
-              <a href='/${
-                p.slug
-              }.html' class='text-xl font-bold text-blue-700 underline hover:text-blue-900'>${
+<a href='site/${
+                    p.slug
+                  }.html' class='text-xl font-bold text-blue-700 underline hover:text-blue-900'>${
                     p.title
                   }</a>
               <div class='text-sm text-gray-600 mt-1'>${p.date}</div>
               <div class='mt-2'>${p.tags
                 .map(
                   (tag) =>
-                    `<a href='/tag-${tag}.html' class='inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2'>#${tag}</a>`
+                    `<a href='site/tag-${tag}.html' class='inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2'>#${tag}</a>`
                 )
                 .join("")}</div>
               <p class='mt-2 text-gray-700'>${p.summary}</p>

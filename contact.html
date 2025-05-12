@@ -13,6 +13,14 @@
       rel="stylesheet"
     />
     <link rel="canonical" href="https://yourdomain.com/contact.html" />
+    <style>
+      html,
+      body {
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      /* Removed all #productSlider and related CSS */
+    </style>
   </head>
   <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
     <!-- Language Toggle -->
@@ -225,12 +233,12 @@
         </form>
         <div class="mt-8">
           <h3 class="text-lg font-semibold mb-2">Contact Information</h3>
-          <ul class="...">
+          <ul class="text-sm mt-4 flex flex-col gap-1">
             <li>
               Contact us at
               <a
                 href="mailto:support@swiftcart.com"
-                class="text-blue-700 underline"
+                class="text-yellow-600 underline font-bold hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
                 >support@swiftcart.com</a
               >
             </li>
@@ -238,7 +246,7 @@
               For business inquiries, email
               <a
                 href="mailto:business@swiftcart.com"
-                class="text-blue-700 underline"
+                class="text-yellow-600 underline font-bold hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
                 >business@swiftcart.com</a
               >
             </li>

@@ -14,7 +14,7 @@
     />
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
     <style>
-        /* Remove all inline styles and use Tailwind classes only */
+      /* Remove all inline styles and use Tailwind classes only */
     </style>
   </head>
   <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
@@ -183,68 +183,85 @@
       class="flex-1 flex flex-col items-center justify-start p-4"
       role="main"
     >
+      <!-- Product Category Card for tag -->
+      <section class="w-full max-w-2xl mx-auto mb-8">
+        <div
+          class="bg-gradient-to-br from-blue-100 via-green-100 to-yellow-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center"
+        >
+          <div class="text-5xl mb-2">🏷️</div>
+          <h2 class="text-2xl font-bold mb-2">Explore #{{ tag }}</h2>
+          <p class="text-gray-700 mb-4">
+            Browse all blog posts and products related to
+            <span class="font-semibold text-blue-700">#{{ tag }}</span>.
+            Discover trending items, tips, and more!
+          </p>
+          <a
+            href="/tag-{{ tag }}.html"
+            class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-blue-700 transition"
+            >View #{{ tag }} Posts</a
+          >
+        </div>
+      </section>
       <section
         class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8"
       >
         <ul class="space-y-8">
-          {% for post in tag_posts %}
-            <li>
-              <li
-                class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100"
+          {%- for post in tag_posts -%}
+          <li>
+            <div
+              class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100"
+            >
+              <a
+                href="/{{ post.slug }}.html"
+                class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-en"
+                >{{ post.title }}</a
               >
-                <a
-                  href="/{{ post.slug }}.html"
-                  class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-en"
-                  >{{ post.title }}</a
-                >
-                <a
-                  href="/{{ post.slug }}.html"
-                  class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-zh hidden"
-                  >{{ post.title_zh or post.title }}</a
-                >
-                <div class="text-sm text-gray-600 mt-1">
-                  <span class="lang-en"
-                    >By
-                    <a
-                      href="/author-{{ post.author }}.html"
-                      class="underline hover:text-blue-700"
-                      >{{ authors[post.author].name }}</a
-                    >
-                    | {{ post.date_obj.strftime('%B %d, %Y') }}</span
-                  >
-                  <span class="lang-zh hidden"
-                    >作者
-                    <a
-                      href="/author-{{ post.author }}.html"
-                      class="underline hover:text-blue-700"
-                      >{{ authors[post.author].name_zh or authors[post.author].name
-                      }}</a
-                    >
-                    ｜ {{ post.date_obj.strftime('%Y年%m月%d日') }}</span
-                  >
-                </div>
-                <div class="mt-2">
-                  {% for tag2 in post.tags %}
+              <a
+                href="/{{ post.slug }}.html"
+                class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-zh hidden"
+                >{{ post.title_zh or post.title }}</a
+              >
+              <div class="text-sm text-gray-600 mt-1">
+                <span class="lang-en"
+                  >By
                   <a
-                    href="/tag-{{ tag2 }}.html"
-                    class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
-                    >#{{ tag2 }}</a
+                    href="/author-{{ post.author }}.html"
+                    class="underline hover:text-blue-700"
+                    >{{ authors[post.author].name }}</a
                   >
-                  {% endfor %}
-                </div>
-                <p class="mt-2 text-gray-700 lang-en">{{ post.summary }}</p>
-                <p class="mt-2 text-gray-700 lang-zh hidden">
-                  {{ post.summary_zh or post.summary }}
-                </p>
-                {% if post.featured %}
-                <span
-                  class="inline-block bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded mt-2"
-                  >Featured</span
+                  | {{ post.date_obj.strftime('%B %d, %Y') }}</span
                 >
-                {% endif %}
-              </li>
-            </li>
-          {% endfor %}
+                <span class="lang-zh hidden"
+                  >作者
+                  <a
+                    href="/author-{{ post.author }}.html"
+                    class="underline hover:text-blue-700"
+                    >{{ authors[post.author].name_zh or
+                    authors[post.author].name }}</a
+                  >
+                  ｜ {{ post.date_obj.strftime('%Y年%m月%d日') }}</span
+                >
+              </div>
+              <div class="mt-2">
+                {%- for tag2 in post.tags -%}<a
+                  href="/tag-{{ tag2 }}.html"
+                  class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                  >#{{ tag2 }}</a
+                >{%- endfor -%}
+              </div>
+              <p class="mt-2 text-gray-700 lang-en">{{ post.summary }}</p>
+              <p class="mt-2 text-gray-700 lang-zh hidden">
+                {{ post.summary_zh or post.summary }}
+              </p>
+              {% if post.featured %}
+              <span
+                class="inline-block bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded mt-2"
+                >Featured</span
+              >
+              {% endif %}
+            </div>
+          </li>
+          {%- endfor -%}
         </ul>
       </section>
     </main>

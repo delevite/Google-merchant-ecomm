@@ -181,7 +181,7 @@
         </div>
         <h3 class="text-lg font-semibold mb-4">Posts by {{ author.name }}</h3>
         <ul class="space-y-8">
-          {% for post in author_posts %}
+          {%- for post in author_posts -%}
           <li>
             <a
               href="/{{ post.slug }}.html"
@@ -193,7 +193,7 @@
             </div>
             <p class="mt-2 text-gray-700">{{ post.summary }}</p>
           </li>
-          {% endfor %}
+          {%- endfor -%}
         </ul>
       </section>
     </main>

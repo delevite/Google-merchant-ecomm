@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,11 +15,10 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-    <style>
-      /* Remove all inline styles and use Tailwind classes only */
-    </style>
   </head>
-  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <body
+    class="bg-gray-50 font-sans min-h-screen flex flex-col overflow-x-hidden"
+  >
     <header class="relative bg-blue-600 text-white text-center" role="banner">
       <div class="relative w-full">
         <img
@@ -248,28 +247,58 @@
             href="https://facebook.com"
             target="_blank"
             rel="noopener"
+            class="hover:underline focus:outline-none focus:ring-2 focus:ring-white"
             title="Facebook"
-            class="hover:text-yellow-300"
             >Facebook</a
           >
           <a
             href="https://twitter.com"
             target="_blank"
             rel="noopener"
+            class="hover:underline focus:outline-none focus:ring-2 focus:ring-white"
             title="Twitter"
-            class="hover:text-yellow-300"
             >Twitter</a
           >
           <a
             href="https://instagram.com"
             target="_blank"
             rel="noopener"
+            class="hover:underline focus:outline-none focus:ring-2 focus:ring-white"
             title="Instagram"
-            class="hover:text-yellow-300"
             >Instagram</a
+          >
+          <a
+            href="/contact.html"
+            class="hover:underline focus:outline-none focus:ring-2 focus:ring-white font-semibold"
+            title="Contact"
+            >Contact</a
           >
         </div>
       </div>
     </footer>
+    <script>
+      // ...existing code...
+      function renderPagination(totalPages) {
+        pagination.innerHTML = "";
+        if (totalPages <= 1) return;
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          btn.className = `px-3 py-1 rounded ${
+            i === currentPage
+              ? "bg-blue-600 text-white"
+              : "bg-white text-blue-600 border border-blue-600"
+          } hover:bg-blue-700 hover:text-white`;
+          btn.onclick = () => {
+            currentPage = i;
+            renderProducts(lastProducts);
+          };
+          pagination.appendChild(btn);
+        }
+        // Always scroll pagination bar to the start (number 1) after rendering
+        pagination.scrollLeft = 0;
+      }
+      // ...existing code...
+    </script>
   </body>
 </html>

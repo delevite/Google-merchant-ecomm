@@ -393,7 +393,10 @@
         class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full px-1 sm:px-0"
         aria-live="polite"
       ></div>
-      <div id="pagination" class="flex justify-center mt-8 gap-2"></div>
+      <div
+        id="pagination"
+        class="flex justify-center mt-8 gap-2 overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-blue-100 snap-x snap-mandatory px-2 py-2 rounded-lg bg-white shadow"
+      ></div>
 
       <!-- Product Details Modal -->
       <div
@@ -542,12 +545,12 @@
             </svg>
           </a>
         </div>
-        <ul class="...">
+        <ul class="text-sm mt-4 flex flex-col gap-1">
           <li>
             Contact us at
             <a
               href="mailto:support@swiftcart.com"
-              class="text-blue-700 underline"
+              class="text-yellow-200 underline font-bold hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
               >support@swiftcart.com</a
             >
           </li>
@@ -555,7 +558,7 @@
             For business inquiries, email
             <a
               href="mailto:business@swiftcart.com"
-              class="text-blue-700 underline"
+              class="text-yellow-200 underline font-bold hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
               >business@swiftcart.com</a
             >
           </li>
@@ -614,6 +617,8 @@
           };
           pagination.appendChild(btn);
         }
+        // Always scroll pagination bar to the start (number 1) after rendering
+        pagination.scrollLeft = 0;
       }
 
       function showModal(product) {
@@ -944,6 +949,14 @@
     </script>
 
     <style>
+      html,
+      body {
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      #productSlider {
+        scroll-behavior: smooth;
+      }
       @media (max-width: 640px) {
         #products {
           padding-left: 0.25rem;
