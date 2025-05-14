@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="overflow-x-hidden">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,9 +17,7 @@
       /* Remove all inline styles and use Tailwind classes only */
     </style>
   </head>
-  <body
-    class="bg-gray-50 font-sans min-h-screen flex flex-col overflow-x-hidden"
-  >
+  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
     <header class="relative bg-blue-600 text-white text-center" role="banner">
       <div class="relative w-full">
         <img
@@ -37,9 +35,7 @@
             Author: Jane Smith
           </h1>
           <p class="text-lg sm:text-xl mt-2 drop-shadow-lg" tabindex="0">
-            Jane is an e-commerce strategist and dropshipping expert with 10+
-            years of experience helping entrepreneurs grow their online
-            businesses.
+            Jane is an e-commerce strategist and dropshipping expert with 10+ years of experience helping entrepreneurs grow their online businesses.
           </p>
         </div>
         <!-- Mobile Nav Icon -->
@@ -121,11 +117,15 @@
         const mainNav = document.getElementById("mainNav");
         const navClose = document.getElementById("navClose");
         function openNav() {
-          mainNav.classList.add("h-72", "py-6", "bg-blue-800");
+          mainNav.style.height = "18rem";
+          mainNav.style.padding = "1.5rem 0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
           navClose.classList.remove("hidden");
         }
         function closeNav() {
-          mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
+          mainNav.style.height = "0";
+          mainNav.style.padding = "0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
           navClose.classList.add("hidden");
         }
         navToggle.addEventListener("click", openNav);
@@ -135,7 +135,8 @@
           .forEach((a) => a.addEventListener("click", closeNav));
         window.addEventListener("resize", () => {
           if (window.innerWidth >= 640) {
-            mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
+            mainNav.style.height = "auto";
+            mainNav.style.padding = "0";
             navClose.classList.add("hidden");
           } else {
             closeNav();
@@ -158,11 +159,7 @@
           />
           <div>
             <h2 class="text-xl font-semibold">Jane Smith</h2>
-            <p class="text-gray-700">
-              Jane is an e-commerce strategist and dropshipping expert with 10+
-              years of experience helping entrepreneurs grow their online
-              businesses.
-            </p>
+            <p class="text-gray-700">Jane is an e-commerce strategist and dropshipping expert with 10+ years of experience helping entrepreneurs grow their online businesses.</p>
             <div class="mt-2">
               <a
                 href="https://twitter.com/janesmith"
@@ -171,8 +168,7 @@
                 title="Twitter"
                 class="text-blue-500 underline mr-2"
                 >Twitter</a
-              >
-              <a
+              > <a
                 href="https://linkedin.com/in/janesmith"
                 target="_blank"
                 rel="noopener"
@@ -184,23 +180,7 @@
           </div>
         </div>
         <h3 class="text-lg font-semibold mb-4">Posts by Jane Smith</h3>
-        <ul class="space-y-8">
-          <li
-            class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100"
-          >
-            <a
-              href="/2025-trending-products.html"
-              class="text-xl font-bold text-blue-700 underline hover:text-blue-900"
-              >2025 Trending Products for Dropshipping</a
-            >
-            <div class="text-sm text-gray-600 mt-1">April 15, 2025</div>
-            <p class="mt-2 text-gray-700">
-              Discover the hottest products to sell in 2025, including smart
-              gadgets, eco-friendly items, and more. Expert dropshipping tips
-              and product ideas!
-            </p>
-          </li>
-        </ul>
+        <ul class="space-y-8"></ul>
       </section>
     </main>
     <footer

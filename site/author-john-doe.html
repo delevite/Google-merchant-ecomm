@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="overflow-x-hidden">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,9 +17,7 @@
       /* Remove all inline styles and use Tailwind classes only */
     </style>
   </head>
-  <body
-    class="bg-gray-50 font-sans min-h-screen flex flex-col overflow-x-hidden"
-  >
+  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
     <header class="relative bg-blue-600 text-white text-center" role="banner">
       <div class="relative w-full">
         <img
@@ -37,8 +35,7 @@
             Author: John Doe
           </h1>
           <p class="text-lg sm:text-xl mt-2 drop-shadow-lg" tabindex="0">
-            John is a logistics and fulfillment specialist, passionate about
-            helping e-commerce businesses deliver faster and smarter.
+            John is a logistics and fulfillment specialist, passionate about helping e-commerce businesses deliver faster and smarter.
           </p>
         </div>
         <!-- Mobile Nav Icon -->
@@ -120,11 +117,15 @@
         const mainNav = document.getElementById("mainNav");
         const navClose = document.getElementById("navClose");
         function openNav() {
-          mainNav.classList.add("h-72", "py-6", "bg-blue-800");
+          mainNav.style.height = "18rem";
+          mainNav.style.padding = "1.5rem 0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
           navClose.classList.remove("hidden");
         }
         function closeNav() {
-          mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
+          mainNav.style.height = "0";
+          mainNav.style.padding = "0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
           navClose.classList.add("hidden");
         }
         navToggle.addEventListener("click", openNav);
@@ -134,7 +135,8 @@
           .forEach((a) => a.addEventListener("click", closeNav));
         window.addEventListener("resize", () => {
           if (window.innerWidth >= 640) {
-            mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
+            mainNav.style.height = "auto";
+            mainNav.style.padding = "0";
             navClose.classList.add("hidden");
           } else {
             closeNav();
@@ -157,10 +159,7 @@
           />
           <div>
             <h2 class="text-xl font-semibold">John Doe</h2>
-            <p class="text-gray-700">
-              John is a logistics and fulfillment specialist, passionate about
-              helping e-commerce businesses deliver faster and smarter.
-            </p>
+            <p class="text-gray-700">John is a logistics and fulfillment specialist, passionate about helping e-commerce businesses deliver faster and smarter.</p>
             <div class="mt-2">
               <a
                 href="https://twitter.com/johndoe"
@@ -169,8 +168,7 @@
                 title="Twitter"
                 class="text-blue-500 underline mr-2"
                 >Twitter</a
-              >
-              <a
+              > <a
                 href="https://linkedin.com/in/johndoe"
                 target="_blank"
                 rel="noopener"

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="overflow-x-hidden">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,11 +13,11 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-    <!-- Removed <style> block, use Tailwind classes only -->
+    <style>
+      /* Remove all inline styles and use Tailwind classes only */
+    </style>
   </head>
-  <body
-    class="bg-gray-50 font-sans min-h-screen flex flex-col overflow-x-hidden"
-  >
+  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
     <header class="relative bg-blue-600 text-white text-center" role="banner">
       <div class="absolute top-2 right-2 z-30 flex gap-2">
         <button
@@ -55,8 +55,8 @@
             class="text-lg sm:text-xl mt-2 drop-shadow-lg lang-en"
             tabindex="0"
           >
-            Read the latest tips, trends, and news about dropshipping, trending
-            products, and e-commerce success.
+            Read the latest tips, trends, and news about
+            dropshipping, trending products, and e-commerce success.
           </p>
           <p
             class="text-lg sm:text-xl mt-2 drop-shadow-lg lang-zh hidden"
@@ -144,16 +144,15 @@
         const mainNav = document.getElementById("mainNav");
         const navClose = document.getElementById("navClose");
         function openNav() {
-          mainNav.classList.add("h-72", "py-6", "bg-blue-700", "bg-opacity-90");
+          mainNav.style.height = "18rem";
+          mainNav.style.padding = "1.5rem 0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
           navClose.classList.remove("hidden");
         }
         function closeNav() {
-          mainNav.classList.remove(
-            "h-72",
-            "py-6",
-            "bg-blue-700",
-            "bg-opacity-90"
-          );
+          mainNav.style.height = "0";
+          mainNav.style.padding = "0";
+          mainNav.style.background = "rgba(30,64,175,0.97)";
           navClose.classList.add("hidden");
         }
         navToggle.addEventListener("click", openNav);
@@ -163,12 +162,8 @@
           .forEach((a) => a.addEventListener("click", closeNav));
         window.addEventListener("resize", () => {
           if (window.innerWidth >= 640) {
-            mainNav.classList.remove(
-              "h-72",
-              "py-6",
-              "bg-blue-700",
-              "bg-opacity-90"
-            );
+            mainNav.style.height = "auto";
+            mainNav.style.padding = "0";
             navClose.classList.add("hidden");
           } else {
             closeNav();
@@ -186,9 +181,10 @@
             .querySelectorAll(".lang-zh")
             .forEach((el) => el.classList.toggle("hidden", lang !== "zh"));
           if (lang === "en") {
-            mainTitle.textContent = "Your SwiftCart Global Store Blog";
+            mainTitle.textContent =
+              'Your SwiftCart Global Store Blog';
           } else {
-            mainTitle.textContent = "SwiftCart全球商店博客";
+            mainTitle.textContent = 'SwiftCart全球商店博客';
           }
         }
         langEn && langEn.addEventListener("click", () => setLang("en"));
@@ -218,80 +214,81 @@
         />
         <ul id="searchResults" class="space-y-8"></ul>
         <ul id="allPosts" class="space-y-8">
-          <li
-            class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100"
-          >
-            <a
-              href="site/2025-trending-products.html"
-              class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-en"
-              >2025 Trending Products for Dropshipping</a
+          
+          <li>
+            <div
+              class="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100"
             >
-            <a
-              href="site/2025-trending-products.html"
-              class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-zh hidden"
-              >2025 Trending Products for Dropshipping</a
-            >
-            <div class="text-sm text-gray-600 mt-1">
-              <span class="lang-en"
-                >By
-                <a
-                  href="/author-jane-smith.html"
-                  class="underline hover:text-blue-700"
-                  >Jane Smith</a
+              <a
+                href="/2025-trending-products.html"
+                class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-en"
+                >2025 Trending Products for Dropshipping</a
+              >
+              <a
+                href="/2025-trending-products.html"
+                class="text-xl font-bold text-blue-700 underline hover:text-blue-900 lang-zh hidden"
+                >2025 Trending Products for Dropshipping</a
+              >
+              <div class="text-sm text-gray-600 mt-1">
+                <span class="lang-en"
+                  >By
+                  <a
+                    href="/author-jane-smith.html"
+                    class="underline hover:text-blue-700"
+                    >Jane Smith</a
+                  >
+                  | April 15, 2025</span
                 >
-                | April 15, 2025</span
-              >
-              <span class="lang-zh hidden"
-                >作者
-                <a
-                  href="/author-jane-smith.html"
-                  class="underline hover:text-blue-700"
-                  >Jane Smith</a
+                <span class="lang-zh hidden"
+                  >作者
+                  <a
+                    href="/author-jane-smith.html"
+                    class="underline hover:text-blue-700"
+                    >Jane Smith</a
+                  >
+                  ｜ 2025年04月15日</span
                 >
-                ｜ 2025年04月15日</span
+              </div>
+              <div class="mt-2">
+                
+                <a
+                  href="/tag-trending.html"
+                  class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                  >#trending</a
+                >
+                
+                <a
+                  href="/tag-products.html"
+                  class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                  >#products</a
+                >
+                
+                <a
+                  href="/tag-2025.html"
+                  class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                  >#2025</a
+                >
+                
+                <a
+                  href="/tag-gadgets.html"
+                  class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+                  >#gadgets</a
+                >
+                
+              </div>
+              <p class="mt-2 text-gray-700 lang-en">Discover the hottest products to sell in 2025, including smart gadgets, eco-friendly items, and more. Expert dropshipping tips and product ideas!</p>
+              <p class="mt-2 text-gray-700 lang-zh hidden">
+                Discover the hottest products to sell in 2025, including smart gadgets, eco-friendly items, and more. Expert dropshipping tips and product ideas!
+              </p>
+              
+              <span
+                class="inline-block bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded mt-2"
+                >Featured</span
               >
+              
             </div>
-            <div class="mt-2">
-              <a
-                href="site/tag-trending.html"
-                class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
-                >#trending</a
-              >
-
-              <a
-                href="site/tag-products.html"
-                class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
-                >#products</a
-              >
-
-              <a
-                href="/tag-2025.html"
-                class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
-                >#2025</a
-              >
-
-              <a
-                href="/tag-gadgets.html"
-                class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
-                >#gadgets</a
-              >
-            </div>
-            <p class="mt-2 text-gray-700 lang-en">
-              Discover the hottest products to sell in 2025, including smart
-              gadgets, eco-friendly items, and more. Expert dropshipping tips
-              and product ideas!
-            </p>
-            <p class="mt-2 text-gray-700 lang-zh hidden">
-              Discover the hottest products to sell in 2025, including smart
-              gadgets, eco-friendly items, and more. Expert dropshipping tips
-              and product ideas!
-            </p>
-
-            <span
-              class="inline-block bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded mt-2"
-              >Featured</span
-            >
           </li>
+          
         </ul>
         <script>
           let posts = [];
@@ -321,16 +318,16 @@
               .map(
                 (p) =>
                   `<li class='bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition border border-blue-100'>
-<a href='site/${
-                    p.slug
-                  }.html' class='text-xl font-bold text-blue-700 underline hover:text-blue-900'>${
+              <a href='/${
+                p.slug
+              }.html' class='text-xl font-bold text-blue-700 underline hover:text-blue-900'>${
                     p.title
                   }</a>
               <div class='text-sm text-gray-600 mt-1'>${p.date}</div>
               <div class='mt-2'>${p.tags
                 .map(
                   (tag) =>
-                    `<a href='site/tag-${tag}.html' class='inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2'>#${tag}</a>`
+                    `<a href='/tag-${tag}.html' class='inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2'>#${tag}</a>`
                 )
                 .join("")}</div>
               <p class='mt-2 text-gray-700'>${p.summary}</p>
