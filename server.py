@@ -159,10 +159,12 @@ LOGIN_FORM = '''
 </html>
 '''
 
+
 @app.route('/admin/logout')
 def admin_logout():
     session.pop('admin_logged_in', None)
     return redirect('/admin/login')
+
 
 @app.route('/admin')
 def admin_page():
@@ -276,6 +278,16 @@ def manage_products():
                 writer.writerows(products)
         return jsonify({'message': 'Product deleted.'})
     
+# Generic route for individual blog posts, e.g., /dropshipping-tips.html
+@app.route('/<string:slug>.html')
+def serve_blog_post(slug):
+    return send_from_directory(os.path.join(os.getcwd(), 'site'), f'{slug}.html')
+
+# The tag_products route was already defined earlier, and this one was incomplete.
+# If you intended to redefine it or add new logic, ensure it's correctly placed and has a body.
+# For now, I'm assuming the earlier definition is the one you want to keep.
+# If this was a duplicate or an accidental addition, it can be removed.
+
     # Ensure the Flask app runs when this script is executed directly
 if __name__ == "__main__":
     print("Starting Flask server on http://127.0.0.1:5000 ...")

@@ -1,72 +1,139 @@
 <!DOCTYPE html>
-<html lang="en" class="overflow-x-hidden">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2025 Trending Products for Dropshipping</title>
-    <meta
-      name="description"
-      content="Discover the hottest products to sell in 2025, including smart gadgets, eco-friendly items, and more. Expert dropshipping tips and product ideas!"
-    />
-    <meta
-      name="keywords"
-      content="dropshipping 2025, trending products, best dropshipping products, smart gadgets, eco-friendly products, wearable tech, portable audio, pet accessories, dropshipping tips, ecommerce trends 2025"
-    />
-    <meta
-      property="og:title"
-      content="2025 Trending Products for Dropshipping"
-    />
-    <meta
-      property="og:description"
-      content="Discover the hottest products to sell in 2025, including smart gadgets, eco-friendly items, and more. Expert dropshipping tips and product ideas!"
-    />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:url"
-      content="https://yourdomain.com/blog/2025-trending-products"
-    />
-    <meta
-      property="og:image"
-      content="https://yourdomain.com/images/blog-2025-trending.png"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="2025 Trending Products for Dropshipping"
-    />
-    <meta
-      name="twitter:description"
-      content="Discover the hottest products to sell in 2025, including smart gadgets, eco-friendly items, and more. Expert dropshipping tips and product ideas!"
-    />
-    <meta
-      name="twitter:image"
-      content="https://yourdomain.com/images/blog-2025-trending.png"
-    />
+    <title>2025 Trending Products for Dropshipping - Your Dropshipping Store</title>
+    <meta name="description" content="Unveil the hottest dropshipping products for 2025: smart home gadgets, eco-friendly items, advanced wearable tech, high-fidelity audio, and innovative pet accessories. Plus, get expert tips for e-commerce success." />
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <link
-      rel="canonical"
-      href="https://yourdomain.com/blog/2025-trending-products"
-    />
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <style>
+      /* Remove all inline styles and use Tailwind classes only */
+    </style>
   </head>
-  <body
-    class="bg-gray-50 font-sans min-h-screen flex flex-col overflow-x-hidden"
-  >
-    <header class="bg-blue-600 p-6 text-white text-center" role="banner">
-      <img
-        src="/static/blog_header.jpg"
-        alt="SwiftCart Global Store Blog Header"
-        class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]"
-      />
-      <h1 class="text-3xl font-bold" tabindex="0">
-        2025 Trending Products for Dropshipping
-      </h1>
-      <nav class="mt-2" aria-label="Main Navigation">
+  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+    <header class="relative bg-blue-600 text-white text-center" role="banner">
+      <div class="relative w-full">
+        <img
+          src="/static/blog_header.jpg"
+          alt="SwiftCart Global Store Blog Header"
+          class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]"
+        />
+        <div
+          class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 px-2 py-4"
+        >
+          <h1
+            class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2"
+            tabindex="0"
+          >
+            2025 Trending Products for Dropshipping
+          </h1>
+        </div>
+        <!-- Mobile Nav Icon -->
+        <button
+          id="navToggle"
+          class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded"
+          aria-label="Open navigation menu"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+      <nav
+        id="mainNav"
+        class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10"
+        aria-label="Main Navigation"
+      >
         <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
-        <a href="/blog" class="mx-2 underline" aria-label="Blog">Blog</a>
+        <a href="/blog.html" class="mx-2 underline font-bold" aria-label="Blog"
+          >Blog</a
+        >
+        <a
+          href="/about.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="About"
+          >About</a
+        >
+        <a
+          href="/terms.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Terms of Service"
+          >Terms</a
+        >
+        <a
+          href="/privacy.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Privacy"
+          >Privacy</a
+        >
+        <a
+          href="/contact.html"
+          class="mx-2 underline text-white hover:text-blue-200"
+          aria-label="Contact"
+          >Contact</a
+        >
+        <button
+          id="navClose"
+          class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded hidden"
+          aria-label="Close navigation menu"
+        >
+          <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
       </nav>
+      <script>
+        const navToggle = document.getElementById("navToggle");
+        const mainNav = document.getElementById("mainNav");
+        const navClose = document.getElementById("navClose");
+        function openNav() {
+          mainNav.classList.add("h-72", "py-6", "bg-blue-800");
+          navClose.classList.remove("hidden");
+        }
+        function closeNav() {
+          mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
+          navClose.classList.add("hidden");
+        }
+        navToggle.addEventListener("click", openNav);
+        navClose.addEventListener("click", closeNav);
+        // Close nav on link click (mobile)
+        mainNav
+          .querySelectorAll("a")
+          .forEach((a) => a.addEventListener("click", closeNav));
+        // On resize, reset nav for desktop
+        window.addEventListener("resize", () => {
+          if (window.innerWidth >= 640) {
+            mainNav.classList.remove("h-72", "py-6", "bg-blue-800");
+            navClose.classList.add("hidden");
+          } else {
+            closeNav();
+          }
+        });
+      </script>
     </header>
     <main
       class="flex-1 flex flex-col items-center justify-start p-4"
@@ -76,9 +143,6 @@
         class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8"
         aria-labelledby="main-title"
       >
-        <h2 id="main-title" class="text-2xl font-semibold mb-4">
-          Unveiling the Hottest Dropshipping Products for 2025
-        </h2>
         <div class="flex items-center mb-4">
           <img
             src="/images/author-jane.png"
@@ -86,300 +150,217 @@
             class="w-10 h-10 rounded-full mr-2"
           />
           <span class="text-sm text-gray-700"
-            >By <strong>Jane Smith</strong> |
-            <time datetime="2025-04-15" class="text-gray-500"
-              >April 15, 2025</time
+            >By
+            <a href="/author-jane-smith.html" class="underline"
+              >Jane Smith</a
+            >
+            |
+            <span class="text-gray-500"
+              >April 15, 2025</span
             ></span
           >
         </div>
-
-        <p class="mt-4 mb-4">
-          The dropshipping landscape is constantly evolving, and 2025 is shaping
-          up to be an exciting year packed with new opportunities. Staying ahead
-          of the curve means identifying and capitalizing on emerging product
-          trends. Here are some of the top trending product categories you
-          should consider adding to your online store to maximize your sales and
-          appeal to modern consumers:
-        </p>
-
-        <h3 class="text-xl font-semibold mt-6 mb-3">
-          Top Trending Product Categories for 2025
-        </h3>
-
-        <ul class="list-disc pl-6 mb-4 space-y-3">
-          <li>
-            <strong>Smart Home Gadgets:</strong> Convenience, security, and
-            energy efficiency continue to drive demand.
-            <ul class="list-circle pl-6 mt-1 text-gray-700">
-              <li>
-                Examples: AI-powered voice assistants, smart lighting systems
-                (beyond bulbs, think strips and panels), robotic vacuum cleaners
-                with advanced mapping, smart thermostats, and comprehensive home
-                security kits (doorbell cameras, sensors).
-              </li>
-              <li>
-                <em>Why it's trending:</em> Increasing adoption of IoT
-                technology and desire for automated, connected living.
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Eco-Friendly & Sustainable Products:</strong> Consumer
-            consciousness is at an all-time high.
-            <ul class="list-circle pl-6 mt-1 text-gray-700">
-              <li>
-                Examples: Reusable shopping and produce bags, biodegradable
-                phone cases, bamboo toothbrushes, solar-powered chargers and
-                power banks, water-saving showerheads, and ethically sourced
-                home goods.
-              </li>
-              <li>
-                <em>Why it's trending:</em> Growing awareness of environmental
-                impact and a shift towards sustainable living.
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Advanced Wearable Tech:</strong> Beyond basic fitness
-            tracking.
-            <ul class="list-circle pl-6 mt-1 text-gray-700">
-              <li>
-                Examples: Smartwatches with advanced health monitoring (ECG,
-                blood oxygen), smart rings, AR glasses (early adoption phase),
-                and specialized fitness trackers for niche sports.
-              </li>
-              <li>
-                <em>Why it's trending:</em> Focus on personal health, wellness,
-                and seamless integration of technology into daily life.
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>High-Fidelity Portable Audio:</strong> Immersive sound
-            experiences on the go.
-            <ul class="list-circle pl-6 mt-1 text-gray-700">
-              <li>
-                Examples: True wireless earbuds with active noise cancellation
-                (ANC) and long battery life, portable Bluetooth speakers with
-                enhanced bass and durability, and over-ear noise-cancelling
-                headphones for travel and focus.
-              </li>
-              <li>
-                <em>Why it's trending:</em> Demand for high-quality audio for
-                music, podcasts, and calls in various environments.
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Innovative Pet Accessories:</strong> Catering to the "pet
-            parent" generation.
-            <ul class="list-circle pl-6 mt-1 text-gray-700">
-              <li>
-                Examples: Smart pet feeders with portion control and cameras,
-                GPS pet trackers, interactive puzzle toys, orthopedic pet beds,
-                and stylish, durable pet apparel.
-              </li>
-              <li>
-                <em>Why it's trending:</em> Increased spending on pets and the
-                desire to provide them with comfort, safety, and entertainment
-                using technology.
-              </li>
-            </ul>
-          </li>
-        </ul>
-
-        <h3 class="text-xl font-semibold mt-6 mb-3">
-          Expert Dropshipping Tips for Success in 2025
-        </h3>
-        <p class="mb-4">
-          Identifying trending products is just the first step. To truly succeed
-          in the competitive dropshipping market of 2025, consider these expert
-          tips:
-        </p>
-        <ul class="list-disc pl-6 mb-4 space-y-2">
-          <li>
-            <strong>Thorough Supplier Vetting:</strong> Don't just look at
-            price. Prioritize suppliers known for consistent product quality,
-            reliable and
-            <a
-              href="/blog/fast-shipping.html"
-              class="text-blue-600 underline hover:text-blue-800"
-              >fast shipping</a
-            >, and good communication. Request samples before committing.
-          </li>
-          <li>
-            <strong>Focus on High-Quality Product Media:</strong> Invest in
-            excellent photos and videos for your product listings. Show the
-            products in use and highlight their benefits. User-generated content
-            can also be very powerful.
-          </li>
-          <li>
-            <strong>Craft Compelling Product Descriptions:</strong> Go beyond
-            generic descriptions. Focus on the value proposition, solve customer
-            pain points, and use SEO-friendly language.
-          </li>
-          <li>
-            <strong>Leverage Video Marketing:</strong> Short-form video content
-            (TikTok, Instagram Reels, YouTube Shorts) is crucial for showcasing
-            trending products and driving engagement.
-          </li>
-          <li>
-            <strong>Offer Exceptional Customer Service:</strong> Quick response
-            times, clear communication about shipping, and hassle-free returns
-            can differentiate your store. Read our
-            <a
-              href="/blog/dropshipping-tips.html"
-              class="text-blue-600 underline hover:text-blue-800"
-              >top dropshipping tips for beginners</a
-            >
-            for more on this.
-          </li>
-          <li>
-            <strong>Stay Agile and Adapt:</strong> Trends can change quickly.
-            Continuously monitor the market, analyze your sales data, and be
-            prepared to pivot your product offerings.
-          </li>
-        </ul>
-
-        <div class="mt-6 mb-4 p-4 bg-blue-50 border-l-4 border-blue-500">
-          <p class="font-semibold text-blue-700">
-            Ready to Dominate Dropshipping in 2025?
-          </p>
-          <p class="text-gray-700 mt-1">
-            Subscribe to our newsletter for exclusive insights, new product
-            alerts, and advanced marketing strategies delivered straight to your
-            inbox!
-          </p>
-          <form class="mt-3 flex">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              class="p-2 border rounded-l w-full"
-              required
-            />
-            <button
-              type="submit"
-              class="bg-blue-600 text-white py-2 px-4 rounded-r hover:bg-blue-700"
-            >
-              Subscribe
-            </button>
-          </form>
+        <div class="mb-4">
+          
+          <a
+            href="/tag-trending.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#trending</a
+          >
+          
+          <a
+            href="/tag-products.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#products</a
+          >
+          
+          <a
+            href="/tag-2025.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#2025</a
+          >
+          
+          <a
+            href="/tag-dropshipping.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#dropshipping</a
+          >
+          
+          <a
+            href="/tag-smart home.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#smart home</a
+          >
+          
+          <a
+            href="/tag-eco-friendly.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#eco-friendly</a
+          >
+          
+          <a
+            href="/tag-wearable tech.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#wearable tech</a
+          >
+          
+          <a
+            href="/tag-portable audio.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#portable audio</a
+          >
+          
+          <a
+            href="/tag-pet accessories.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#pet accessories</a
+          >
+          
+          <a
+            href="/tag-e-commerce tips.html"
+            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2"
+            >#e-commerce tips</a
+          >
+           
+          <span
+            class="inline-block bg-yellow-200 text-yellow-800 text-xs px-2 py-1 rounded ml-2"
+            >Featured</span
+          >
+          
         </div>
+        <div class="prose max-w-none mb-8"><p>The dropshipping landscape is constantly evolving, and 2025 is shaping up to be an exciting year packed with new opportunities. Staying ahead of the curve means identifying and capitalizing on emerging product trends. Here are some of the top trending product categories you should consider adding to your online store to maximize your sales and appeal to modern consumers:</p>
+<h3>Top Trending Product Categories for 2025</h3>
+<ul>
+<li>
+<p><strong>Smart Home Gadgets:</strong> Convenience, security, and energy efficiency continue to drive demand.</p>
+</li>
+<li>
+<p><em>Examples:</em> AI-powered voice assistants, smart lighting systems (beyond bulbs, think strips and panels), robotic vacuum cleaners with advanced mapping, smart thermostats, and comprehensive home security kits (doorbell cameras, sensors).</p>
+</li>
+<li>
+<p><em>Why it's trending:</em> Increasing adoption of IoT technology and desire for automated, connected living.</p>
+</li>
+<li>
+<p><strong>Eco-Friendly &amp; Sustainable Products:</strong> Consumer consciousness is at an all-time high.</p>
+</li>
+<li>
+<p><em>Examples:</em> Reusable shopping and produce bags, biodegradable phone cases, bamboo toothbrushes, solar-powered chargers and power banks, water-saving showerheads, and ethically sourced home goods.</p>
+</li>
+<li>
+<p><em>Why it's trending:</em> Growing awareness of environmental impact and a shift towards sustainable living.</p>
+</li>
+<li>
+<p><strong>Advanced Wearable Tech:</strong> Beyond basic fitness tracking.</p>
+</li>
+<li>
+<p><em>Examples:</em> Smartwatches with advanced health monitoring (ECG, blood oxygen), smart rings, AR glasses (early adoption phase), and specialized fitness trackers for niche sports.</p>
+</li>
+<li>
+<p><em>Why it's trending:</em> Focus on personal health, wellness, and seamless integration of technology into daily life.</p>
+</li>
+<li>
+<p><strong>High-Fidelity Portable Audio:</strong> Immersive sound experiences on the go.</p>
+</li>
+<li>
+<p><em>Examples:</em> True wireless earbuds with active noise cancellation (ANC) and long battery life, portable Bluetooth speakers with enhanced bass and durability, and over-ear noise-cancelling headphones for travel and focus.</p>
+</li>
+<li>
+<p><em>Why it's trending:</em> Demand for high-quality audio for music, podcasts, and calls in various environments.</p>
+</li>
+<li>
+<p><strong>Innovative Pet Accessories:</strong> Catering to the "pet parent" generation.</p>
+</li>
+<li><em>Examples:</em> Smart pet feeders with portion control and cameras, GPS pet trackers, interactive puzzle toys, orthopedic pet beds, and stylish, durable pet apparel.</li>
+<li><em>Why it's trending:</em> Increased spending on pets and the desire to provide them with comfort, safety, and entertainment using technology.</li>
+</ul>
+<h3>Expert Dropshipping Tips for Success in 2025</h3>
+<p>Identifying trending products is just the first step. To truly succeed in the competitive dropshipping market of 2025, consider these expert tips:</p>
+<ul>
+<li><strong>Thorough Supplier Vetting:</strong> Don't just look at price. Prioritize suppliers known for consistent product quality, reliable and <a href="/blog/fast-shipping.html">fast shipping</a>, and good communication. Request samples before committing.</li>
+<li><strong>Focus on High-Quality Product Media:</strong> Invest in excellent photos and videos for your product listings. Show the products in use and highlight their benefits. User-generated content can also be very powerful.</li>
+<li><strong>Craft Compelling Product Descriptions:</strong> Go beyond generic descriptions. Focus on the value proposition, solve customer pain points, and use SEO-friendly language.</li>
+<li><strong>Leverage Video Marketing:</strong> Short-form video content (TikTok, Instagram Reels, YouTube Shorts) is crucial for showcasing trending products and driving engagement.</li>
+<li><strong>Offer Exceptional Customer Service:</strong> Quick response times, clear communication about shipping, and hassle-free returns can differentiate your store. Read our <a href="/blog/dropshipping-tips.html">top dropshipping tips for beginners</a> for more on this.</li>
+<li><strong>Stay Agile and Adapt:</strong> Trends can change quickly. Continuously monitor the market, analyze your sales data, and be prepared to pivot your product offerings.</li>
+</ul></div>
 
-        <div class="mb-4 mt-6">
-          <span
-            class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-2 mb-2"
-            >#trending</span
-          >
-          <span
-            class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded mr-2 mb-2"
-            >#products</span
-          >
-          <span
-            class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mr-2 mb-2"
-            >#2025</span
-          >
-          <span
-            class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mr-2 mb-2"
-            >#gadgets</span
-          >
-          <span
-            class="inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded mb-2"
-            >#dropshipping</span
-          >
-        </div>
-
-        <section class="mt-8">
-          <h3 class="text-lg font-semibold mb-2">Comments</h3>
-          <form id="commentForm" class="mb-4">
-            <input
-              type="text"
-              id="commentName"
-              placeholder="Your name"
-              class="p-2 border rounded w-full mb-2"
-              required
-            />
-            <textarea
-              id="commentText"
-              placeholder="Your comment"
-              class="p-2 border rounded w-full mb-2"
-              required
-            ></textarea>
-            <button
-              type="submit"
-              class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
-            >
-              Post Comment
-            </button>
+        <!-- Newsletter Signup Section -->
+        <section
+          class="bg-blue-50 p-6 md:p-8 rounded-lg shadow-inner my-8 border border-blue-200"
+        >
+          <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">
+            Stay Updated!
+          </h2>
+          <p class="text-gray-600 mb-6 text-center">
+            Subscribe to our newsletter to get the latest blog posts, tips, and
+            product updates directly in your inbox.
+          </p>
+          <form action="#" method="POST" class="max-w-md mx-auto">
+            
+            <div class="flex flex-col sm:flex-row gap-2">
+              <label for="newsletter-email" class="sr-only"
+                >Email address</label
+              >
+              <input
+                type="email"
+                id="newsletter-email"
+                name="email"
+                placeholder="Enter your email"
+                required
+                class="flex-grow p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              />
+              <button
+                type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition duration-150"
+              >
+                Subscribe
+              </button>
+            </div>
           </form>
-          <ul id="commentsList" class="space-y-2"></ul>
         </section>
 
-        <a href="/blog" class="text-blue-600 underline">&#8592; Back to Blog</a>
+        <a href="/blog.html" class="text-blue-600 underline"
+          >&#8592; Back to Blog</a
+        >
       </article>
     </main>
     <footer
-      class="bg-blue-600 text-white p-4 text-center mt-auto"
+      class="bg-blue-600 text-white p-6 text-center mt-auto"
       role="contentinfo"
     >
-      &copy; 2025 Your Dropshipping Store. All rights reserved.
+      <div
+        class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4"
+      >
+        <div class="mb-2 sm:mb-0">
+          <span>&copy; 2025 Your Dropshipping Store. All rights reserved.</span>
+        </div>
+        <div class="flex gap-4">
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener"
+            title="Facebook"
+            class="hover:text-yellow-300"
+            >Facebook</a
+          >
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener"
+            title="Twitter"
+            class="hover:text-yellow-300"
+            >Twitter</a
+          >
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener"
+            title="Instagram"
+            class="hover:text-yellow-300"
+            >Instagram</a
+          >
+        </div>
+      </div>
     </footer>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://yourdomain.com/blog/2025-trending-products"
-        },
-        "headline": "Unveiling the Hottest Dropshipping Products for 2025",
-        "description": "Discover the hottest products to sell in 2025, including smart gadgets, eco-friendly items, wearable tech, and more. Expert dropshipping tips and product ideas to boost your e-commerce success.",
-        "image": "https://yourdomain.com/images/blog-2025-trending.png",
-        "author": {
-          "@type": "Person",
-          "name": "Jane Smith"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "Your Dropshipping Store",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://yourdomain.com/images/logo.png"
-          }
-        },
-        "datePublished": "2025-04-15",
-        "dateModified": "2025-04-15"
-      }
-    </script>
-    <script>
-      // Simple localStorage-based comments (demo only)
-      const commentsKey = "blog_comments_2025_trending_products"; // Unique key for this post
-      function renderComments() {
-        const list = document.getElementById("commentsList");
-        const comments = JSON.parse(localStorage.getItem(commentsKey) || "[]");
-        list.innerHTML = comments
-          .map(
-            (c) =>
-              `<li class="border rounded p-2 bg-gray-50"><strong>${c.name}:</strong> ${c.text}</li>`
-          )
-          .join("");
-      }
-      document
-        .getElementById("commentForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const name = document.getElementById("commentName").value.trim();
-          const text = document.getElementById("commentText").value.trim();
-          if (!name || !text) return;
-          const comments = JSON.parse(
-            localStorage.getItem(commentsKey) || "[]"
-          );
-          comments.push({ name, text });
-          localStorage.setItem(commentsKey, JSON.stringify(comments));
-          renderComments();
-          this.reset();
-        });
-      renderComments();
-    </script>
   </body>
 </html>
