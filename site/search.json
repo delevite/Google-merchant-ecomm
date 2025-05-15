@@ -37,6 +37,23 @@
     "date": "2025-03-28"
   },
   {
+    "title": "Level Up Your E-Commerce Game: Essential Tips for Online Store Success",
+    "summary": "Boost your online store's performance with our essential e-commerce tips. Drive traffic, convert visitors, and build a thriving business.",
+    "slug": "ecommerce-tips",
+    "tags": [
+      "ecommerce tips",
+      "online store",
+      "conversion",
+      "marketing",
+      "customer service",
+      "website design",
+      "analytics",
+      "online business"
+    ],
+    "author": "our-ecommerce-team",
+    "date": "2025-04-15"
+  },
+  {
     "title": "How to Optimize Your Store for Fast Shipping",
     "summary": "Speed matters! Learn how to choose products and suppliers, set clear expectations, and automate processes for the fastest delivery times in your dropshipping store.",
     "slug": "fast-shipping",
@@ -51,5 +68,23 @@
     ],
     "author": "john-doe",
     "date": "2025-02-10"
+  },
+  {
+    "title": "The Power of Niche: Finding Untapped Goldmines for Your Dropshipping Store",
+    "summary": "Discover why niche products are key to dropshipping success. Learn how to find profitable niches, target specific audiences, and build a thriving online business.",
+    "slug": "niche-products",
+    "tags": [
+      "niche products",
+      "dropshipping",
+      "ecommerce",
+      "product research",
+      "target audience",
+      "niche marketing",
+      "online business",
+      "profitable niches",
+      "unique products"
+    ],
+    "author": "jane-smith",
+    "date": "2025-03-05"
   }
 ]

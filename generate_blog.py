@@ -71,7 +71,16 @@ def render_site():
 
     # Author pages
     author_tmpl = env.get_template('author.html')
-    for author_id, author in authors.items():
+    for author_id, author_data_from_load in authors.items():
+        # Create a mutable copy to work with, to avoid modifying the original loaded authors dict
+        author = author_data_from_load.copy()
+
+        # Ensure the 'social' key exists in the author dictionary.
+        # If it's not present in the author's MD frontmatter, default it to an empty dictionary.
+        # This makes template access like `author.social.twitter` safer,
+        # as `author.social` will always exist (though it might be empty).
+        author.setdefault('social', {})
+
         author_posts = [p for p in posts if p.get('author') == author_id and p['date_obj'] <= now]
         author_html = author_tmpl.render(author=author, posts=author_posts)
         with open(os.path.join(OUTPUT_DIR, f'author-{author_id}.html'), 'w', encoding='utf-8') as f:

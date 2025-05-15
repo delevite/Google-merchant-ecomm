@@ -232,21 +232,31 @@
               >
               <div class="text-sm text-gray-600 mt-1">
                 <span class="lang-en"
-                  >By
+                  >By {% set author_id = post.author %} {% set author_details =
+                  authors.get(author_id) %}
                   <a
-                    href="/author-{{ post.author }}.html"
+                    href="/author-{{ author_id }}.html"
                     class="underline hover:text-blue-700"
-                    >{{ authors[post.author].name }}</a
+                    >{% if author_details and author_details.name %}{{
+                    author_details.name }}{% elif author_id %}{{ author_id |
+                    replace('-', ' ') | title }}{% else %}Anonymous{% endif
+                    %}</a
                   >
-                  | {{ post.date_obj.strftime('%B %d, %Y') }}</span
+
+                  > | {{ post.date_obj.strftime('%B %d, %Y') }}</span
                 >
                 <span class="lang-zh hidden"
-                  >作者
+                  >作者 {# Ensure author_id and author_details are defined from
+                  above or redefine if needed in a different scope #} {% if not
+                  author_id %}{% set author_id = post.author %}{% endif %} {% if
+                  not author_details %}{% set author_details =
+                  authors.get(author_id) %}{% endif %}
                   <a
-                    href="/author-{{ post.author }}.html"
+                    href="/author-{{ author_id }}.html"
                     class="underline hover:text-blue-700"
-                    >{{ authors[post.author].name_zh or
-                    authors[post.author].name }}</a
+                    >{% if author_details %}{{ author_details.name_zh or
+                    author_details.name }}{% elif author_id %}{{ author_id |
+                    replace('-', ' ') | title }}{% else %}佚名{% endif %}</a
                   >
                   ｜ {{ post.date_obj.strftime('%Y年%m月%d日') }}</span
                 >
