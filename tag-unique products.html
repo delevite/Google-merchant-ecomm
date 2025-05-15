@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>John Doe - Author at Your Dropshipping Store</title>
+    <title>Posts tagged: #unique products - Your Dropshipping Store</title>
     <meta
       name="description"
-      content="Read posts by John Doe, John is a logistics and fulfillment specialist, passionate about helping e-commerce businesses deliver faster and smarter."
+      content="All blog posts tagged with 'unique products' at Your Dropshipping Store."
     />
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
@@ -19,6 +19,23 @@
   </head>
   <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
     <header class="relative bg-blue-600 text-white text-center" role="banner">
+      <!-- Language Toggle (optional, remove if not needed) -->
+      <div class="absolute top-2 right-2 z-30 flex gap-2">
+        <button
+          id="langEn"
+          class="px-3 py-1 rounded bg-white text-blue-700 font-semibold shadow hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          aria-label="Switch to English"
+        >
+          EN
+        </button>
+        <button
+          id="langZh"
+          class="px-3 py-1 rounded bg-white text-blue-700 font-semibold shadow hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          aria-label="切换到中文"
+        >
+          中文
+        </button>
+      </div>
       <div class="relative w-full">
         <img
           src="/static/blog_header.jpg"
@@ -29,14 +46,12 @@
           class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 px-2 py-4"
         >
           <h1
+            id="mainTitle"
             class="text-3xl sm:text-4xl font-bold drop-shadow-lg mb-2"
             tabindex="0"
           >
-            Author: John Doe
+            Posts tagged: #unique products
           </h1>
-          <p class="text-lg sm:text-xl mt-2 drop-shadow-lg" tabindex="0">
-            John is a logistics and fulfillment specialist, passionate about helping e-commerce businesses deliver faster and smarter.
-          </p>
         </div>
         <!-- Mobile Nav Icon -->
         <button
@@ -142,37 +157,55 @@
             closeNav();
           }
         });
+        // Language toggle logic (optional)
+        const langEn = document.getElementById("langEn");
+        const langZh = document.getElementById("langZh");
+        const mainTitle = document.getElementById("mainTitle");
+        function setLang(lang) {
+          document
+            .querySelectorAll(".lang-en")
+            .forEach((el) => el.classList.toggle("hidden", lang !== "en"));
+          document
+            .querySelectorAll(".lang-zh")
+            .forEach((el) => el.classList.toggle("hidden", lang !== "zh"));
+          if (lang === "en") {
+            mainTitle.textContent = "Posts tagged: #unique products";
+          } else {
+            mainTitle.textContent = "标签文章：#unique products";
+          }
+        }
+        langEn && langEn.addEventListener("click", () => setLang("en"));
+        langZh && langZh.addEventListener("click", () => setLang("zh"));
+        setLang("en");
       </script>
     </header>
     <main
       class="flex-1 flex flex-col items-center justify-start p-4"
       role="main"
     >
+      <!-- Product Category Card for tag -->
+      <section class="w-full max-w-2xl mx-auto mb-8">
+        <div
+          class="bg-gradient-to-br from-blue-100 via-green-100 to-yellow-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center"
+        >
+          <div class="text-5xl mb-2">🏷️</div>
+          <h2 class="text-2xl font-bold mb-2">Explore #unique products</h2>
+          <p class="text-gray-700 mb-4">
+            Browse all blog posts and products related to
+            <span class="font-semibold text-blue-700">#unique products</span>.
+            Discover trending items, tips, and more!
+          </p>
+          <a
+            href="/tag-unique products.html"
+            class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-blue-700 transition"
+            >View #unique products Posts</a
+          >
+        </div>
+      </section>
       <section
         class="w-full max-w-3xl bg-white p-8 rounded shadow-md mt-6 mb-8"
       >
-        <div class="flex items-center mb-6">
-          <img
-            src="/images/author-john.png"
-            alt="John Doe"
-            class="w-16 h-16 rounded-full mr-4 !my-0"
-          />
-          <div>
-            <h2 class="text-xl font-semibold">John Doe</h2>
-            <p class="text-gray-700">John is a logistics and fulfillment specialist, passionate about helping e-commerce businesses deliver faster and smarter.</p>
-
-                       <div class="mt-2">
-              <a
-                href="https://twitter.com/johndoe"
-                ...
-              >Twitter</a>
-              <a
-                href="https://linkedin.com/in/johndoe"
-                ...
-              >LinkedIn</a>
-            </div>
-
-        </ul>
+        <ul class="space-y-8"></ul>
       </section>
     </main>
     <footer
@@ -183,7 +216,12 @@
         class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4"
       >
         <div class="mb-2 sm:mb-0">
-          <span>&copy; 2025 Your Dropshipping Store. All rights reserved.</span>
+          <span class="lang-en"
+            >&copy; 2025 Your Dropshipping Store. All rights reserved.</span
+          >
+          <span class="lang-zh hidden"
+            >&copy; 2025 您的跨境电商店铺。保留所有权利。</span
+          >
         </div>
         <div class="flex gap-4">
           <a
