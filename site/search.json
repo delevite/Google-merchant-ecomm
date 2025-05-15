@@ -19,6 +19,23 @@
     "date": "2025-04-15"
   },
   {
+    "title": "The AI Revolution in E-commerce: What to Expect in 2025",
+    "summary": "Explore how Artificial Intelligence is set to transform e-commerce in 2025, from personalized shopping experiences and AI-powered customer service to supply chain optimization. Discover tools and strategies to leverage AI for your online store.",
+    "slug": "ai-ecommerce-2025",
+    "tags": [
+      "AI in ecommerce",
+      "ecommerce trends",
+      2025,
+      "artificial intelligence",
+      "future of ecommerce",
+      "personalization",
+      "customer service automation",
+      "supply chain AI"
+    ],
+    "author": "our-ecommerce-team",
+    "date": "2025-05-10"
+  },
+  {
     "title": "Top Dropshipping Tips for Beginners",
     "summary": "Get started with dropshipping the right way. Learn about supplier selection, marketing, customer service, niche products, and analytics from the experts!",
     "slug": "dropshipping-tips",
@@ -86,5 +103,20 @@
     ],
     "author": "jane-smith",
     "date": "2025-03-05"
+  },
+  {
+    "title": "Sustainable E-commerce in 2025: Building an Eco-Conscious Online Store",
+    "summary": "Discover how to build a sustainable and ethical e-commerce business in 2025. Learn about eco-friendly practices, ethical sourcing, packaging, and meeting conscious consumer demand.",
+    "slug": "sustainable-ecommerce-2025",
+    "tags": [
+      "sustainable ecommerce",
+      "ethical sourcing",
+      "eco-friendly packaging",
+      "2025 trends",
+      "conscious consumer",
+      "green business"
+    ],
+    "author": "our-ecommerce-team",
+    "date": "2025-05-15"
   }
 ]
