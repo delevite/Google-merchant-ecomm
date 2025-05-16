@@ -17,7 +17,7 @@ tags:
   ]
 featured: true
 summary: "Unveil the hottest dropshipping products for 2025: smart home gadgets, eco-friendly items, advanced wearable tech, high-fidelity audio, and innovative pet accessories. Plus, get expert tips for e-commerce success."
-image: /images/blog-2025-trending.png
+image: /static/blog-2025-trending.png
 ---
 
 The dropshipping landscape is constantly evolving, and 2025 is shaping up to be an exciting year packed with new opportunities. Staying ahead of the curve means identifying and capitalizing on emerging product trends. Here are some of the top trending product categories you should consider adding to your online store to maximize your sales and appeal to modern consumers:

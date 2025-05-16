@@ -14,7 +14,7 @@ tags:
   ]
 featured: false
 summary: "Speed matters! Learn how to choose products and suppliers, set clear expectations, and automate processes for the fastest delivery times in your dropshipping store."
-image: /images/blog-fast-shipping.png
+image: /static/blog-fast-shipping.png
 ---
 
 In today's fast-paced e-commerce world, customers don't just want great products; they expect them to arrive quickly. Fast shipping is no longer a luxury—it's a critical factor influencing customer satisfaction, conversion rates, and repeat business. For dropshippers, optimizing for speed can be a significant competitive advantage. Here’s a comprehensive guide on how to make your dropshipping store stand out with swift delivery.

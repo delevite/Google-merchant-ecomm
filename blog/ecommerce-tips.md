@@ -15,7 +15,7 @@ tags:
   ]
 featured: false # Or true if you want it featured
 summary: "Boost your online store's performance with our essential e-commerce tips. Drive traffic, convert visitors, and build a thriving business."
-image: /images/blog-ecommerce-tips.png # Ensure this image exists
+image: /static/blog-ecommerce-tips.png # Ensure this image exists
 ---
 
 Running a successful e-commerce store requires more than just listing products online. It demands a strategic approach, constant adaptation, and a relentless focus on the customer experience. Whether you're just starting or looking to optimize an existing business, these essential tips will help you level up your e-commerce game and drive sustainable growth.

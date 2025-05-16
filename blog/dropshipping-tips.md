@@ -16,7 +16,7 @@ tags:
   ]
 featured: true
 summary: "Get started with dropshipping the right way. Learn about supplier selection, marketing, customer service, niche products, and analytics from the experts!"
-image: /images/blog-tips.png
+image: /static/blog-tips.png
 ---
 
 Starting a dropshipping business is an exciting venture, offering a low-barrier entry into the world of e-commerce. However, navigating the initial steps can feel overwhelming. To set you on the path to success, we've compiled these essential tips covering everything from finding the right products to keeping your customers happy.

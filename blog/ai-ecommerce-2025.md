@@ -16,7 +16,7 @@ tags:
   ]
 summary: "Explore how Artificial Intelligence is set to transform e-commerce in 2025, from personalized shopping experiences and AI-powered customer service to supply chain optimization. Discover tools and strategies to leverage AI for your online store."
 summary_zh: "探索人工智能如何在2025年改变电子商务，从个性化购物体验、AI驱动的客户服务到供应链优化。发现利用AI为您的在线商店赋能的工具和策略。"
-image: /images/blog-ai-ecommerce-2025.png
+image: /static/blog-ai-ecommerce-2025.png
 featured: true
 ---
 
@@ -44,7 +44,7 @@ Generic shopping experiences are becoming a relic of the past. In 2025, AI will 
 
 <!-- Product Recommendation 1: PersonalizePro AI -->
 <div class="product-recommendation my-6 p-4 border rounded-lg shadow-md bg-gray-50 flex flex-col sm:flex-row items-center gap-4">
-  <img src="/static/products/personalizepro-ai.jpg" alt="PersonalizePro AI Recommendation Engine" class="w-32 h-32 object-cover rounded-md sm:mr-4">
+  <img src="/static/personalizepro-ai.jpg" alt="PersonalizePro AI Recommendation Engine" class="w-32 h-32 object-cover rounded-md sm:mr-4">
   <div>
     <h4 class="text-xl font-semibold text-blue-700">
         <span class="lang-en">Product Spotlight: PersonalizePro AI</span>
@@ -76,7 +76,7 @@ Customer expectations for instant and effective support are higher than ever. AI
 
 <!-- Product Recommendation 2: ChatGenius AI -->
 <div class="product-recommendation my-6 p-4 border rounded-lg shadow-md bg-gray-50 flex flex-col sm:flex-row items-center gap-4">
-  <img src="/static/products/chatgenius-ai.jpg" alt="ChatGenius AI Customer Service Bot" class="w-32 h-32 object-cover rounded-md sm:mr-4">
+  <img src="/static/chatgenius-ai.jpg" alt="ChatGenius AI Customer Service Bot" class="w-32 h-32 object-cover rounded-md sm:mr-4">
   <div>
     <h4 class="text-xl font-semibold text-blue-700">
         <span class="lang-en">Product Spotlight: ChatGenius AI</span>
@@ -123,7 +123,7 @@ Efficiency in the supply chain is critical for profitability and customer satisf
 
 <!-- Product Recommendation 3: LogiOptimize AI -->
 <div class="product-recommendation my-6 p-4 border rounded-lg shadow-md bg-gray-50 flex flex-col sm:flex-row items-center gap-4">
-  <img src="/static/products/logioptimize-ai.jpg" alt="LogiOptimize AI Supply Chain Optimizer" class="w-32 h-32 object-cover rounded-md sm:mr-4">
+  <img src="/static/logioptimize-ai.jpg" alt="LogiOptimize AI Supply Chain Optimizer" class="w-32 h-32 object-cover rounded-md sm:mr-4">
   <div>
     <h4 class="text-xl font-semibold text-blue-700">
         <span class="lang-en">Product Spotlight: LogiOptimize AI</span>
