@@ -1,7 +1,7 @@
 ---
 title: "The Power of Niche: Finding Untapped Goldmines for Your Dropshipping Store"
 date: 2025-03-05
-author: jane-smith
+author: our-ecommerce-team
 tags:
   [
     niche products,

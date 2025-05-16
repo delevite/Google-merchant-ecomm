@@ -1,7 +1,7 @@
 ---
 title: "How to Optimize Your Store for Fast Shipping"
 date: 2025-02-10
-author: john-doe
+author: our-ecommerce-team
 tags:
   [
     shipping,

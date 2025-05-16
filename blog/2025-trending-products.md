@@ -1,7 +1,7 @@
 ---
 title: "2025 Trending Products for Dropshipping"
 date: 2025-04-15
-author: jane-smith
+author: our-ecommerce-team
 tags:
   [
     trending,

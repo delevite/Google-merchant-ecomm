@@ -1,7 +1,7 @@
 ---
 title: "Top Dropshipping Tips for Beginners"
 date: 2025-03-28
-author: jane-smith
+author: our-ecommerce-team
 tags:
   [
     dropshipping,
