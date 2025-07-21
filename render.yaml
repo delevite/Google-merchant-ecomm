@@ -1,0 +1,54 @@
+# render.yaml
+services:
+  - type: web
+    name: dropship-ng-web
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT server:app
+    envVars:
+      - key: FLASK_SECRET_KEY # IMPORTANT: Generate a strong, unique key for production
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: your_admin_username
+      - key: ADMIN_PASSWORD
+        value: your_admin_password
+      - key: PAYSTACK_PUBLIC_KEY
+        value: pk_live_xxxxxxxxxxxxx
+      - key: PAYSTACK_SECRET_KEY
+        value: sk_live_xxxxxxxxxxxxx
+      - key: SMTP_USERNAME
+        value: your_smtp_email@gmail.com
+      - key: SMTP_PASSWORD
+        value: your_smtp_app_password
+      - key: SHOP_EMAIL
+        value: no-reply@yourdomain.com
+      - key: SHOP_EMAIL_PASS
+        value: your_shop_email_app_password
+      - key: TELEGRAM_TOKEN
+        value: your_telegram_bot_token
+      - key: TELEGRAM_CHAT_ID
+        value: your_telegram_chat_id
+      - key: GEMINI_API_KEY
+        value: your_gemini_api_key
+      - key: EXCHANGE_RATE_API
+        value: your_exchange_rate_api_key
+      - key: BREVO_API_KEY
+        value: your_brevo_api_key
+      # Add Firebase keys if needed for server-side push notification sending
+      # - key: FIREBASE_API_KEY
+      #   value: your_firebase_api_key
+      # ... other firebase keys
+    autoDeploy: true
+    pullRequestPreviewsEnabled: true
+    healthCheckPath: /health # Add a simple health check route in server.py if needed
+
+  - type: cron
+    name: inventory-sync-cron
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python sync_inventory.py
+    schedule: "0 2 * * *" # Runs daily at 2:00 AM UTC
+    envVars:
+      - key: CJ_API_TOKEN # Use CJ_API_TOKEN for sync_inventory.py
+        value: your_cj_api_token
+      # Ensure other necessary env vars for sync_inventory.py are here if it needs them

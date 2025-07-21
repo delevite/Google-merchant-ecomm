@@ -390,7 +390,7 @@
 
       <div
         id="products"
-        class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full px-1 sm:px-0"
+        class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full px-1 sm:px-0"
         aria-live="polite"
       ></div>
       <div
@@ -621,32 +621,57 @@
         pagination.scrollLeft = 0;
       }
 
-      function showModal(product) {
-        modalImage.src = product.image;
-        // Bilingual modal title
-        modalTitle.innerHTML = `<span class='lang-en'>${
-          product.title_optimized || product.title || ""
-        }</span><span class='lang-zh hidden'>${
-          product.title_zh || product.title || ""
-        }</span>`;
-        modalPrice.textContent = `$${product.price}`;
-        modalLink.href = product.url;
-        // Bilingual modal description
-        modalDescription.innerHTML = `<span class='lang-en'>${removeChinese(
-          product.description || ""
-        )}</span><span class='lang-zh hidden'>${
-          product.description_zh || ""
-        }</span>`;
-        // Add brand, rating, and stock to modal
-        let details = "";
-        if (product.brand)
-          details += `Brand: <span class="font-semibold">${product.brand}</span><br>`;
-        if (product.rating)
-          details += `Rating: <span class="font-semibold">${product.rating} ⭐</span><br>`;
-        if (product.stock)
-          details += `Stock: <span class="font-semibold">${product.stock}</span>`;
-        document.getElementById("modalExtra").innerHTML = details;
-        modal.classList.remove("hidden");
+      async function showModal(product) {
+        // Fetch full product details from the new /product endpoint
+        try {
+          const response = await fetch(`/product?title=${encodeURIComponent(product.title)}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch product details.');
+          }
+          const fullProduct = await response.json();
+
+          modalImage.src = fullProduct.image;
+          // Bilingual modal title
+          document.getElementById("modalTitleEn").textContent = fullProduct.title_optimized || fullProduct.title || "";
+          document.getElementById("modalTitleZh").textContent = fullProduct.title_zh || fullProduct.title || "";
+          
+          document.getElementById("modalPriceEn").textContent = `${fullProduct.price}`;
+          document.getElementById("modalPriceZh").textContent = `${fullProduct.price}`; // Assuming price is same for both languages
+          
+          document.getElementById("modalLinkEn").href = fullProduct.url;
+          document.getElementById("modalLinkZh").href = fullProduct.url;
+
+          // Bilingual modal description
+          document.getElementById("modalDescriptionEn").innerHTML = `<span class='lang-en'>${removeChinese(
+            fullProduct.description || ""
+          )}</span>`;
+          document.getElementById("modalDescriptionZh").innerHTML = `<span class='lang-zh hidden'>${
+            fullProduct.description_zh || ""
+          }</span>`;
+
+          // Add brand, rating, and stock to modal
+          let detailsEn = "";
+          let detailsZh = "";
+          if (fullProduct.brand) {
+            detailsEn += `Brand: <span class="font-semibold">${fullProduct.brand}</span><br>`;
+            detailsZh += `品牌: <span class="font-semibold">${fullProduct.brand}</span><br>`;
+          }
+          if (fullProduct.rating) {
+            detailsEn += `Rating: <span class="font-semibold">${fullProduct.rating} ⭐</span><br>`;
+            detailsZh += `评分: <span class="font-semibold">${fullProduct.rating} ⭐</span><br>`;
+          }
+          if (fullProduct.stock) {
+            detailsEn += `Stock: <span class="font-semibold">${fullProduct.stock}</span>`;
+            detailsZh += `库存: <span class="font-semibold">${fullProduct.stock}</span>`;
+          }
+          document.getElementById("modalExtraEn").innerHTML = detailsEn;
+          document.getElementById("modalExtraZh").innerHTML = detailsZh;
+
+          modal.classList.remove("hidden");
+        } catch (error) {
+          console.error("Error fetching product details:", error);
+          showError("Could not load product details. Please try again.");
+        }
       }
 
       closeModal.addEventListener("click", () => {
