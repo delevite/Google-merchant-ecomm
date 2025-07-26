@@ -1,46 +1,32 @@
 
  
-import requests
 from flask import Flask, send_from_directory, make_response, jsonify, request, redirect, session, render_template_string
 from flask_cors import CORS
 import os
 import csv
 import json
 from datetime import datetime
-from werkzeug.utils import secure_filename, generate_password_hash, check_password_hash
-import hmac
-import hashlib
-from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash
+from dotenv import load_dotenv
+import google.generativeai as genai
+import uuid
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
 
 
 app = Flask(__name__)
 CORS(app)
 app.secret_key = os.environ.get('ADMIN_SECRET_KEY', 'changeme')  # Set a strong secret in production
 
-# Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+# Load environment variables from a .env file
+load_dotenv()
 
-# User Model
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    def __repr__(self):
-        return f'<User {self.email}>'
-
-# Create database tables if they don't exist
-with app.app_context():
-    db.create_all()
+# --- Gemini API Setup ---
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+if not os.getenv("GEMINI_API_KEY"):
+    print("Warning: GEMINI_API_KEY environment variable not set.")
 
 # Serve static legal/info pages so nav links work locally
 @app.route('/about.html')
@@ -77,7 +63,8 @@ def tag_products():
 def serve_tag_page_generic(tag_slug):
     return send_from_directory(os.path.join(os.getcwd(), 'site'), f'tag-{tag_slug}.html')
 
-
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'password')
 
 # Serve static files from the 'site' directory if requested with /site/ prefix
 # This will handle requests like /site/tag-trending.html
@@ -154,79 +141,15 @@ def get_products():
                 filtered.append(p)
     return jsonify(filtered)
 
-@app.route('/product')
-def get_product_detail():
-    title = request.args.get('title')
-    if not title:
-        return jsonify({'error': 'Product title is required'}), 400
-
-    products = fetch_cj_products()
-    for product in products:
-        if product.get('title') == title:
-            return jsonify(product)
-    
-    return jsonify({'error': 'Product not found'}), 404
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
     if request.method == 'POST':
-        email = request.form.get('email')
+        username = request.form.get('username')
         password = request.form.get('password')
-        
-        if not email or not password:
-            return render_template_string('<p class="text-red-600">Email and password are required</p>' + SIGNUP_FORM)
-
-        existing_user = User.query.filter_by(email=email).first()
-        if existing_user:
-            return render_template_string('<p class="text-red-600">Email already registered</p>' + SIGNUP_FORM)
-
-        new_user = User(email=email)
-        new_user.set_password(password)
-        db.session.add(new_user)
-        db.session.commit()
-        
-        return redirect('/login')
-    return render_template_string(SIGNUP_FORM)
-
-SIGNUP_FORM = '''
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign Up</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-</head>
-<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
-  <main class="flex-1 flex flex-col items-center justify-center">
-    <form method="POST" class="bg-white p-8 rounded shadow-md w-full max-w-md mt-8">
-      <h2 class="text-xl font-bold mb-4">Sign Up</h2>
-      <input type="email" name="email" placeholder="Email" class="mb-4 p-2 border rounded w-full" required />
-      <input type="password" name="password" placeholder="Password" class="mb-6 p-2 border rounded w-full" required />
-      <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 w-full">Sign Up</button>
-      <p class="mt-4 text-center">Already have an account? <a href="/login" class="text-blue-600 hover:underline">Login here</a></p>
-    </form>
-  </main>
-</body>
-</html>
-'''
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        
-        user = User.query.filter_by(email=email).first()
-        
-        if user and user.check_password(password):
-            session['user_id'] = user.id
-            session['is_admin'] = user.is_admin
-            if user.is_admin:
-                return redirect('/admin')
-            else:
-                return redirect('/dashboard') # Redirect to a user dashboard
-        return render_template_string('<p class="text-red-600">Invalid email or password</p>' + LOGIN_FORM)
+        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+            session['admin_logged_in'] = True
+            return redirect('/admin')
+        return render_template_string('<p class="text-red-600">Invalid credentials</p>' + LOGIN_FORM)
     return render_template_string(LOGIN_FORM)
 
 LOGIN_FORM = '''
@@ -235,43 +158,32 @@ LOGIN_FORM = '''
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login</title>
+  <title>Admin Login</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
   <main class="flex-1 flex flex-col items-center justify-center">
     <form method="POST" class="bg-white p-8 rounded shadow-md w-full max-w-md mt-8">
-      <h2 class="text-xl font-bold mb-4">Login</h2>
-      <input type="email" name="email" placeholder="Email" class="mb-4 p-2 border rounded w-full" required />
+      <h2 class="text-xl font-bold mb-4">Admin Login</h2>
+      <input type="text" name="username" placeholder="Username" class="mb-4 p-2 border rounded w-full" required />
       <input type="password" name="password" placeholder="Password" class="mb-6 p-2 border rounded w-full" required />
       <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 w-full">Login</button>
-      <p class="mt-4 text-center">Don't have an account? <a href="/signup" class="text-blue-600 hover:underline">Sign Up here</a></p>
     </form>
   </main>
 </body>
 </html>
 '''
 
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    session.pop('is_admin', None)
-    return redirect('/login')
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin_logged_in', None)
+    return redirect('/admin/login')
 
 @app.route('/admin')
 def admin_page():
-    if not session.get('is_admin'):
-        return redirect('/login')
+    if not session.get('admin_logged_in'):
+        return redirect('/admin/login')
     return send_from_directory(os.getcwd(), 'admin.html')
-
-@app.route('/dashboard')
-def dashboard_page():
-    if not session.get('user_id'):
-        return redirect('/login')
-    # This is a placeholder for the user dashboard.
-    # You would typically render a dashboard.html template here.
-    return "<h1>Welcome to your Dashboard!</h1><p>You are logged in as a regular user.</p><p><a href="/logout">Logout</a></p>"
-
 
 def log_upload(filename, username):
     entry = {
@@ -290,7 +202,7 @@ def log_upload(filename, username):
 
 @app.route('/admin/upload', methods=['POST'])
 def upload_feed():
-    if not session.get('is_admin'):
+    if not session.get('admin_logged_in'):
         return jsonify({'error': 'Unauthorized'}), 401
     if 'csvFile' not in request.files:
         return jsonify({'error': 'No file part'}), 400
@@ -306,7 +218,7 @@ def upload_feed():
 
 @app.route('/admin/history')
 def upload_history():
-    if not session.get('is_admin'):
+    if not session.get('admin_logged_in'):
         return redirect('/admin/login')
     if os.path.exists(UPLOAD_HISTORY_FILE):
         with open(UPLOAD_HISTORY_FILE, 'r', encoding='utf-8') as f:
@@ -315,13 +227,36 @@ def upload_history():
         history = []
     return jsonify(history)
 
+@app.route('/admin/change-credentials', methods=['POST'])
+def change_credentials():
+    if not session.get('admin_logged_in'):
+        return jsonify({'error': 'Unauthorized'}), 401
+    data = request.json
+    new_user = data.get('username')
+    new_pass = data.get('password')
+    if not new_user or not new_pass:
+        return jsonify({'error': 'Username and password required'}), 400
+    # Save to a file for persistence (in production, use a secure method)
+    with open(os.path.join(os.getcwd(), 'admin_creds.json'), 'w', encoding='utf-8') as f:
+        json.dump({'username': new_user, 'password': new_pass}, f)
+    global ADMIN_USERNAME, ADMIN_PASSWORD
+    ADMIN_USERNAME = new_user
+    ADMIN_PASSWORD = new_pass
+    return jsonify({'message': 'Credentials updated. Please log in again.'})
 
-
-
+@app.before_request
+def load_admin_creds():
+    creds_path = os.path.join(os.getcwd(), 'admin_creds.json')
+    global ADMIN_USERNAME, ADMIN_PASSWORD
+    if os.path.exists(creds_path):
+        with open(creds_path, 'r', encoding='utf-8') as f:
+            creds = json.load(f)
+            ADMIN_USERNAME = creds.get('username', ADMIN_USERNAME)
+            ADMIN_PASSWORD = creds.get('password', ADMIN_PASSWORD)
 
 @app.route('/admin/products', methods=['GET', 'POST', 'DELETE'])
 def manage_products():
-    if not session.get('is_admin'):
+    if not session.get('admin_logged_in'):
         return jsonify({'error': 'Unauthorized'}), 401
     if request.method == 'GET':
         return jsonify(fetch_cj_products())
@@ -356,261 +291,176 @@ def manage_products():
                 writer.writerows(products)
         return jsonify({'message': 'Product deleted.'})
 
-@app.route('/submit-order', methods=['POST'])
-def submit_order():
-    data = request.json
-    if not data or not data.get('items'):
-        return jsonify({'error': 'Invalid order data'}), 400
+# --- Implementation of Task #4: AI Product Tag Generator ---
+@app.route('/generate-tags', methods=['POST'])
+def generate_tags():
+    """
+    Accepts a product title and description and returns AI-generated SEO tags.
+    Expects a JSON payload with 'title' and 'description' keys.
+    """
+    if not os.getenv("GEMINI_API_KEY"):
+        return jsonify({"error": "Gemini API key is not configured on the server."}), 500
 
-    order = {
-        'timestamp': datetime.utcnow().isoformat() + 'Z',
-        'status': 'Processing',  # Initial status
-        'fulfillment_status': 'Pending',
-        'customer': data.get('customer', {}),
-        'items': data.get('items', []),
-        'total': data.get('total', 0),
-        'payment_reference': data.get('payment_reference', '')
-    }
+    data = request.get_json()
+    if not data or 'title' not in data or 'description' not in data:
+        return jsonify({"error": "Missing 'title' or 'description' in request body"}), 400
 
-    log_order(order)
-    return jsonify({'message': 'Order received', 'order': order}), 201
-
-def log_order(order_data):
-    orders_file = os.path.join(os.getcwd(), 'orders.json')
-    orders = []
-    if os.path.exists(orders_file):
-        with open(orders_file, 'r', encoding='utf-8') as f:
-            try:
-                orders = json.load(f)
-            except json.JSONDecodeError:
-                pass  # File is empty or corrupt, start fresh
-    orders.append(order_data)
-    with open(orders_file, 'w', encoding='utf-8') as f:
-        json.dump(orders, f, indent=2)
-
-@app.route('/paystack/webhook', methods=['POST'])
-def paystack_webhook():
-    # Get the signature from the header
-    paystack_signature = request.headers.get('x-paystack-signature')
-    
-    # Get the request body
-    payload = request.data
-    
-    # Your Paystack secret key
-    PAYSTACK_SECRET_KEY = os.environ.get('PAYSTACK_SECRET_KEY')
-
-    if not PAYSTACK_SECRET_KEY:
-        print("Error: PAYSTACK_SECRET_KEY not found in environment variables.")
-        return jsonify({'status': 'error', 'message': 'Server configuration error'}), 500
-
-    # Verify the webhook signature
-    hash = hmac.new(PAYSTACK_SECRET_KEY.encode('utf-8'), payload, hashlib.sha512).hexdigest()
-
-    if hash != paystack_signature:
-        # Signature is not valid, ignore the request
-        return jsonify({'status': 'error', 'message': 'Invalid signature'}), 401
-
-    # If the signature is valid, process the event
-    event_data = json.loads(payload)
-    
-    if event_data['event'] == 'charge.success':
-        reference = event_data['data']['reference']
-        
-        # Update the order status in orders.json
-        orders_file = os.path.join(os.getcwd(), 'orders.json')
-        orders = []
-        if os.path.exists(orders_file):
-            with open(orders_file, 'r', encoding='utf-8') as f:
-                try:
-                    orders = json.load(f)
-                except json.JSONDecodeError:
-                    pass # File is empty or corrupt
-
-        for order in orders:
-            if order.get('payment_reference') == reference:
-                order['status'] = 'Paid'
-                order['verified_by'] = 'webhook'
-                order['paid_amount'] = event_data['data']['amount'] / 100 # Amount is in kobo
-                order['payment_time'] = event_data['data']['paid_at']
-                break
-
-        with open(orders_file, 'w', encoding='utf-8') as f:
-            json.dump(orders, f, indent=2)
-
-    return jsonify({'status': 'success'}), 200
-
-@app.route('/sitemap.xml')
-def sitemap():
-    # Base URL for your domain
-    base_url = "https://yourdomain.com" # Replace with your actual domain
-
-    # Static pages
-    static_pages = [
-        "/",
-        "/about.html",
-        "/contact.html",
-        "/privacy.html",
-        "/terms.html",
-        "/blog.html"
-    ]
-
-    # Dynamically add product pages
-    products = fetch_cj_products()
-    product_pages = [f"/product?title={p['title']}" for p in products if p.get('title')]
-
-    # Combine all URLs
-    all_urls = static_pages + product_pages
-
-    # Generate XML sitemap content
-    xml_content = '''<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'''
-    for url_path in all_urls:
-        full_url = f"{base_url}{url_path}"
-        xml_content += f'''
-    <url>
-        <loc>{full_url}</loc>
-        <lastmod>{datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')}</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.7</priority>
-    </url>'''
-    xml_content += '''
-</urlset>'''
-
-    response = make_response(xml_content)
-    response.headers["Content-Type"] = "application/xml"
-    return response
-
-@app.route('/admin/sync-cj')
-def sync_cj_feed_route():
-    if not session.get('is_admin'):
-        return jsonify({'error': 'Unauthorized'}), 401
-    
-    success, message = fetch_and_save_cj_feed()
-    
-    if success:
-        return jsonify({'message': message}), 200
-    else:
-        return jsonify({'error': message}), 500
-
-    
-# Generic route for individual blog posts, e.g., /dropshipping-tips.html
-@app.route('/<string:slug>.html')
-def serve_blog_post(slug):
-    return send_from_directory(os.path.join(os.getcwd(), 'site'), f'{slug}.html')
-
-# The tag_products route was already defined earlier, and this one was incomplete.
-# If you intended to redefine it or add new logic, ensure it's correctly placed and has a body.
-# For now, I'm assuming the earlier definition is the one you want to keep.
-# If this was a duplicate or an accidental addition, it can be removed.
-
-def fetch_and_save_cj_feed():
-    API_KEY = os.environ.get('CJ_API_KEY')
-    if not API_KEY:
-        print("Error: CJ_API_KEY not found in environment variables.")
-        return False, "CJ_API_KEY not configured"
-
-    url = "https://developers.cjdropshipping.com/api/product/list"
-    headers = {"CJ-Access-Token": API_KEY}
-    params = {'pageNum': 1, 'pageSize': 100}  # Adjust as needed
+    product_title = data['title']
+    product_description = data['description']
 
     try:
-        response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
-        data = response.json()
+        # Initialize the Gemini Pro model
+        model = genai.GenerativeModel('gemini-pro')
 
-        if not data.get('data') or not data['data'].get('list'):
-            print("No products found in CJ Dropshipping response.")
-            return True, "No products found"
+        # Example prompt as per your GEMINI.md
+        prompt = f"Generate 5-7 SEO-friendly product tags for a product with the title '{product_title}' and description '{product_description}'. Return the tags as a single comma-separated string."
 
-        products = data['data']['list']
-        
-        # Define the headers for your CSV file
-        headers = [
-            'id', 'title', 'image', 'price', 'url', 'description', 
-            'brand', 'rating', 'stock', 'category', 'shipping'
-        ]
+        response = model.generate_content(prompt)
 
-        with open(os.path.join(os.getcwd(), 'feed.csv'), 'w', newline='', encoding='utf-8') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=headers)
-            writer.writeheader()
-            for product in products:
-                writer.writerow({
-                    'id': product.get('pid', ''),
-                    'title': product.get('productNameEn', ''),
-                    'image': product.get('productImage', ''),
-                    'price': product.get('sellPrice', '0.00'),
-                    'url': f"https://cjdropshipping.com/product/{product.get('pid', '')}.html",
-                    'description': product.get('description', ''),
-                    'brand': 'CJ Dropshipping',  # Placeholder
-                    'rating': '4.5',  # Placeholder
-                    'stock': product.get('totalStock', '0'),
-                    'category': product.get('categoryName', ''),
-                    'shipping': '5.00'  # Placeholder
-                })
-        
-        print(f"Successfully fetched and saved {len(products)} products to feed.csv.")
-        return True, f"Successfully fetched {len(products)} products."
+        # The response from Gemini is in response.text
+        tags_string = response.text.strip()
+        tags_list = [tag.strip() for tag in tags_string.split(',') if tag.strip()]
 
-    except requests.exceptions.RequestException as e:
-        print(f"Error connecting to CJ Dropshipping API: {e}")
-        return False, f"API request failed: {e}"
+        return jsonify({"product_title": product_title, "generated_tags": tags_list})
+
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        return False, f"An unexpected error occurred: {e}"
+        app.logger.error(f"An unexpected error occurred: {e}")
+        return jsonify({"error": f"An error occurred with the AI service: {str(e)}"}), 503
 
-    @app.route('/gmc-feed.xml')
-def gmc_feed():
-    products = fetch_cj_products()
-    xml_content = '''<?xml version="1.0"?>
-<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
-  <channel>
-    <title>Your Store Name</title>
-    <link>https://yourdomain.com</link>
-    <description>Your store's description</description>'''
+# --- Vendor Management (Task #5) ---
+VENDORS_FILE = os.path.join(os.getcwd(), 'data', 'vendors.json')
 
-    for p in products:
-        product_id = p.get('id') or p['url'].split('/')[-1].split('.')[0] # Use 'id' or extract from URL
-        title = p.get('title', '')
-        description = p.get('description', '')
-        link = p.get('url', '')
-        image_link = p.get('image', '')
-        
-        # Handle price variations (e.g., "4.86 -- 6.22")
-        price_str = p.get('price', '0.00').split(' ')[0] # Take the first price if a range
-        try:
-            price = float(price_str)
-        except ValueError:
-            price = 0.00
-        formatted_price = f"{price:.2f} NGN" # Assuming Nigerian Naira
+def load_vendors():
+    data_dir = os.path.join(os.getcwd(), 'data')
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+    if not os.path.exists(VENDORS_FILE):
+        return []
+    with open(VENDORS_FILE, 'r', encoding='utf-8') as f:
+        return json.load(f)
 
-        availability = "in stock" if int(p.get('stock', 0)) > 0 else "out of stock"
-        brand = p.get('brand', 'Generic')
-        category = p.get('category', 'Apparel & Accessories') # Default category
+def get_vendor(username):
+    vendors = load_vendors()
+    for vendor in vendors:
+        if vendor['username'] == username:
+            return vendor
+    return None
 
-        xml_content += f'''
-    <item>
-      <g:id>{product_id}</g:id>
-      <g:title>{title}</g:title>
-      <g:description>{description}</g:description>
-      <g:link>{link}</g:link>
-      <g:image_link>{image_link}</g:image_link>
-      <g:price>{formatted_price}</g:price>
-      <g:availability>{availability}</g:availability>
-      <g:brand>{brand}</g:brand>
-      <g:condition>new</g:condition>
-      <g:google_product_category>{category}</g:google_product_category>
-      <g:identifier_exists>FALSE</g:identifier_exists>
-    </item>'''
+VENDOR_LOGIN_FORM = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendor Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <main class="flex-1 flex flex-col items-center justify-center">
+    <form method="POST" class="bg-white p-8 rounded shadow-md w-full max-w-md mt-8">
+      <h2 class="text-xl font-bold mb-4">Vendor Login</h2>
+      <input type="text" name="username" placeholder="Username" class="mb-4 p-2 border rounded w-full" required />
+      <input type="password" name="password" placeholder="Password" class="mb-6 p-2 border rounded w-full" required />
+      <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 w-full">Login</button>
+    </form>
+  </main>
+</body>
+</html>
+'''
 
-    xml_content += '''
-  </channel>
-</rss>'''
+@app.route('/vendor/login', methods=['GET', 'POST'])
+def vendor_login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        vendor = get_vendor(username)
+        if vendor and check_password_hash(vendor['password_hash'], password):
+            session['vendor_logged_in'] = True
+            session['vendor_id'] = vendor['id']
+            return redirect('/vendor/dashboard')
+        return render_template_string('<p class="text-red-600">Invalid credentials</p>' + VENDOR_LOGIN_FORM)
+    return render_template_string(VENDOR_LOGIN_FORM)
 
-    response = make_response(xml_content)
-    response.headers["Content-Type"] = "application/xml"
-    return response
+@app.route('/vendor/logout')
+def vendor_logout():
+    session.pop('vendor_logged_in', None)
+    session.pop('vendor_id', None)
+    return redirect('/vendor/login')
 
-# Ensure the Flask app runs when this script is executed directly
+@app.route('/vendor/dashboard')
+def vendor_dashboard():
+    if not session.get('vendor_logged_in'):
+        return redirect('/vendor/login')
+    vendor_id = session.get('vendor_id', 'Unknown')
+    # A simple dashboard page for the vendor
+    DASHBOARD_HTML = f'''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Vendor Dashboard</title>
+      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    </head>
+    <body class="bg-gray-100 p-8">
+      <h1 class="text-2xl font-bold">Welcome to your Dashboard, {vendor_id}!</h1>
+      <p class="mt-4">Here you can manage your products and view your orders.</p>
+      <a href="/vendor/logout" class="text-blue-600 hover:underline mt-8 inline-block">Logout</a>
+    </body>
+    </html>
+    '''
+    return render_template_string(DASHBOARD_HTML)
+
+# --- PDF Invoice Generation (Task #6) ---
+INVOICES_DIR = os.path.join(os.getcwd(), 'invoices')
+
+def generate_invoice_pdf(order_details):
+    """Generates a PDF invoice for a given order."""
+    if not os.path.exists(INVOICES_DIR):
+        os.makedirs(INVOICES_DIR)
+
+    order_id = order_details['id']
+    file_path = os.path.join(INVOICES_DIR, f"invoice_{order_id}.pdf")
+    
+    c = canvas.Canvas(file_path, pagesize=letter)
+    width, height = letter
+
+    c.setFont("Helvetica-Bold", 18)
+    c.drawString(1 * inch, height - 1 * inch, "INVOICE")
+    c.setFont("Helvetica", 12)
+    c.drawString(1 * inch, height - 1.5 * inch, f"Order ID: {order_id}")
+    c.drawString(1 * inch, height - 1.7 * inch, f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+    c.line(1 * inch, height - 3.6 * inch, width - 1 * inch, height - 3.6 * inch)
+    y_pos = height - 3.9 * inch
+    for item in order_details.get('items', []):
+        c.drawString(1 * inch, y_pos, item.get('name', ''))
+        c.drawString(6.75 * inch, y_pos, f"${item.get('price', 0) * item.get('quantity', 1):.2f}")
+        y_pos -= 0.3 * inch
+
+    c.line(1 * inch, y_pos + 0.1 * inch, width - 1 * inch, y_pos + 0.1 * inch)
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(5 * inch, y_pos - 0.3 * inch, "Total:")
+    c.drawString(6.5 * inch, y_pos - 0.3 * inch, f"${order_details.get('total', 0):.2f}")
+
+    c.save()
+
+@app.route('/order/create', methods=['POST'])
+def create_order():
+    """A mock endpoint to simulate creating an order and generating an invoice."""
+    data = request.get_json() or {}
+    items = data.get('items', [{"name": "Sample Product", "price": 19.99, "quantity": 2}])
+    total_price = sum(item.get('price', 0) * item.get('quantity', 1) for item in items)
+    order_id = str(uuid.uuid4())[:8]
+    order_details = {"id": order_id, "items": items, "total": total_price}
+    generate_invoice_pdf(order_details)
+    invoice_url = f"/invoices/invoice_{order_id}.pdf"
+    return jsonify({"message": "Order created", "order_id": order_id, "invoice_url": invoice_url})
+
+@app.route('/invoices/<path:filename>')
+def download_invoice(filename):
+    """Serves a generated invoice file for download."""
+    return send_from_directory(INVOICES_DIR, filename, as_attachment=True)
+    
 if __name__ == "__main__":
     print("Starting Flask server on http://127.0.0.1:5000 ...")
     app.run(debug=True, host="0.0.0.0", port=5000)
