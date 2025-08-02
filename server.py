@@ -2,6 +2,9 @@
  
 from flask import Flask, send_from_directory, make_response, jsonify, request, redirect, session, render_template_string
 from flask_cors import CORS
+import io
+from collections import defaultdict
+from werkzeug.security import generate_password_hash
 import os
 import csv
 import json
@@ -11,9 +14,12 @@ from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 import google.generativeai as genai
 import uuid
+import matplotlib.pyplot as plt
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
+import base64
 from reportlab.lib.pagesizes import letter
+import traceback
 
 
 app = Flask(__name__)
@@ -67,6 +73,9 @@ ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'password')
 
 # Serve static files from the 'site' directory if requested with /site/ prefix
+
+
+
 # This will handle requests like /site/tag-trending.html
 @app.route('/site/<path:filename>')
 def serve_from_site_prefixed(filename):
@@ -292,7 +301,11 @@ def manage_products():
         return jsonify({'message': 'Product deleted.'})
 
 # --- Implementation of Task #4: AI Product Tag Generator ---
-@app.route('/generate-tags', methods=['POST'])
+from functools import wraps
+from time import time
+request_counts = {}
+RATE_LIMIT = 5  # 5 requests per minute
+TIME_WINDOW = 60  # 60 seconds (1 minute)
 def generate_tags():
     """
     Accepts a product title and description and returns AI-generated SEO tags.
@@ -301,6 +314,7 @@ def generate_tags():
     if not os.getenv("GEMINI_API_KEY"):
         return jsonify({"error": "Gemini API key is not configured on the server."}), 500
 
+    from functools import wraps
     data = request.get_json()
     if not data or 'title' not in data or 'description' not in data:
         return jsonify({"error": "Missing 'title' or 'description' in request body"}), 400
@@ -327,7 +341,78 @@ def generate_tags():
         app.logger.error(f"An unexpected error occurred: {e}")
         return jsonify({"error": f"An error occurred with the AI service: {str(e)}"}), 503
 
+def rate_limit(limit=RATE_LIMIT, per=TIME_WINDOW):
+    """
+    Decorator to rate-limit API calls based on the originating IP address.
+    """
+    def decorator(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            ip_address = request.remote_addr
+            now = time()
+
+            # Clean up old requests
+            request_counts[ip_address] = [t for t in request_counts.get(ip_address, []) if t > now - per]
+
+            # Check if limit is exceeded
+            if len(request_counts.get(ip_address, [])) >= limit:
+                return jsonify({"error": "Rate limit exceeded"}), 429
+
+            # Record the current request
+            request_counts.setdefault(ip_address, []).append(now)
+
+            return f(*args, **kwargs)
+        return wrapped
+    return decorator
+
 # --- Vendor Management (Task #5) ---
+
+
+VENDOR_REGISTER_FORM = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendor Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+  <main class="flex-1 flex flex-col items-center justify-center">
+    <form method="POST" class="bg-white p-8 rounded shadow-md w-full max-w-md mt-8">
+      <h2 class="text-xl font-bold mb-4">Vendor Registration</h2>
+      <input type="text" name="username" placeholder="Username" class="mb-4 p-2 border rounded w-full" required />
+      <input type="password" name="password" placeholder="Password" class="mb-6 p-2 border rounded w-full" required />
+      <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 w-full">Register</button>
+    </form>
+  </main>
+</body>
+</html>
+'''
+@app.route('/vendor/register', methods=['GET', 'POST'])
+def vendor_register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        # Hash the password
+        hashed_password = generate_password_hash(password)
+
+        # Generate a unique vendor ID
+        vendor_id = str(uuid.uuid4())
+
+        vendor = {
+            'id': vendor_id,
+            'username': username,
+            'password_hash': hashed_password  # Store the hashed password
+        }
+
+        save_vendor(vendor)
+        return redirect('/vendor/login')
+
+    return render_template_string(VENDOR_REGISTER_FORM)
+
+
 VENDORS_FILE = os.path.join(os.getcwd(), 'data', 'vendors.json')
 
 def load_vendors():
@@ -335,7 +420,17 @@ def load_vendors():
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
     if not os.path.exists(VENDORS_FILE):
+        with open(VENDORS_FILE, 'w') as f:
+             json.dump([], f)
+    
+    try:
+        with open(VENDORS_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        # Handle the case where the file is empty or contains invalid JSON
         return []
+
+
     with open(VENDORS_FILE, 'r', encoding='utf-8') as f:
         return json.load(f)
 
@@ -345,6 +440,14 @@ def get_vendor(username):
         if vendor['username'] == username:
             return vendor
     return None
+
+def save_vendor(vendor):
+    vendors = load_vendors()
+    vendors.append(vendor)
+    with open(VENDORS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(vendors, f, indent=4)
+
+
 
 VENDOR_LOGIN_FORM = '''
 <!DOCTYPE html>
@@ -404,6 +507,7 @@ def vendor_dashboard():
     <body class="bg-gray-100 p-8">
       <h1 class="text-2xl font-bold">Welcome to your Dashboard, {vendor_id}!</h1>
       <p class="mt-4">Here you can manage your products and view your orders.</p>
+      <a href="/vendor/products" class="text-blue-600 hover:underline mt-8 inline-block">Manage Products</a>
       <a href="/vendor/logout" class="text-blue-600 hover:underline mt-8 inline-block">Logout</a>
     </body>
     </html>
@@ -461,6 +565,227 @@ def download_invoice(filename):
     """Serves a generated invoice file for download."""
     return send_from_directory(INVOICES_DIR, filename, as_attachment=True)
     
+def calculate_profit():
+    """Calculates profit from orders.  Since we don't have real order data,
+    we'll simulate it for this example."""
+    products = fetch_cj_products()
+    # products is a list of dictionaries
+    
+    daily_profit = defaultdict(float)
+    weekly_profit = defaultdict(float)
+    monthly_profit = defaultdict(float)
+
+    for product in products:
+        try:
+            price = float(product['price'])
+        except ValueError:
+            continue
+            
+        # Assume a cost of 60% of the price
+        cost = price * 0.6
+        profit = price - cost
+
+def generate_inventory_graph():
+    """Generates a dummy inventory graph using matplotlib."""
+    # Simulate inventory data
+    products = ["Product A", "Product B", "Product C", "Product D"]
+    stock_levels = [50, 80, 30, 60]
+
+    # Create the bar chart
+    plt.figure(figsize=(8, 6))
+    plt.bar(products, stock_levels, color='skyblue')
+    plt.xlabel("Products")
+    plt.ylabel("Stock Levels")
+    plt.title("Inventory Status")
+    plt.ylim(0, max(stock_levels) + 20)  # Set y-axis limit
+
+    # Save the graph to a BytesIO object
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plt.close()
+
+    return img
+
+@app.route('/admin/inventory-dashboard')
+def inventory_dashboard():
+    if not session.get('admin_logged_in'):
+        return redirect('/admin/login')
+
+    img = generate_inventory_graph()
+    img_base64 = base64.b64encode(img.read()).decode()
+    
+    dashboard_html = f'''
+        <!DOCTYPE html>
+        <html>
+        <head><title>Inventory Dashboard</title></head>
+        <body>
+            <h1>Inventory Dashboard</h1>
+            <img src="data:image/png;base64,{img_base64}" alt="Inventory Graph">
+        </body>
+        </html>
+    '''
+    return dashboard_html
+@app.route('/admin/profit-report')
+def profit_report():
+    if not session.get('admin_logged_in'):
+        return redirect('/admin/login')
+
+    profit_data = calculate_profit()
+
+    report = f'''
+        <!DOCTYPE html>
+        <html>
+        <head><title>Profit Report</title></head>
+        <body>
+            <h1>Profit Report</h1>
+            <p>Total Profit: ${profit_data:.2f}</p>
+        </body>
+        </html>
+    '''
+
+    return report
+
+def calculate_profit():
+    """Calculates profit from orders.  Since we don't have real order data,
+    we'll simulate it for this example."""
+    products = fetch_cj_products()
+    # products is a list of dictionaries
+    
+    daily_profit = defaultdict(float)
+    weekly_profit = defaultdict(float)
+    monthly_profit = defaultdict(float)
+
+    for product in products:
+        try:
+            price = float(product['price'])
+        except ValueError:
+            continue
+            
+        # Assume a cost of 60% of the price
+        cost = price * 0.6
+        profit = price - cost
+
+VENDOR_PRODUCTS_FILE = os.path.join(os.getcwd(), 'data', 'vendor_products.json')
+
+def load_vendor_products(vendor_id):
+    """Loads vendor products from the JSON file."""
+    if not os.path.exists(VENDOR_PRODUCTS_FILE):
+        return []
+
+    try:
+        with open(VENDOR_PRODUCTS_FILE, 'r', encoding='utf-8') as f:
+            all_products = json.load(f)
+            # Filter products by vendor_id
+            vendor_products = [p for p in all_products if p.get('vendor_id') == vendor_id]
+            return vendor_products
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+
+def save_vendor_products(vendor_id, products):
+    """Saves vendor products to the JSON file, preserving products of other vendors."""
+    all_products = []
+    # Load all products if the file exists
+    if os.path.exists(VENDOR_PRODUCTS_FILE):
+        try:
+            with open(VENDOR_PRODUCTS_FILE, 'r', encoding='utf-8') as f:
+                all_products = json.load(f)
+        except json.JSONDecodeError:
+            all_products = []
+
+    # Remove existing products for this vendor
+    all_products = [p for p in all_products if p.get('vendor_id') != vendor_id]
+
+    # Add the new products for this vendor
+    for product in products:
+        product['vendor_id'] = vendor_id  # Ensure vendor_id is set
+        all_products.append(product)
+
+    # Write all products back to the file
+    with open(VENDOR_PRODUCTS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(all_products, f, indent=4)
+
+
+
+@app.route('/vendor/products', methods=['GET', 'POST'])
+def manage_vendor_products():
+    """Manages vendor products - GET returns list, POST adds a new product."""
+    if not session.get('vendor_logged_in'):
+        return redirect('/vendor/login')
+
+    vendor_id = session.get('vendor_id')
+    if not vendor_id:
+        return "Vendor ID not found in session", 400
+
+    if request.method == 'GET':
+        products = load_vendor_products(vendor_id)
+        return jsonify(products)
+
+    elif request.method == 'POST':
+        product_data = request.get_json()
+        if not product_data:
+            return "No product data received", 400
+
+        # Load existing products for this vendor
+        products = load_vendor_products(vendor_id)
+
+        # Add the new product
+        products.append(product_data)
+
+        # Save the updated list of products
+        save_vendor_products(vendor_id, products)
+
+        return jsonify({"message": "Product added successfully"}), 201
+
+
+@app.route('/vendor/products/<int:product_id>', methods=['PUT', 'DELETE'])
+def manage_single_vendor_product(product_id):
+    """Edits or deletes a single product for a vendor."""
+    if not session.get('vendor_logged_in'):
+        return redirect('/vendor/login')
+
+    vendor_id = session.get('vendor_id')
+    if not vendor_id:
+        return "Vendor ID not found in session", 400
+
+    products = load_vendor_products(vendor_id)
+    product_index = None
+
+    # Find the product by its index
+    for i, product in enumerate(products):
+        if product.get('id') == product_id:
+            product_index = i
+            break
+
+    if product_index is None:
+        return "Product not found", 404
+
+    if request.method == 'PUT':
+        # Update the product
+        product_data = request.get_json()
+        if not product_data:
+            return "No product data received", 400
+
+        # Update the product with the new data
+        products[product_index].update(product_data)
+        save_vendor_products(vendor_id, products)
+        return jsonify({"message": "Product updated successfully"})
+
+    elif request.method == 'DELETE':
+        # Delete the product
+        del products[product_index]
+        save_vendor_products(vendor_id, products)
+        return jsonify({"message": "Product deleted successfully"})
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     print("Starting Flask server on http://127.0.0.1:5000 ...")
     app.run(debug=True, host="0.0.0.0", port=5000)

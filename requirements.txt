@@ -3,3 +3,4 @@ reportlab
 matplotlib
 python-dotenv
 google-generativeai
+Flask-SQLAlchemy
