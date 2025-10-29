@@ -1,836 +1,918 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to SwiftCart Global Store</title>
-    <meta
-      name="description"
-      content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!"
-    />
-    <meta
-      name="keywords"
-      content="dropshipping, trending products, electronics, wearables, audio, fast shipping, exclusive deals, online store, best gadgets, curated products, 2025"
-    />
-    <meta
-      property="og:title"
-      content="Your Dropshipping Store - Trending Products & Fast Fulfillment"
-    />
-    <meta
-      property="og:description"
-      content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yourdomain.com/" />
-    <meta
-      property="og:image"
-      content="https://yourdomain.com/images/og-main-2025.png?v=2"
-    />
-    <meta property="og:site_name" content="Your Dropshipping Store" />
-    <meta property="og:locale" content="en_US" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Your Dropshipping Store - Trending Products & Fast Fulfillment"
-    />
-    <meta
-      name="twitter:description"
-      content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!"
-    />
-    <meta
-      name="twitter:image"
-      content="https://yourdomain.com/images/og-main-2025.png?v=2"
-    />
-    <meta name="twitter:site" content="@YourStoreHandle" />
-    <meta name="twitter:creator" content="@YourStoreHandle" />
-    <link rel="canonical" href="https://yourdomain.com/" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <meta name="author" content="Your Dropshipping Store Team" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-    <script type="application/ld+json" id="product-ld-json"></script>
-    <link
-      rel="sitemap"
-      type="application/xml"
-      title="Sitemap"
-      href="/sitemap.xml"
-    />
-  </head>
-  <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
-    <!-- Language Toggle -->
-    <div class="fixed top-2 right-2 z-50 flex gap-2">
-      <button
-        id="langEn"
-        class="px-2 py-1 rounded bg-blue-700 text-white font-bold lang-btn"
-        aria-label="English"
-      >
-        EN
-      </button>
-      <button
-        id="langZh"
-        class="px-2 py-1 rounded bg-yellow-400 text-gray-900 font-bold lang-btn"
-        aria-label="Chinese"
-      >
-        中文
-      </button>
-    </div>
-
-    <header class="relative bg-blue-600 text-white text-center" role="banner">
-      <div class="relative w-full">
-        <img
-          src="/static/header.jpg"
-          alt="SwiftCart Global Store Header"
-          class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]"
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Welcome to SwiftCart Global Store</title>
+        <meta
+            name="description"
+            content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!"
         />
-        <div
-          class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40"
-        >
-          <h1
-            class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-en"
-            tabindex="0"
-          >
-            Welcome to SwiftCart Global Store
-          </h1>
-          <h1
-            class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-zh hidden"
-            tabindex="0"
-          >
-            欢迎来到 SwiftCart 全球商店
-          </h1>
-          <p
-            class="text-lg sm:text-xl mt-2 drop-shadow-lg lang-en"
-            tabindex="0"
-          >
-            Handpicked Products. Fast Fulfillment.
-          </p>
-          <p
-            class="text-lg sm:text-xl mt-2 drop-shadow-lg lang-zh hidden"
-            tabindex="0"
-          >
-            精选产品，极速发货，全球直达。
-          </p>
+        <meta
+            name="keywords"
+            content="dropshipping, trending products, electronics, wearables, audio, fast shipping, exclusive deals, online store, best gadgets, curated products, 2025"
+        />
+        <meta
+            property="og:title"
+            content="Your Dropshipping Store - Trending Products & Fast Fulfillment"
+        />
+        <meta
+            property="og:description"
+            content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yourdomain.com/" />
+        <meta
+            property="og:image"
+            content="https://yourdomain.com/images/og-main-2025.png?v=2"
+        />
+        <meta property="og:site_name" content="Your Dropshipping Store" />
+        <meta property="og:locale" content="en_US" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:title"
+            content="Your Dropshipping Store - Trending Products & Fast Fulfillment"
+        />
+        <meta
+            name="twitter:description"
+            content="Shop the best trending dropshipping products: electronics, wearables, audio, and more. Fast shipping, curated selection, and exclusive deals updated daily!"
+        />
+        <meta
+            name="twitter:image"
+            content="https://yourdomain.com/images/og-main-2025.png?v=2"
+        />
+        <meta name="twitter:site" content="@YourStoreHandle" />
+        <meta name="twitter:creator" content="@YourStoreHandle" />
+        <link rel="canonical" href="https://yourdomain.com/" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <meta name="author" content="Your Dropshipping Store Team" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+        <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+        <script type="application/ld+json" id="product-ld-json"></script>
+        <link
+            rel="sitemap"
+            type="application/xml"
+            title="Sitemap"
+            href="/sitemap.xml"
+        />
+    </head>
+    <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+        <!-- Language Toggle -->
+        <div class="fixed top-2 right-2 z-50 flex gap-2">
+            <button
+                id="langEn"
+                class="px-2 py-1 rounded bg-blue-700 text-white font-bold lang-btn"
+                aria-label="English"
+            >
+                EN
+            </button>
+            <button
+                id="langZh"
+                class="px-2 py-1 rounded bg-yellow-400 text-gray-900 font-bold lang-btn"
+                aria-label="Chinese"
+            >
+                中文
+            </button>
         </div>
-        <!-- Mobile Nav Icon -->
-        <button
-          id="navToggle"
-          class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded"
-          aria-label="Open navigation menu"
+
+        <header
+            class="relative bg-blue-600 text-white text-center"
+            role="banner"
         >
-          <svg
-            class="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
-      </div>
-      <nav
-        id="mainNav"
-        class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10"
-        aria-label="Main Navigation"
-      >
-        <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
-        <a href="/blog.html" class="mx-2 underline" aria-label="Blog">Blog</a>
-        <a
-          href="/about.html"
-          class="mx-2 underline text-white hover:text-blue-200"
-          aria-label="About"
-          >About</a
+            <div class="relative w-full">
+                <img
+                    src="/static/header.jpg"
+                    alt="SwiftCart Global Store Header"
+                    class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]"
+                />
+                <div
+                    class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40"
+                >
+                    <h1
+                        class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-en"
+                        tabindex="0"
+                    >
+                        Welcome to SwiftCart Global Store
+                    </h1>
+                    <h1
+                        class="text-3xl sm:text-4xl font-bold drop-shadow-lg lang-zh hidden"
+                        tabindex="0"
+                    >
+                        欢迎来到 SwiftCart 全球商店
+                    </h1>
+                    <p
+                        class="text-lg sm:text-xl mt-2 drop-shadow-lg lang-en"
+                        tabindex="0"
+                    >
+                        Handpicked Products. Fast Fulfillment.
+                    </p>
+                    <p
+                        class="text-lg sm:text-xl mt-2 drop-shadow-lg lang-zh hidden"
+                        tabindex="0"
+                    >
+                        精选产品，极速发货，全球直达。
+                    </p>
+                </div>
+                <!-- Mobile Nav Icon -->
+                <button
+                    id="navToggle"
+                    class="absolute top-4 right-4 sm:hidden z-20 p-2 bg-blue-700 bg-opacity-80 rounded"
+                    aria-label="Open navigation menu"
+                >
+                    <svg
+                        class="w-7 h-7"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4 6h16M4 12h16M4 18h16"
+                        />
+                    </svg>
+                </button>
+            </div>
+            <nav
+                id="mainNav"
+                class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10"
+                aria-label="Main Navigation"
+            >
+                <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
+                <a href="/blog.html" class="mx-2 underline" aria-label="Blog"
+                    >Blog</a
+                >
+                <a
+                    href="/about.html"
+                    class="mx-2 underline text-white hover:text-blue-200"
+                    aria-label="About"
+                    >About</a
+                >
+                <a
+                    href="/terms.html"
+                    class="mx-2 underline text-white hover:text-blue-200"
+                    aria-label="Terms of Service"
+                    >Terms</a
+                >
+                <a
+                    href="/privacy.html"
+                    class="mx-2 underline text-white hover:text-blue-200"
+                    aria-label="Privacy Policy"
+                    >Privacy</a
+                >
+                <a
+                    href="/contact.html"
+                    class="mx-2 underline text-white hover:text-blue-200"
+                    aria-label="Contact"
+                    >Contact</a
+                >
+                <button
+                    id="navClose"
+                    class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded hidden"
+                    aria-label="Close navigation menu"
+                >
+                    <svg
+                        class="w-7 h-7"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                </button>
+            </nav>
+            <script>
+                const navToggle = document.getElementById("navToggle");
+                const mainNav = document.getElementById("mainNav");
+                const navClose = document.getElementById("navClose");
+                function openNav() {
+                    mainNav.style.height = "18rem";
+                    mainNav.style.padding = "1.5rem 0";
+                    mainNav.style.background = "rgba(30,64,175,0.97)";
+                    navClose.style.display = "";
+                }
+                function closeNav() {
+                    mainNav.style.height = "0";
+                    mainNav.style.padding = "0";
+                    mainNav.style.background = "rgba(30,64,175,0.97)";
+                    navClose.style.display = "none";
+                }
+                navToggle.addEventListener("click", openNav);
+                navClose.addEventListener("click", closeNav);
+                mainNav
+                    .querySelectorAll("a")
+                    .forEach((a) => a.addEventListener("click", closeNav));
+                window.addEventListener("resize", () => {
+                    if (window.innerWidth >= 640) {
+                        mainNav.style.height = "auto";
+                        mainNav.style.padding = "0";
+                        navClose.style.display = "none";
+                    } else {
+                        closeNav();
+                    }
+                });
+            </script>
+        </header>
+
+        <main class="w-full max-w-7xl mx-auto py-8 px-2 sm:px-4" role="main">
+            <h2
+                class="text-2xl font-semibold mb-6 text-center sm:text-left lang-en"
+                tabindex="0"
+            >
+                Featured Products
+            </h2>
+            <h2
+                class="text-2xl font-semibold mb-6 text-center sm:text-left lang-zh hidden"
+                tabindex="0"
+            >
+                特色产品推荐
+            </h2>
+            <form
+                id="filterForm"
+                class="flex flex-col sm:flex-row flex-wrap gap-4 mb-8 w-full"
+                aria-label="Product Filter"
+            >
+                <!-- Search Card -->
+                <div
+                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
+                >
+                    <label
+                        for="search"
+                        class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
+                        >🔍 Search</label
+                    >
+                    <label
+                        for="search"
+                        class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
+                        >🔍 搜索</label
+                    >
+                    <input
+                        type="text"
+                        id="search"
+                        placeholder="Search products..."
+                        class="p-2 border-2 border-pink-400 rounded w-full focus:ring-2 focus:ring-pink-400 bg-white text-gray-900"
+                        aria-label="Search products"
+                    />
+                </div>
+                <!-- Category Card -->
+                <div
+                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-green-200 via-teal-200 to-cyan-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
+                >
+                    <label
+                        for="category"
+                        class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
+                        >🗂️ Category</label
+                    >
+                    <label
+                        for="category"
+                        class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
+                        >🗂️ 分类</label
+                    >
+                    <select
+                        id="category"
+                        multiple
+                        class="p-2 border-2 border-teal-400 rounded w-full h-24 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900"
+                        aria-label="Category"
+                    >
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+                <!-- Price Card -->
+                <div
+                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-yellow-200 via-orange-200 to-pink-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
+                >
+                    <label
+                        class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
+                        >💲 Price</label
+                    >
+                    <label
+                        class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
+                        >💲 价格区间</label
+                    >
+                    <div class="flex gap-2 w-full">
+                        <input
+                            type="number"
+                            id="minPrice"
+                            placeholder="Min"
+                            class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900"
+                            aria-label="Minimum Price"
+                        />
+                        <input
+                            type="number"
+                            id="maxPrice"
+                            placeholder="Max"
+                            class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900"
+                            aria-label="Maximum Price"
+                        />
+                    </div>
+                </div>
+                <!-- Sort Card -->
+                <div
+                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-blue-200 via-indigo-200 to-purple-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
+                >
+                    <label
+                        for="sort"
+                        class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
+                        >↕️ Sort By</label
+                    >
+                    <label
+                        for="sort"
+                        class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
+                        >↕️ 排序方式</label
+                    >
+                    <select
+                        id="sort"
+                        class="p-2 border-2 border-indigo-400 rounded w-full focus:ring-2 focus:ring-indigo-400 bg-white text-gray-900"
+                        aria-label="Sort By"
+                    >
+                        <option value="">Sort By</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                        <option value="alpha_asc">Name: A-Z</option>
+                        <option value="alpha_desc">Name: Z-A</option>
+                    </select>
+                </div>
+                <!-- Filter Button -->
+                <div class="w-full flex justify-end mt-2">
+                    <button
+                        type="submit"
+                        class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition lang-en"
+                        aria-label="Apply Filters"
+                    >
+                        Filter
+                    </button>
+                    <button
+                        type="submit"
+                        class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition lang-zh hidden"
+                        aria-label="Apply Filters"
+                    >
+                        筛选
+                    </button>
+                </div>
+            </form>
+
+            <div
+                id="spinner"
+                class="flex justify-center items-center my-8 hidden"
+            >
+                <svg
+                    class="animate-spin h-10 w-10 text-blue-600"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        class="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        stroke-width="4"
+                    ></circle>
+                    <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                </svg>
+            </div>
+
+            <div
+                id="errorMsg"
+                class="hidden text-center text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4"
+            ></div>
+            <div
+                id="errorMsgZh"
+                class="hidden text-center text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4 lang-zh"
+            >
+                加载产品时出错，请稍后再试。
+            </div>
+
+            <div
+                id="products"
+                class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full px-1 sm:px-0"
+                aria-live="polite"
+            ></div>
+            <div
+                id="pagination"
+                class="flex justify-center mt-8 gap-2 overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-blue-100 snap-x snap-mandatory px-2 py-2 rounded-lg bg-white shadow"
+            ></div>
+
+            <!-- Product Details Modal -->
+            <div
+                id="productModal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+            >
+                <div
+                    class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative"
+                >
+                    <button
+                        id="closeModal"
+                        class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl"
+                    >
+                        &times;
+                    </button>
+                    <img
+                        id="modalImage"
+                        src=""
+                        alt=""
+                        class="w-full h-64 object-cover rounded mb-4"
+                    />
+                    <h3
+                        id="modalTitleEn"
+                        class="text-2xl font-bold mb-2 lang-en"
+                    ></h3>
+                    <h3
+                        id="modalTitleZh"
+                        class="text-2xl font-bold mb-2 lang-zh hidden"
+                    ></h3>
+                    <p
+                        id="modalPriceEn"
+                        class="text-green-600 font-bold text-lg mb-3 lang-en"
+                    ></p>
+                    <p
+                        id="modalPriceZh"
+                        class="text-green-600 font-bold text-lg mb-3 lang-zh hidden"
+                    ></p>
+                    <p
+                        id="modalDescriptionEn"
+                        class="text-gray-700 mb-4 lang-en"
+                    ></p>
+                    <p
+                        id="modalDescriptionZh"
+                        class="text-gray-700 mb-4 lang-zh hidden"
+                    ></p>
+                    <div
+                        id="modalExtraEn"
+                        class="text-sm text-gray-600 mb-4 lang-en"
+                    ></div>
+                    <div
+                        id="modalExtraZh"
+                        class="text-sm text-gray-600 mb-4 lang-zh hidden"
+                    ></div>
+                    <a
+                        id="modalLinkEn"
+                        href="#"
+                        target="_blank"
+                        class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition block text-center lang-en"
+                        >Buy Now</a
+                    >
+                    <a
+                        id="modalLinkZh"
+                        href="#"
+                        target="_blank"
+                        class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition block text-center lang-zh hidden"
+                        >立即购买</a
+                    >
+                </div>
+            </div>
+        </main>
+
+        <footer
+            class="bg-blue-600 text-white p-4 text-center relative"
+            role="contentinfo"
         >
-        <a
-          href="/terms.html"
-          class="mx-2 underline text-white hover:text-blue-200"
-          aria-label="Terms of Service"
-          >Terms</a
-        >
-        <a
-          href="/privacy.html"
-          class="mx-2 underline text-white hover:text-blue-200"
-          aria-label="Privacy Policy"
-          >Privacy</a
-        >
-        <a
-          href="/contact.html"
-          class="mx-2 underline text-white hover:text-blue-200"
-          aria-label="Contact"
-          >Contact</a
-        >
-        <button
-          id="navClose"
-          class="sm:hidden absolute top-4 right-4 p-2 bg-blue-800 rounded hidden"
-          aria-label="Close navigation menu"
-        >
-          <svg
-            class="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </nav>
-      <script>
-        const navToggle = document.getElementById("navToggle");
-        const mainNav = document.getElementById("mainNav");
-        const navClose = document.getElementById("navClose");
-        function openNav() {
-          mainNav.style.height = "18rem";
-          mainNav.style.padding = "1.5rem 0";
-          mainNav.style.background = "rgba(30,64,175,0.97)";
-          navClose.style.display = "";
-        }
-        function closeNav() {
-          mainNav.style.height = "0";
-          mainNav.style.padding = "0";
-          mainNav.style.background = "rgba(30,64,175,0.97)";
-          navClose.style.display = "none";
-        }
-        navToggle.addEventListener("click", openNav);
-        navClose.addEventListener("click", closeNav);
-        mainNav
-          .querySelectorAll("a")
-          .forEach((a) => a.addEventListener("click", closeNav));
-        window.addEventListener("resize", () => {
-          if (window.innerWidth >= 640) {
-            mainNav.style.height = "auto";
-            mainNav.style.padding = "0";
-            navClose.style.display = "none";
-          } else {
-            closeNav();
-          }
-        });
-      </script>
-    </header>
+            <div class="max-w-7xl mx-auto">
+                <div
+                    class="flex flex-col sm:flex-row justify-between items-center"
+                >
+                    <div class="mb-4 sm:mb-0">
+                        <span class="lang-en"
+                            >&copy; 2025 Your Dropshipping Store. All rights
+                            reserved.</span
+                        >
+                        <span class="lang-zh hidden"
+                            >&copy; 2025 您的跨境电商店铺。保留所有权利。</span
+                        >
+                    </div>
+                    <div class="flex gap-4">
+                        <a
+                            href="/about.html"
+                            class="text-white hover:text-yellow-300"
+                            >About Us</a
+                        >
+                        <a
+                            href="/terms.html"
+                            class="text-white hover:text-yellow-300"
+                            >Terms</a
+                        >
+                        <a
+                            href="/privacy.html"
+                            class="text-white hover:text-yellow-300"
+                            >Privacy</a
+                        >
+                        <a
+                            href="/contact.html"
+                            class="text-white hover:text-yellow-300"
+                            >Contact</a
+                        >
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-center gap-4">
+                    <a
+                        href="https://facebook.com"
+                        target="_blank"
+                        rel="noopener"
+                        title="Facebook"
+                        class="text-white hover:text-blue-400"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.463.099 2.794.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.31h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.324-.593 1.324-1.324V1.325C24 .593 23.407 0 22.675 0z"
+                            />
+                        </svg>
+                    </a>
+                    <a
+                        href="https://twitter.com"
+                        target="_blank"
+                        rel="noopener"
+                        title="Twitter"
+                        class="text-white hover:text-blue-300"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.384 4.482A13.944 13.944 0 011.671 3.149a4.916 4.916 0 001.523 6.573 4.897 4.897 0 01-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.935 4.935 0 01-2.224.084 4.918 4.918 0 004.6 3.417A9.867 9.867 0 010 21.543a13.94 13.94 0 007.548 2.212c9.142 0 14.307-7.721 13.995-14.646A9.936 9.936 0 0024 4.557z"
+                            />
+                        </svg>
+                    </a>
+                    <a
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener"
+                        title="Instagram"
+                        class="text-white hover:text-pink-400"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.332 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.332-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163C8.756 0 8.332.013 7.052.072 5.773.131 4.548.39 3.5 1.438c-1.048 1.048-1.307 2.273-1.366 3.552C2.013 6.332 2 6.756 2 12s.013 5.668.072 6.948c.059 1.279.318 2.504 1.366 3.552 1.048 1.048 2.273 1.307 3.552 1.366C8.332 23.987 8.756 24 12 24s3.668-.013 4.948-.072c1.279-.059 2.504-.318 3.552-1.366 1.048-1.048 1.307-2.273 1.366-3.552.059-1.279.072-1.703.072-6.948s-.013-5.668-.072-6.948c-.059-1.279-.318-2.504-1.366-3.552C19.452.39 18.227.131 16.948.072 15.668.013 15.244 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a3.999 3.999 0 110-7.998 3.999 3.999 0 010 7.998zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"
+                            />
+                        </svg>
+                    </a>
+                </div>
+                <ul class="text-sm mt-4 flex flex-col gap-1">
+                    <li>
+                        Contact us at
+                        <a
+                            href="mailto:support@swiftcart.com"
+                            class="text-yellow-200 underline font-bold hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
+                            >support@swiftcart.com</a
+                        >
+                    </li>
+                    <li>
+                        For business inquiries, email
+                        <a
+                            href="mailto:business@swiftcart.com"
+                            class="text-yellow-200 underline font-bold hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
+                            >business@swiftcart.com</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </footer>
 
-    <main class="w-full max-w-7xl mx-auto py-8 px-2 sm:px-4" role="main">
-      <h2
-        class="text-2xl font-semibold mb-6 text-center sm:text-left lang-en"
-        tabindex="0"
-      >
-        Featured Products
-      </h2>
-      <h2
-        class="text-2xl font-semibold mb-6 text-center sm:text-left lang-zh hidden"
-        tabindex="0"
-      >
-        特色产品推荐
-      </h2>
-      <form
-        id="filterForm"
-        class="flex flex-col sm:flex-row flex-wrap gap-4 mb-8 w-full"
-        aria-label="Product Filter"
-      >
-        <!-- Search Card -->
-        <div
-          class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
-        >
-          <label
-            for="search"
-            class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
-            >🔍 Search</label
-          >
-          <label
-            for="search"
-            class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
-            >🔍 搜索</label
-          >
-          <input
-            type="text"
-            id="search"
-            placeholder="Search products..."
-            class="p-2 border-2 border-pink-400 rounded w-full focus:ring-2 focus:ring-pink-400 bg-white text-gray-900"
-            aria-label="Search products"
-          />
-        </div>
-        <!-- Category Card -->
-        <div
-          class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-green-200 via-teal-200 to-cyan-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
-        >
-          <label
-            for="category"
-            class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
-            >🗂️ Category</label
-          >
-          <label
-            for="category"
-            class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
-            >🗂️ 分类</label
-          >
-          <select
-            id="category"
-            multiple
-            class="p-2 border-2 border-teal-400 rounded w-full h-24 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900"
-            aria-label="Category"
-          >
-            <!-- Options will be populated dynamically -->
-          </select>
-        </div>
-        <!-- Price Card -->
-        <div
-          class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-yellow-200 via-orange-200 to-pink-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
-        >
-          <label class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
-            >💲 Price</label
-          >
-          <label
-            class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
-            >💲 价格区间</label
-          >
-          <div class="flex gap-2 w-full">
-            <input
-              type="number"
-              id="minPrice"
-              placeholder="Min"
-              class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900"
-              aria-label="Minimum Price"
-            />
-            <input
-              type="number"
-              id="maxPrice"
-              placeholder="Max"
-              class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900"
-              aria-label="Maximum Price"
-            />
-          </div>
-        </div>
-        <!-- Sort Card -->
-        <div
-          class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-blue-200 via-indigo-200 to-purple-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
-        >
-          <label
-            for="sort"
-            class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
-            >↕️ Sort By</label
-          >
-          <label
-            for="sort"
-            class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
-            >↕️ 排序方式</label
-          >
-          <select
-            id="sort"
-            class="p-2 border-2 border-indigo-400 rounded w-full focus:ring-2 focus:ring-indigo-400 bg-white text-gray-900"
-            aria-label="Sort By"
-          >
-            <option value="">Sort By</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="alpha_asc">Name: A-Z</option>
-            <option value="alpha_desc">Name: Z-A</option>
-          </select>
-        </div>
-        <!-- Filter Button -->
-        <div class="w-full flex justify-end mt-2">
-          <button
-            type="submit"
-            class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition lang-en"
-            aria-label="Apply Filters"
-          >
-            Filter
-          </button>
-          <button
-            type="submit"
-            class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition lang-zh hidden"
-            aria-label="Apply Filters"
-          >
-            筛选
-          </button>
-        </div>
-      </form>
+        <script>
+            // Language toggle logic
+            function setLang(lang) {
+                document
+                    .querySelectorAll(".lang-en")
+                    .forEach((el) =>
+                        el.classList.toggle("hidden", lang !== "en"),
+                    );
+                document
+                    .querySelectorAll(".lang-zh")
+                    .forEach((el) =>
+                        el.classList.toggle("hidden", lang !== "zh"),
+                    );
+                localStorage.setItem("lang", lang);
+            }
+            document
+                .getElementById("langEn")
+                .addEventListener("click", () => setLang("en"));
+            document
+                .getElementById("langZh")
+                .addEventListener("click", () => setLang("zh"));
+            setLang(localStorage.getItem("lang") || "en");
 
-      <div id="spinner" class="flex justify-center items-center my-8 hidden">
-        <svg
-          class="animate-spin h-10 w-10 text-blue-600"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            class="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="4"
-          ></circle>
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-          ></path>
-        </svg>
-      </div>
+            const container = document.getElementById("products");
+            const sortSelect = document.getElementById("sort");
+            const pagination = document.getElementById("pagination");
+            const modal = document.getElementById("productModal");
+            const closeModal = document.getElementById("closeModal");
+            const modalImage = document.getElementById("modalImage");
+            const modalTitle = document.getElementById("modalTitle");
+            const modalPrice = document.getElementById("modalPrice");
+            const modalDescription =
+                document.getElementById("modalDescription");
+            const modalLink = document.getElementById("modalLink");
+            let currentPage = 1;
+            const pageSize = 6;
+            let lastQuery = "";
+            let lastProducts = [];
 
-      <div
-        id="errorMsg"
-        class="hidden text-center text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4"
-      ></div>
-      <div
-        id="errorMsgZh"
-        class="hidden text-center text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4 lang-zh"
-      >
-        加载产品时出错，请稍后再试。
-      </div>
+            function renderPagination(totalPages) {
+                pagination.innerHTML = "";
+                if (totalPages <= 1) return;
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement("button");
+                    btn.textContent = i;
+                    btn.className = `px-3 py-1 rounded ${
+                        i === currentPage
+                            ? "bg-blue-600 text-white"
+                            : "bg-white text-blue-600 border border-blue-600"
+                    } hover:bg-blue-700 hover:text-white`;
+                    btn.onclick = () => {
+                        currentPage = i;
+                        renderProducts(lastProducts);
+                    };
+                    pagination.appendChild(btn);
+                }
+                // Always scroll pagination bar to the start (number 1) after rendering
+                pagination.scrollLeft = 0;
+            }
 
-      <div
-        id="products"
-        class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full px-1 sm:px-0"
-        aria-live="polite"
-      ></div>
-      <div
-        id="pagination"
-        class="flex justify-center mt-8 gap-2 overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-blue-100 snap-x snap-mandatory px-2 py-2 rounded-lg bg-white shadow"
-      ></div>
+            async function showModal(product) {
+                // Fetch full product details from the new /product endpoint
+                try {
+                    const response = await fetch(
+                        `/product?title=${encodeURIComponent(product.title)}`,
+                    );
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch product details.");
+                    }
+                    const fullProduct = await response.json();
 
-      <!-- Product Details Modal -->
-      <div
-        id="productModal"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
-      >
-        <div class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
-          <button
-            id="closeModal"
-            class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl"
-          >
-            &times;
-          </button>
-          <img
-            id="modalImage"
-            src=""
-            alt=""
-            class="w-full h-64 object-cover rounded mb-4"
-          />
-          <h3 id="modalTitleEn" class="text-2xl font-bold mb-2 lang-en"></h3>
-          <h3
-            id="modalTitleZh"
-            class="text-2xl font-bold mb-2 lang-zh hidden"
-          ></h3>
-          <p
-            id="modalPriceEn"
-            class="text-green-600 font-bold text-lg mb-3 lang-en"
-          ></p>
-          <p
-            id="modalPriceZh"
-            class="text-green-600 font-bold text-lg mb-3 lang-zh hidden"
-          ></p>
-          <p id="modalDescriptionEn" class="text-gray-700 mb-4 lang-en"></p>
-          <p
-            id="modalDescriptionZh"
-            class="text-gray-700 mb-4 lang-zh hidden"
-          ></p>
-          <div
-            id="modalExtraEn"
-            class="text-sm text-gray-600 mb-4 lang-en"
-          ></div>
-          <div
-            id="modalExtraZh"
-            class="text-sm text-gray-600 mb-4 lang-zh hidden"
-          ></div>
-          <a
-            id="modalLinkEn"
-            href="#"
-            target="_blank"
-            class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition block text-center lang-en"
-            >Buy Now</a
-          >
-          <a
-            id="modalLinkZh"
-            href="#"
-            target="_blank"
-            class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition block text-center lang-zh hidden"
-            >立即购买</a
-          >
-        </div>
-      </div>
-    </main>
+                    modalImage.src = fullProduct.image;
+                    // Bilingual modal title
+                    document.getElementById("modalTitleEn").textContent =
+                        fullProduct.title_optimized || fullProduct.title || "";
+                    document.getElementById("modalTitleZh").textContent =
+                        fullProduct.title_zh || fullProduct.title || "";
 
-    <footer
-      class="bg-blue-600 text-white p-4 text-center relative"
-      role="contentinfo"
-    >
-      <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col sm:flex-row justify-between items-center">
-          <div class="mb-4 sm:mb-0">
-            <span class="lang-en"
-              >&copy; 2025 Your Dropshipping Store. All rights reserved.</span
-            >
-            <span class="lang-zh hidden"
-              >&copy; 2025 您的跨境电商店铺。保留所有权利。</span
-            >
-          </div>
-          <div class="flex gap-4">
-            <a href="/about.html" class="text-white hover:text-yellow-300"
-              >About Us</a
-            >
-            <a href="/terms.html" class="text-white hover:text-yellow-300"
-              >Terms</a
-            >
-            <a href="/privacy.html" class="text-white hover:text-yellow-300"
-              >Privacy</a
-            >
-            <a href="/contact.html" class="text-white hover:text-yellow-300"
-              >Contact</a
-            >
-          </div>
-        </div>
-        <div class="mt-4 flex justify-center gap-4">
-          <a
-            href="https://facebook.com"
-            target="_blank"
-            rel="noopener"
-            title="Facebook"
-            class="text-white hover:text-blue-400"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.463.099 2.794.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.31h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.324-.593 1.324-1.324V1.325C24 .593 23.407 0 22.675 0z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener"
-            title="Twitter"
-            class="text-white hover:text-blue-300"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.384 4.482A13.944 13.944 0 011.671 3.149a4.916 4.916 0 001.523 6.573 4.897 4.897 0 01-2.229-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.935 4.935 0 01-2.224.084 4.918 4.918 0 004.6 3.417A9.867 9.867 0 010 21.543a13.94 13.94 0 007.548 2.212c9.142 0 14.307-7.721 13.995-14.646A9.936 9.936 0 0024 4.557z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener"
-            title="Instagram"
-            class="text-white hover:text-pink-400"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.332 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.332-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163C8.756 0 8.332.013 7.052.072 5.773.131 4.548.39 3.5 1.438c-1.048 1.048-1.307 2.273-1.366 3.552C2.013 6.332 2 6.756 2 12s.013 5.668.072 6.948c.059 1.279.318 2.504 1.366 3.552 1.048 1.048 2.273 1.307 3.552 1.366C8.332 23.987 8.756 24 12 24s3.668-.013 4.948-.072c1.279-.059 2.504-.318 3.552-1.366 1.048-1.048 1.307-2.273 1.366-3.552.059-1.279.072-1.703.072-6.948s-.013-5.668-.072-6.948c-.059-1.279-.318-2.504-1.366-3.552C19.452.39 18.227.131 16.948.072 15.668.013 15.244 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a3.999 3.999 0 110-7.998 3.999 3.999 0 010 7.998zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"
-              />
-            </svg>
-          </a>
-        </div>
-        <ul class="text-sm mt-4 flex flex-col gap-1">
-          <li>
-            Contact us at
-            <a
-              href="mailto:support@swiftcart.com"
-              class="text-yellow-200 underline font-bold hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
-              >support@swiftcart.com</a
-            >
-          </li>
-          <li>
-            For business inquiries, email
-            <a
-              href="mailto:business@swiftcart.com"
-              class="text-yellow-200 underline font-bold hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
-              >business@swiftcart.com</a
-            >
-          </li>
-        </ul>
-      </div>
-    </footer>
+                    document.getElementById("modalPriceEn").textContent =
+                        `${fullProduct.price}`;
+                    document.getElementById("modalPriceZh").textContent =
+                        `${fullProduct.price}`; // Assuming price is same for both languages
 
-    <script>
-      // Language toggle logic
-      function setLang(lang) {
-        document
-          .querySelectorAll(".lang-en")
-          .forEach((el) => el.classList.toggle("hidden", lang !== "en"));
-        document
-          .querySelectorAll(".lang-zh")
-          .forEach((el) => el.classList.toggle("hidden", lang !== "zh"));
-        localStorage.setItem("lang", lang);
-      }
-      document
-        .getElementById("langEn")
-        .addEventListener("click", () => setLang("en"));
-      document
-        .getElementById("langZh")
-        .addEventListener("click", () => setLang("zh"));
-      setLang(localStorage.getItem("lang") || "en");
+                    document.getElementById("modalLinkEn").href =
+                        fullProduct.url;
+                    document.getElementById("modalLinkZh").href =
+                        fullProduct.url;
 
-      const container = document.getElementById("products");
-      const sortSelect = document.getElementById("sort");
-      const pagination = document.getElementById("pagination");
-      const modal = document.getElementById("productModal");
-      const closeModal = document.getElementById("closeModal");
-      const modalImage = document.getElementById("modalImage");
-      const modalTitle = document.getElementById("modalTitle");
-      const modalPrice = document.getElementById("modalPrice");
-      const modalDescription = document.getElementById("modalDescription");
-      const modalLink = document.getElementById("modalLink");
-      let currentPage = 1;
-      const pageSize = 6;
-      let lastQuery = "";
-      let lastProducts = [];
+                    // Bilingual modal description
+                    document.getElementById("modalDescriptionEn").innerHTML =
+                        `<span class='lang-en'>${removeChinese(
+                            fullProduct.description || "",
+                        )}</span>`;
+                    document.getElementById("modalDescriptionZh").innerHTML =
+                        `<span class='lang-zh hidden'>${
+                            fullProduct.description_zh || ""
+                        }</span>`;
 
-      function renderPagination(totalPages) {
-        pagination.innerHTML = "";
-        if (totalPages <= 1) return;
-        for (let i = 1; i <= totalPages; i++) {
-          const btn = document.createElement("button");
-          btn.textContent = i;
-          btn.className = `px-3 py-1 rounded ${
-            i === currentPage
-              ? "bg-blue-600 text-white"
-              : "bg-white text-blue-600 border border-blue-600"
-          } hover:bg-blue-700 hover:text-white`;
-          btn.onclick = () => {
-            currentPage = i;
-            renderProducts(lastProducts);
-          };
-          pagination.appendChild(btn);
-        }
-        // Always scroll pagination bar to the start (number 1) after rendering
-        pagination.scrollLeft = 0;
-      }
+                    // Add brand, rating, and stock to modal
+                    let detailsEn = "";
+                    let detailsZh = "";
+                    if (fullProduct.brand) {
+                        detailsEn += `Brand: <span class="font-semibold">${fullProduct.brand}</span><br>`;
+                        detailsZh += `品牌: <span class="font-semibold">${fullProduct.brand}</span><br>`;
+                    }
+                    if (fullProduct.rating) {
+                        detailsEn += `Rating: <span class="font-semibold">${fullProduct.rating} ⭐</span><br>`;
+                        detailsZh += `评分: <span class="font-semibold">${fullProduct.rating} ⭐</span><br>`;
+                    }
+                    if (fullProduct.stock) {
+                        detailsEn += `Stock: <span class="font-semibold">${fullProduct.stock}</span>`;
+                        detailsZh += `库存: <span class="font-semibold">${fullProduct.stock}</span>`;
+                    }
+                    document.getElementById("modalExtraEn").innerHTML =
+                        detailsEn;
+                    document.getElementById("modalExtraZh").innerHTML =
+                        detailsZh;
 
-      async function showModal(product) {
-        // Fetch full product details from the new /product endpoint
-        try {
-          const response = await fetch(`/product?title=${encodeURIComponent(product.title)}`);
-          if (!response.ok) {
-            throw new Error('Failed to fetch product details.');
-          }
-          const fullProduct = await response.json();
+                    modal.classList.remove("hidden");
+                } catch (error) {
+                    console.error("Error fetching product details:", error);
+                    showError(
+                        "Could not load product details. Please try again.",
+                    );
+                }
+            }
 
-          modalImage.src = fullProduct.image;
-          // Bilingual modal title
-          document.getElementById("modalTitleEn").textContent = fullProduct.title_optimized || fullProduct.title || "";
-          document.getElementById("modalTitleZh").textContent = fullProduct.title_zh || fullProduct.title || "";
-          
-          document.getElementById("modalPriceEn").textContent = `${fullProduct.price}`;
-          document.getElementById("modalPriceZh").textContent = `${fullProduct.price}`; // Assuming price is same for both languages
-          
-          document.getElementById("modalLinkEn").href = fullProduct.url;
-          document.getElementById("modalLinkZh").href = fullProduct.url;
+            closeModal.addEventListener("click", () => {
+                modal.classList.add("hidden");
+            });
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) modal.classList.add("hidden");
+            });
 
-          // Bilingual modal description
-          document.getElementById("modalDescriptionEn").innerHTML = `<span class='lang-en'>${removeChinese(
-            fullProduct.description || ""
-          )}</span>`;
-          document.getElementById("modalDescriptionZh").innerHTML = `<span class='lang-zh hidden'>${
-            fullProduct.description_zh || ""
-          }</span>`;
+            // Highlight search matches in a string
+            function highlight(text, term) {
+                if (!term) return text;
+                const re = new RegExp(
+                    `(${term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+                    "gi",
+                );
+                return text.replace(
+                    re,
+                    '<mark class="bg-yellow-200">$1</mark>',
+                );
+            }
 
-          // Add brand, rating, and stock to modal
-          let detailsEn = "";
-          let detailsZh = "";
-          if (fullProduct.brand) {
-            detailsEn += `Brand: <span class="font-semibold">${fullProduct.brand}</span><br>`;
-            detailsZh += `品牌: <span class="font-semibold">${fullProduct.brand}</span><br>`;
-          }
-          if (fullProduct.rating) {
-            detailsEn += `Rating: <span class="font-semibold">${fullProduct.rating} ⭐</span><br>`;
-            detailsZh += `评分: <span class="font-semibold">${fullProduct.rating} ⭐</span><br>`;
-          }
-          if (fullProduct.stock) {
-            detailsEn += `Stock: <span class="font-semibold">${fullProduct.stock}</span>`;
-            detailsZh += `库存: <span class="font-semibold">${fullProduct.stock}</span>`;
-          }
-          document.getElementById("modalExtraEn").innerHTML = detailsEn;
-          document.getElementById("modalExtraZh").innerHTML = detailsZh;
+            // Instant search: trigger search on input
+            document
+                .getElementById("search")
+                .addEventListener("input", function () {
+                    document
+                        .getElementById("filterForm")
+                        .dispatchEvent(new Event("submit"));
+                });
 
-          modal.classList.remove("hidden");
-        } catch (error) {
-          console.error("Error fetching product details:", error);
-          showError("Could not load product details. Please try again.");
-        }
-      }
+            // Helper: Remove Chinese characters from a string
+            function removeChinese(text) {
+                if (!text) return "";
+                return text
+                    .replace(/[\u4e00-\u9fff]+/g, "")
+                    .replace(/\[\".*?\"\]/g, "")
+                    .replace(/,+/g, ",")
+                    .replace(/^,|,$/g, "")
+                    .trim();
+            }
 
-      closeModal.addEventListener("click", () => {
-        modal.classList.add("hidden");
-      });
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) modal.classList.add("hidden");
-      });
-
-      // Highlight search matches in a string
-      function highlight(text, term) {
-        if (!term) return text;
-        const re = new RegExp(
-          `(${term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-          "gi"
-        );
-        return text.replace(re, '<mark class="bg-yellow-200">$1</mark>');
-      }
-
-      // Instant search: trigger search on input
-      document.getElementById("search").addEventListener("input", function () {
-        document
-          .getElementById("filterForm")
-          .dispatchEvent(new Event("submit"));
-      });
-
-      // Helper: Remove Chinese characters from a string
-      function removeChinese(text) {
-        if (!text) return "";
-        return text
-          .replace(/[\u4e00-\u9fff]+/g, "")
-          .replace(/\[\".*?\"\]/g, "")
-          .replace(/,+/g, ",")
-          .replace(/^,|,$/g, "")
-          .trim();
-      }
-
-      function renderProducts(products) {
-        // Deduplicate products by URL (or another unique field)
-        const seen = new Set();
-        const deduped = products.filter((p) => {
-          if (!p.url || seen.has(p.url)) return false;
-          seen.add(p.url);
-          return true;
-        });
-        const sort = sortSelect.value;
-        if (sort === "price_asc") {
-          deduped.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-        } else if (sort === "price_desc") {
-          deduped.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-        } else if (sort === "alpha_asc") {
-          deduped.sort((a, b) =>
-            (a.title_optimized || a.title || "").localeCompare(
-              b.title_optimized || b.title || ""
-            )
-          );
-        } else if (sort === "alpha_desc") {
-          deduped.sort((a, b) =>
-            (b.title_optimized || b.title || "").localeCompare(
-              a.title_optimized || a.title || ""
-            )
-          );
-        }
-        const totalPages = Math.ceil(deduped.length / pageSize) || 1;
-        if (currentPage > totalPages) currentPage = totalPages;
-        const start = (currentPage - 1) * pageSize;
-        const end = start + pageSize;
-        const pageProducts = deduped.slice(start, end);
-        container.innerHTML = "";
-        const searchTerm = document.getElementById("search").value.trim();
-        pageProducts.forEach((p, idx) => {
-          const productDiv = document.createElement("div");
-          // Stock badge color
-          let stockBadge = "";
-          if (p.stock) {
-            let badgeColor = "bg-green-100 text-green-800";
-            if (p.stock.toLowerCase().includes("limited"))
-              badgeColor = "bg-yellow-100 text-yellow-800";
-            if (p.stock.toLowerCase().includes("out"))
-              badgeColor = "bg-red-100 text-red-800";
-            stockBadge = `<span class="inline-block px-2 py-1 text-xs font-semibold rounded ${badgeColor} mb-2">${p.stock}</span>`;
-          }
-          // Category badge
-          let categoryBadge = p.category
-            ? `<span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 mb-2 ml-2">${p.category}</span>`
-            : "";
-          // Shipping badge
-          let shippingBadge = p.shipping
-            ? `<span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-purple-100 text-purple-800 mb-2 ml-2">${p.shipping}</span>`
-            : "";
-          // Rating stars
-          let ratingStars = "";
-          if (p.rating) {
-            const rating = Math.round(parseFloat(p.rating));
-            ratingStars =
-              '<span class="text-yellow-400">' +
-              "★".repeat(rating) +
-              "</span>" +
-              '<span class="text-gray-300">' +
-              "★".repeat(5 - rating) +
-              "</span>";
-          }
-          // Optimized title and bilingual support
-          let titleEn = p.title_optimized || p.title || "";
-          let titleZh = p.title_zh || p.title || "";
-          let descEn = p.description
-            ? removeChinese(
-                p.description.substring(0, 60) +
-                  (p.description.length > 60 ? "..." : "")
-              )
-            : "";
-          let descZh = p.description_zh || "";
-          // Brand display: only show if not an array or JSON string
-          let brandDisplay = "";
-          if (
-            typeof p.brand === "string" &&
-            p.brand.trim() &&
-            !p.brand.trim().startsWith("[") &&
-            !p.brand.trim().startsWith("{")
-          ) {
-            brandDisplay =
-              'Brand: <span class="font-semibold">' +
-              highlight(p.brand, searchTerm) +
-              "</span>";
-          }
-          productDiv.className =
-            "bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-yellow-200";
-          productDiv.innerHTML = `
+            function renderProducts(products) {
+                // Deduplicate products by URL (or another unique field)
+                const seen = new Set();
+                const deduped = products.filter((p) => {
+                    if (!p.url || seen.has(p.url)) return false;
+                    seen.add(p.url);
+                    return true;
+                });
+                const sort = sortSelect.value;
+                if (sort === "price_asc") {
+                    deduped.sort(
+                        (a, b) => parseFloat(a.price) - parseFloat(b.price),
+                    );
+                } else if (sort === "price_desc") {
+                    deduped.sort(
+                        (a, b) => parseFloat(b.price) - parseFloat(a.price),
+                    );
+                } else if (sort === "alpha_asc") {
+                    deduped.sort((a, b) =>
+                        (a.title_optimized || a.title || "").localeCompare(
+                            b.title_optimized || b.title || "",
+                        ),
+                    );
+                } else if (sort === "alpha_desc") {
+                    deduped.sort((a, b) =>
+                        (b.title_optimized || b.title || "").localeCompare(
+                            a.title_optimized || a.title || "",
+                        ),
+                    );
+                }
+                const totalPages = Math.ceil(deduped.length / pageSize) || 1;
+                if (currentPage > totalPages) currentPage = totalPages;
+                const start = (currentPage - 1) * pageSize;
+                const end = start + pageSize;
+                const pageProducts = deduped.slice(start, end);
+                container.innerHTML = "";
+                const searchTerm = document
+                    .getElementById("search")
+                    .value.trim();
+                pageProducts.forEach((p, idx) => {
+                    const productDiv = document.createElement("div");
+                    // Stock badge color
+                    let stockBadge = "";
+                    if (p.stock) {
+                        let badgeColor = "bg-green-100 text-green-800";
+                        if (p.stock.toLowerCase().includes("limited"))
+                            badgeColor = "bg-yellow-100 text-yellow-800";
+                        if (p.stock.toLowerCase().includes("out"))
+                            badgeColor = "bg-red-100 text-red-800";
+                        stockBadge = `<span class="inline-block px-2 py-1 text-xs font-semibold rounded ${badgeColor} mb-2">${p.stock}</span>`;
+                    }
+                    // Category badge
+                    let categoryBadge = "";
+                    if (p.category) {
+                        let categoryText = p.category.trim();
+                        if (
+                            categoryText.startsWith("[") &&
+                            categoryText.endsWith("]")
+                        ) {
+                            try {
+                                const categoryArray = JSON.parse(categoryText);
+                                categoryBadge = `<span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 mb-2 ml-2">${categoryArray.join(", ")}</span>`;
+                            } catch (e) {
+                                categoryBadge = `<span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 mb-2 ml-2">${p.category}</span>`;
+                            }
+                        } else {
+                            categoryBadge = `<span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 mb-2 ml-2">${p.category}</span>`;
+                        }
+                    } // Shipping badge
+                    let shippingBadge = p.shipping
+                        ? `<span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-purple-100 text-purple-800 mb-2 ml-2">${p.shipping}</span>`
+                        : "";
+                    // Rating stars
+                    let ratingStars = "";
+                    if (p.rating) {
+                        const rating = Math.round(parseFloat(p.rating));
+                        ratingStars =
+                            '<span class="text-yellow-400">' +
+                            "★".repeat(rating) +
+                            "</span>" +
+                            '<span class="text-gray-300">' +
+                            "★".repeat(5 - rating) +
+                            "</span>";
+                    }
+                    // Optimized title and bilingual support
+                    let titleEn = p.title_optimized || p.title || "";
+                    let titleZh = p.title_zh || p.title || "";
+                    let descEn = p.description
+                        ? removeChinese(
+                              p.description.substring(0, 60) +
+                                  (p.description.length > 60 ? "..." : ""),
+                          )
+                        : "";
+                    if (descEn.startsWith("[") && descEn.endsWith("]")) {
+                        try {
+                            const descArray = JSON.parse(descEn);
+                            descEn = descArray.join(", ");
+                        } catch (e) {
+                            // Not a valid JSON array, leave as is
+                        }
+                    }
+                    let descZh = p.description_zh || "";
+                    // Brand display: only show if not an array or JSON string
+                    let brandDisplay = "";
+                    if (p.brand) {
+                        let brandText = p.brand.trim();
+                        if (
+                            brandText.startsWith("[") &&
+                            brandText.endsWith("]")
+                        ) {
+                            try {
+                                const brandArray = JSON.parse(brandText);
+                                brandDisplay = `Brand: <span class="font-semibold">${brandArray.join(", ")}</span>`;
+                            } catch (e) {
+                                brandDisplay = `Brand: <span class="font-semibold">${highlight(brandText, searchTerm)}</span>`;
+                            }
+                        } else {
+                            brandDisplay = `Brand: <span class="font-semibold">${highlight(brandText, searchTerm)}</span>`;
+                        }
+                    }
+                    productDiv.className =
+                        "bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-yellow-200";
+                    productDiv.innerHTML = `
             <div class='relative'>
               <img src='${p.image}' alt='${highlight(
-            titleEn,
-            searchTerm
-          )}' class='w-full h-48 object-cover rounded-t-2xl border-b-2 border-yellow-100'>
+                  titleEn,
+                  searchTerm,
+              )}' class='w-full h-48 object-cover rounded-t-2xl border-b-2 border-yellow-100'>
               <div class='absolute top-2 left-2 flex flex-wrap'>${stockBadge}${categoryBadge}${shippingBadge}</div>
             </div>
             <div class='p-4 flex flex-col justify-between min-h-[210px]'>
               <h3 class='text-xl font-extrabold mb-1 flex items-center text-pink-800 drop-shadow lang-en'>${highlight(
-                titleEn,
-                searchTerm
+                  titleEn,
+                  searchTerm,
               )}</h3>
               <h3 class='text-xl font-extrabold mb-1 flex items-center text-pink-800 drop-shadow lang-zh hidden'>${highlight(
-                titleZh,
-                searchTerm
+                  titleZh,
+                  searchTerm,
               )}</h3>
               <div class='flex items-center mb-2'>
                 ${ratingStars}
                 <span class='ml-2 text-yellow-700 text-xs'>${
-                  p.rating ? p.rating : ""
+                    p.rating ? p.rating : ""
                 }</span>
               </div>
               <p class='text-green-700 font-extrabold text-lg mb-1'>$${
-                p.price
+                  p.price
               }</p>
               <p class='text-gray-900 text-sm mb-1'>${brandDisplay}</p>
               <p class='text-gray-900 text-sm mb-2 lang-en'>${descEn}</p>
               <p class='text-gray-900 text-sm mb-2 lang-zh hidden'>${descZh}</p>
-              <a href='${
-                p.url
-              }' target='_blank' class='relative group bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 text-white py-3 px-6 rounded-full shadow-xl font-extrabold text-lg tracking-wide text-center transition-all duration-200 border-2 border-white hover:from-green-600 hover:to-purple-700 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300'>
+              <a href='/product?title=${encodeURIComponent(p.title)}' target='_blank' class='relative group bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 text-white py-3 px-6 rounded-full shadow-xl font-extrabold text-lg tracking-wide text-center transition-all duration-200 border-2 border-white hover:from-green-600 hover:to-purple-700 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300'>
                 <span class="inline-flex items-center gap-2">
                   <svg class="w-5 h-5 text-white opacity-80 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A2 2 0 0 0 7.48 19h9.04a2 2 0 0 0 1.83-1.3L21 13M7 13V6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v7"/></svg>
                   <span class="lang-en">Buy Now</span>
@@ -840,169 +922,176 @@
               </a>
             </div>
         `;
-          productDiv.addEventListener("click", (e) => {
-            // Prevent modal on Buy Now click
-            if (e.target.tagName.toLowerCase() === "a") return;
-            showModal(p);
-          });
-          container.appendChild(productDiv);
-        });
-        // Structured data for products
-        const productLD = products.slice(0, 12).map((p) => ({
-          "@context": "https://schema.org",
-          "@type": "Product",
-          name: p.title_optimized || p.title,
-          image: p.image,
-          description: p.description,
-          brand: { "@type": "Brand", name: p.brand },
-          offers: {
-            "@type": "Offer",
-            priceCurrency: "USD",
-            price: p.price,
-            availability:
-              p.stock && p.stock.toLowerCase().includes("out")
-                ? "https://schema.org/OutOfStock"
-                : "https://schema.org/InStock",
-            url: p.url,
-          },
-          category: p.category,
-          aggregateRating: p.rating
-            ? {
-                "@type": "AggregateRating",
-                ratingValue: p.rating,
-                reviewCount: 10,
-              }
-            : undefined,
-        }));
-        document.getElementById("product-ld-json").textContent = JSON.stringify(
-          productLD,
-          null,
-          2
-        );
-        renderPagination(totalPages);
-      }
+                    productDiv.addEventListener("click", (e) => {
+                        // Prevent modal on Buy Now click
+                        if (e.target.tagName.toLowerCase() === "a") return;
+                        showModal(p);
+                    });
+                    container.appendChild(productDiv);
+                });
+                // Structured data for products
+                const productLD = products.slice(0, 12).map((p) => ({
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    name: p.title_optimized || p.title,
+                    image: p.image,
+                    description: p.description,
+                    brand: { "@type": "Brand", name: p.brand },
+                    offers: {
+                        "@type": "Offer",
+                        priceCurrency: "USD",
+                        price: p.price,
+                        availability:
+                            p.stock && p.stock.toLowerCase().includes("out")
+                                ? "https://schema.org/OutOfStock"
+                                : "https://schema.org/InStock",
+                        url: p.url,
+                    },
+                    category: p.category,
+                    aggregateRating: p.rating
+                        ? {
+                              "@type": "AggregateRating",
+                              ratingValue: p.rating,
+                              reviewCount: 10,
+                          }
+                        : undefined,
+                }));
+                document.getElementById("product-ld-json").textContent =
+                    JSON.stringify(productLD, null, 2);
+                renderPagination(totalPages);
+            }
 
-      function showSpinner(show) {
-        document.getElementById("spinner").classList.toggle("hidden", !show);
-      }
+            function showSpinner(show) {
+                document
+                    .getElementById("spinner")
+                    .classList.toggle("hidden", !show);
+            }
 
-      function showError(msg) {
-        const errorDiv = document.getElementById("errorMsg");
-        errorDiv.textContent = msg;
-        errorDiv.classList.remove("hidden");
-      }
-      function hideError() {
-        document.getElementById("errorMsg").classList.add("hidden");
-      }
+            function showError(msg) {
+                const errorDiv = document.getElementById("errorMsg");
+                errorDiv.textContent = msg;
+                errorDiv.classList.remove("hidden");
+            }
+            function hideError() {
+                document.getElementById("errorMsg").classList.add("hidden");
+            }
 
-      function loadProducts(params = "") {
-        hideError();
-        showSpinner(true);
-        fetch(`/products${params}`)
-          .then((res) => {
-            if (!res.ok) throw new Error("Failed to fetch products.");
-            return res.json();
-          })
-          .then((products) => {
-            lastProducts = products;
-            currentPage = 1;
-            renderProducts(products);
-          })
-          .catch((err) => {
-            showError(
-              "Could not load products. Please check your connection or CSV format."
-            );
-          })
-          .finally(() => showSpinner(false));
-      }
+            function loadProducts(params = "") {
+                hideError();
+                showSpinner(true);
+                fetch(`/products${params}`)
+                    .then((res) => {
+                        if (!res.ok)
+                            throw new Error("Failed to fetch products.");
+                        return res.json();
+                    })
+                    .then((products) => {
+                        lastProducts = products;
+                        currentPage = 1;
+                        renderProducts(products);
+                    })
+                    .catch((err) => {
+                        showError(
+                            "Could not load products. Please check your connection or CSV format.",
+                        );
+                    })
+                    .finally(() => showSpinner(false));
+            }
 
-      // Dynamically populate category dropdown from CSV
-      async function populateCategories() {
-        const res = await fetch("/products");
-        const products = await res.json();
-        const categories = Array.from(
-          new Set(products.map((p) => p.category).filter(Boolean))
-        );
-        const catSelect = document.getElementById("category");
-        catSelect.innerHTML = "";
-        categories.forEach((cat) => {
-          // Add icon based on category (simple emoji demo)
-          let icon = "";
-          if (cat.toLowerCase().includes("audio")) icon = "🔊 ";
-          else if (cat.toLowerCase().includes("wearable")) icon = "⌚ ";
-          else if (cat.toLowerCase().includes("electronic")) icon = "💻 ";
-          else if (cat.toLowerCase().includes("cosplay")) icon = "🎭 ";
-          else if (cat.toLowerCase().includes("clothes")) icon = "👕 ";
-          else icon = "📦 ";
-          const option = document.createElement("option");
-          option.value = cat;
-          option.innerText = icon + cat;
-          catSelect.appendChild(option);
-        });
-      }
-      populateCategories();
+            // Dynamically populate category dropdown from CSV
+            async function populateCategories() {
+                const res = await fetch("/products");
+                const products = await res.json();
+                const categories = Array.from(
+                    new Set(products.map((p) => p.category).filter(Boolean)),
+                );
+                const catSelect = document.getElementById("category");
+                catSelect.innerHTML = "";
+                categories.forEach((cat) => {
+                    // Add icon based on category (simple emoji demo)
+                    let icon = "";
+                    if (cat.toLowerCase().includes("audio")) icon = "🔊 ";
+                    else if (cat.toLowerCase().includes("wearable"))
+                        icon = "⌚ ";
+                    else if (cat.toLowerCase().includes("electronic"))
+                        icon = "💻 ";
+                    else if (cat.toLowerCase().includes("cosplay"))
+                        icon = "🎭 ";
+                    else if (cat.toLowerCase().includes("clothes"))
+                        icon = "👕 ";
+                    else icon = "📦 ";
+                    const option = document.createElement("option");
+                    option.value = cat;
+                    option.innerText = icon + cat;
+                    catSelect.appendChild(option);
+                });
+            }
+            populateCategories();
 
-      document
-        .getElementById("filterForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const search = document.getElementById("search").value;
-          // Multi-select: get all selected categories
-          const catSelect = document.getElementById("category");
-          const selectedCats = Array.from(catSelect.selectedOptions).map(
-            (opt) => opt.value
-          );
-          const cat = selectedCats.join(",");
-          const min = document.getElementById("minPrice").value;
-          const max = document.getElementById("maxPrice").value;
-          const query = `?search=${encodeURIComponent(
-            search
-          )}&category=${encodeURIComponent(
-            cat
-          )}&min_price=${min}&max_price=${max}`;
-          loadProducts(query);
-        });
+            document
+                .getElementById("filterForm")
+                .addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    const search = document.getElementById("search").value;
+                    // Multi-select: get all selected categories
+                    const catSelect = document.getElementById("category");
+                    const selectedCats = Array.from(
+                        catSelect.selectedOptions,
+                    ).map((opt) => opt.value);
+                    const cat = selectedCats.join(",");
+                    const min = document.getElementById("minPrice").value;
+                    const max = document.getElementById("maxPrice").value;
+                    const query = `?search=${encodeURIComponent(
+                        search,
+                    )}&category=${encodeURIComponent(
+                        cat,
+                    )}&min_price=${min}&max_price=${max}`;
+                    loadProducts(query);
+                });
 
-      sortSelect.addEventListener("change", function () {
-        document
-          .getElementById("filterForm")
-          .dispatchEvent(new Event("submit"));
-      });
+            sortSelect.addEventListener("change", function () {
+                document
+                    .getElementById("filterForm")
+                    .dispatchEvent(new Event("submit"));
+            });
 
-      // Initial load
-      loadProducts();
-    </script>
+            // Initial load
+            loadProducts();
+        </script>
 
-    <style>
-      html,
-      body {
-        max-width: 100vw;
-        overflow-x: hidden;
-      }
-      #productSlider {
-        scroll-behavior: smooth;
-      }
-      @media (max-width: 640px) {
-        #products {
-          padding-left: 0.25rem;
-          padding-right: 0.25rem;
-        }
-        #products > div {
-          max-width: 100%;
-          min-width: 0;
-          margin-left: auto;
-          margin-right: auto;
-          box-sizing: border-box;
-        }
-      }
-      #products > div {
-        transition: box-shadow 0.2s, transform 0.2s;
-      }
-      #products > div:hover {
-        box-shadow: 0 8px 32px 0 rgba(34, 197, 94, 0.15),
-          0 1.5px 6px 0 rgba(59, 130, 246, 0.1);
-        transform: translateY(-4px) scale(1.02);
-      }
-    </style>
-  </body>
+        <style>
+            html,
+            body {
+                max-width: 100vw;
+                overflow-x: hidden;
+            }
+            #productSlider {
+                scroll-behavior: smooth;
+            }
+            @media (max-width: 640px) {
+                #products {
+                    padding-left: 0.25rem;
+                    padding-right: 0.25rem;
+                }
+                #products > div {
+                    max-width: 100%;
+                    min-width: 0;
+                    margin-left: auto;
+                    margin-right: auto;
+                    box-sizing: border-box;
+                }
+            }
+            #products > div {
+                transition:
+                    box-shadow 0.2s,
+                    transform 0.2s;
+            }
+            #products > div:hover {
+                box-shadow:
+                    0 8px 32px 0 rgba(34, 197, 94, 0.15),
+                    0 1.5px 6px 0 rgba(59, 130, 246, 0.1);
+                transform: translateY(-4px) scale(1.02);
+            }
+        </style>
+    </body>
 </html>

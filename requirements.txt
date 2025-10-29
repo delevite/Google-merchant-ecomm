@@ -1,6 +1,7 @@
 Flask
-reportlab
-matplotlib
+Flask-Cors
 python-dotenv
 google-generativeai
-Flask-SQLAlchemy
+matplotlib
+reportlab
+Werkzeug
