@@ -5,3 +5,4 @@ google-generativeai
 matplotlib
 reportlab
 Werkzeug
+gunicorn
