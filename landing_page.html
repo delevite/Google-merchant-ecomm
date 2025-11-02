@@ -24,7 +24,11 @@
         <meta property="og:url" content="https://yourdomain.com/" />
         <meta
             property="og:image"
-            content="https://yourdomain.com/images/og-main-2025.png?v=2"
+            content="/static/header-swiftcart-global-store.webp"
+        />
+        <meta
+            property="og:image:alt"
+            content="Swiftcart Global Store – AI-powered dropshipping and logistics eCommerce platform"
         />
         <meta property="og:site_name" content="Your Dropshipping Store" />
         <meta property="og:locale" content="en_US" />
@@ -39,7 +43,7 @@
         />
         <meta
             name="twitter:image"
-            content="https://yourdomain.com/images/og-main-2025.png?v=2"
+            content="/static/header-swiftcart-global-store.webp"
         />
         <meta name="twitter:site" content="@YourStoreHandle" />
         <meta name="twitter:creator" content="@YourStoreHandle" />
@@ -59,7 +63,9 @@
             href="/sitemap.xml"
         />
     </head>
-    <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+    <body
+        class="bg-gray-50 dark:bg-gray-900 font-sans min-h-screen flex flex-col"
+    >
         <!-- Language Toggle -->
         <div class="fixed top-2 right-2 z-50 flex gap-2">
             <button
@@ -79,15 +85,15 @@
         </div>
 
         <header
-            class="relative bg-blue-600 text-white text-center"
+            class="relative bg-blue-600 dark:bg-gray-800 text-white dark:text-gray-200 text-center"
             role="banner"
         >
             <div class="relative w-full">
-                <img
-                    src="/static/header.jpg"
-                    alt="SwiftCart Global Store Header"
-                    class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]"
-                />
+                <img src="/static/header-swiftcart-global-store.webp"
+     alt="AI-powered dropshipping and logistics platform warehouse with drones, conveyor belts, and global analytics dashboard"
+     width="1920" height="1080"
+     loading="lazy"
+     class="w-full h-56 sm:h-72 object-cover object-center max-h-[320px]">
                 <div
                     class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40"
                 >
@@ -139,7 +145,7 @@
             </div>
             <nav
                 id="mainNav"
-                class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10"
+                class="mt-2 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-0 bg-blue-700 bg-opacity-90 sm:bg-transparent dark:bg-gray-900 fixed sm:static top-0 left-0 w-full sm:w-auto h-0 sm:h-auto overflow-hidden sm:overflow-visible transition-all duration-300 z-10"
                 aria-label="Main Navigation"
             >
                 <a href="/" class="mx-2 underline" aria-label="Home">Home</a>
@@ -225,13 +231,13 @@
 
         <main class="w-full max-w-7xl mx-auto py-8 px-2 sm:px-4" role="main">
             <h2
-                class="text-2xl font-semibold mb-6 text-center sm:text-left lang-en"
+                class="text-2xl font-semibold mb-6 text-center sm:text-left lang-en dark:text-gray-200"
                 tabindex="0"
             >
                 Featured Products
             </h2>
             <h2
-                class="text-2xl font-semibold mb-6 text-center sm:text-left lang-zh hidden"
+                class="text-2xl font-semibold mb-6 text-center sm:text-left lang-zh hidden dark:text-gray-200"
                 tabindex="0"
             >
                 特色产品推荐
@@ -243,29 +249,29 @@
             >
                 <!-- Search Card -->
                 <div
-                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
+                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
                 >
                     <label
                         for="search"
-                        class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
+                        class="block text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 lang-en"
                         >🔍 Search</label
                     >
                     <label
                         for="search"
-                        class="block text-lg font-semibold text-gray-800 mb-2 lang-zh hidden"
+                        class="block text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2 lang-zh hidden"
                         >🔍 搜索</label
                     >
                     <input
                         type="text"
                         id="search"
                         placeholder="Search products..."
-                        class="p-2 border-2 border-pink-400 rounded w-full focus:ring-2 focus:ring-pink-400 bg-white text-gray-900"
+                        class="p-2 border-2 border-pink-400 rounded w-full focus:ring-2 focus:ring-pink-400 bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-100"
                         aria-label="Search products"
                     />
                 </div>
                 <!-- Category Card -->
                 <div
-                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-green-200 via-teal-200 to-cyan-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
+                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-green-200 via-teal-200 to-cyan-200 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
                 >
                     <label
                         for="category"
@@ -280,7 +286,7 @@
                     <select
                         id="category"
                         multiple
-                        class="p-2 border-2 border-teal-400 rounded w-full h-24 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900"
+                        class="p-2 border-2 border-teal-400 rounded w-full h-24 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-100"
                         aria-label="Category"
                     >
                         <!-- Options will be populated dynamically -->
@@ -288,7 +294,7 @@
                 </div>
                 <!-- Price Card -->
                 <div
-                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-yellow-200 via-orange-200 to-pink-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
+                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-yellow-200 via-orange-200 to-pink-200 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
                 >
                     <label
                         class="block text-lg font-semibold text-gray-800 mb-2 lang-en"
@@ -303,21 +309,21 @@
                             type="number"
                             id="minPrice"
                             placeholder="Min"
-                            class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900"
+                            class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-100"
                             aria-label="Minimum Price"
                         />
                         <input
                             type="number"
                             id="maxPrice"
                             placeholder="Max"
-                            class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900"
+                            class="p-2 border-2 border-yellow-400 rounded w-1/2 focus:ring-2 focus:ring-yellow-400 bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-100"
                             aria-label="Maximum Price"
                         />
                     </div>
                 </div>
                 <!-- Sort Card -->
                 <div
-                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-blue-200 via-indigo-200 to-purple-200 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
+                    class="w-full sm:w-1/2 md:w-1/4 bg-gradient-to-br from-blue-200 via-indigo-200 to-purple-200 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center min-h-[110px]"
                 >
                     <label
                         for="sort"
@@ -331,7 +337,7 @@
                     >
                     <select
                         id="sort"
-                        class="p-2 border-2 border-indigo-400 rounded w-full focus:ring-2 focus:ring-indigo-400 bg-white text-gray-900"
+                        class="p-2 border-2 border-indigo-400 rounded w-full focus:ring-2 focus:ring-indigo-400 bg-white text-gray-900 dark:bg-gray-700 dark:text-gray-100"
                         aria-label="Sort By"
                     >
                         <option value="">Sort By</option>
@@ -345,7 +351,7 @@
                 <div class="w-full flex justify-end mt-2">
                     <button
                         type="submit"
-                        class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition lang-en"
+                        class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-8 rounded-full shadow-lg hover:from-green-500 hover:to-blue-600 font-bold text-lg transition lang-en dark:from-green-600 dark:to-blue-700"
                         aria-label="Apply Filters"
                     >
                         Filter
@@ -413,7 +419,7 @@
                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
             >
                 <div
-                    class="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative"
+                    class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full p-6 relative"
                 >
                     <button
                         id="closeModal"
@@ -429,41 +435,41 @@
                     />
                     <h3
                         id="modalTitleEn"
-                        class="text-2xl font-bold mb-2 lang-en"
+                        class="text-2xl font-bold mb-2 lang-en dark:text-gray-200"
                     ></h3>
                     <h3
                         id="modalTitleZh"
-                        class="text-2xl font-bold mb-2 lang-zh hidden"
+                        class="text-2xl font-bold mb-2 lang-zh hidden dark:text-gray-200"
                     ></h3>
                     <p
                         id="modalPriceEn"
-                        class="text-green-600 font-bold text-lg mb-3 lang-en"
+                        class="text-green-600 dark:text-green-400 font-bold text-lg mb-3 lang-en"
                     ></p>
                     <p
                         id="modalPriceZh"
-                        class="text-green-600 font-bold text-lg mb-3 lang-zh hidden"
+                        class="text-green-600 dark:text-green-400 font-bold text-lg mb-3 lang-zh hidden"
                     ></p>
                     <p
                         id="modalDescriptionEn"
-                        class="text-gray-700 mb-4 lang-en"
+                        class="text-gray-700 dark:text-gray-300 mb-4 lang-en"
                     ></p>
                     <p
                         id="modalDescriptionZh"
-                        class="text-gray-700 mb-4 lang-zh hidden"
+                        class="text-gray-700 dark:text-gray-300 mb-4 lang-zh hidden"
                     ></p>
                     <div
                         id="modalExtraEn"
-                        class="text-sm text-gray-600 mb-4 lang-en"
+                        class="text-sm text-gray-600 dark:text-gray-400 mb-4 lang-en"
                     ></div>
                     <div
                         id="modalExtraZh"
-                        class="text-sm text-gray-600 mb-4 lang-zh hidden"
+                        class="text-sm text-gray-600 dark:text-gray-400 mb-4 lang-zh hidden"
                     ></div>
                     <a
                         id="modalLinkEn"
                         href="#"
                         target="_blank"
-                        class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition block text-center lang-en"
+                        class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 dark:bg-green-700 transition block text-center lang-en"
                         >Buy Now</a
                     >
                     <a
@@ -478,7 +484,7 @@
         </main>
 
         <footer
-            class="bg-blue-600 text-white p-4 text-center relative"
+            class="bg-blue-900 dark:bg-gray-900 text-white dark:text-gray-200 p-4 text-center relative"
             role="contentinfo"
         >
             <div class="max-w-7xl mx-auto">
@@ -497,25 +503,33 @@
                     <div class="flex gap-4">
                         <a
                             href="/about.html"
-                            class="text-white hover:text-yellow-300"
+                            class="text-white hover:text-yellow-300 dark:text-gray-200 dark:hover:text-yellow-400"
                             >About Us</a
                         >
                         <a
                             href="/terms.html"
-                            class="text-white hover:text-yellow-300"
+                            class="text-white hover:text-yellow-300 dark:text-gray-200 dark:hover:text-yellow-400"
                             >Terms</a
                         >
                         <a
                             href="/privacy.html"
-                            class="text-white hover:text-yellow-300"
+                            class="text-white hover:text-yellow-300 dark:text-gray-200 dark:hover:text-yellow-400"
                             >Privacy</a
                         >
                         <a
                             href="/contact.html"
-                            class="text-white hover:text-yellow-300"
+                            class="text-white hover:text-yellow-300 dark:text-gray-200 dark:hover:text-yellow-400"
                             >Contact</a
                         >
                     </div>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-lg font-semibold">Subscribe to our Newsletter</h3>
+                    <p class="text-sm text-gray-300">Get the latest updates on new products and upcoming sales</p>
+                    <form class="mt-2 flex justify-center">
+                        <input type="email" placeholder="Enter your email" class="p-2 rounded-l-md w-64 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
+                        <button type="submit" class="bg-yellow-400 text-gray-900 px-4 rounded-r-md">Subscribe</button>
+                    </form>
                 </div>
                 <div class="mt-4 flex justify-center gap-4">
                     <a
@@ -523,7 +537,7 @@
                         target="_blank"
                         rel="noopener"
                         title="Facebook"
-                        class="text-white hover:text-blue-400"
+                        class="text-white hover:text-blue-400 dark:text-gray-200 dark:hover:text-blue-500"
                     >
                         <svg
                             class="w-6 h-6"
@@ -541,7 +555,7 @@
                         target="_blank"
                         rel="noopener"
                         title="Twitter"
-                        class="text-white hover:text-blue-300"
+                        class="text-white hover:text-blue-300 dark:text-gray-200 dark:hover:text-blue-400"
                     >
                         <svg
                             class="w-6 h-6"
@@ -559,7 +573,7 @@
                         target="_blank"
                         rel="noopener"
                         title="Instagram"
-                        class="text-white hover:text-pink-400"
+                        class="text-white hover:text-pink-400 dark:text-gray-200 dark:hover:text-pink-500"
                     >
                         <svg
                             class="w-6 h-6"
@@ -573,26 +587,6 @@
                         </svg>
                     </a>
                 </div>
-                <ul class="text-sm mt-4 flex flex-col gap-1">
-                    <li>
-                        Contact us at
-                        <a
-                            href="mailto:support@swiftcart.com"
-                            class="text-yellow-200 underline font-bold hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
-                            >support@swiftcart.com</a
-                        >
-                    </li>
-                    <li>
-                        For business inquiries, email
-                        <a
-                            href="mailto:business@swiftcart.com"
-                            class="text-yellow-200 underline font-bold hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 transition"
-                            >business@swiftcart.com</a
-                        >
-                    </li>
-                </ul>
-            </div>
-        </footer>
 
         <script>
             // Language toggle logic
@@ -882,7 +876,7 @@
                         }
                     }
                     productDiv.className =
-                        "bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-yellow-200";
+                        "bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-yellow-200";
                     productDiv.innerHTML = `
             <div class='relative'>
               <img src='${p.image}' alt='${highlight(
@@ -1095,7 +1089,7 @@
         </style>
         <div
             id="chatbot-container"
-            class="fixed bottom-4 right-4 w-80 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hidden"
+            class="fixed bottom-4 right-4 w-80 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden hidden"
         >
             <div
                 class="bg-blue-600 text-white px-4 py-2 font-bold flex justify-between"
@@ -1115,13 +1109,16 @@
                 </select>
                 <button id="closeChat" class="text-white">✖</button>
             </div>
-            <div id="chatArea" class="p-3 h-64 overflow-y-auto text-sm"></div>
+            <div
+                id="chatArea"
+                class="p-3 h-64 overflow-y-auto text-sm dark:text-gray-200"
+            ></div>
             <form id="chatForm" class="flex border-t">
                 <input
                     type="text"
                     id="chatInput"
                     placeholder="Ask me anything..."
-                    class="flex-1 p-2 border-none focus:outline-none"
+                    class="flex-1 p-2 border-none focus:outline-none dark:bg-gray-700 dark:text-gray-100"
                 />
                 <button type="submit" class="bg-blue-600 text-white px-4">
                     Send
@@ -1130,9 +1127,21 @@
         </div>
         <button
             id="chatOpenBtn"
-            class="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg"
+            class="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg flex items-center"
         >
-            💬
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M4.5 5.653c0-1.426 1.355-2.545 2.876-2.545 1.131 0 2.067.607 2.502 1.515a2.973 2.973 0 0 1 2.876-1.515c1.426 0 2.545 1.355 2.545 2.876v.717a6.75 6.75 0 0 1-2.545 4.724V17.25a.75.75 0 0 1-1.5 0V12.54a6.75 6.75 0 0 1-2.545-4.724v-.717c0-1.426-1.355-2.545-2.876-2.545S4.5 4.227 4.5 5.653v.717a6.75 6.75 0 0 1-2.545 4.724V17.25a.75.75 0 0 1-1.5 0V12.54a6.75 6.75 0 0 1-2.545-4.724v-.717c0-1.426-1.355-2.545-2.876-2.545S4.5 4.227 4.5 5.653z"
+                    clip-rule="evenodd"
+                />
+            </svg>
+            <span class="ml-2">Delevite Assistant</span>
         </button>
 
         <script>
