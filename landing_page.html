@@ -1103,6 +1103,7 @@
                 <span>💬 Delevite Assistant</span>
                 <select
                     id="chatMode"
+                    aria-label="Chat Mode"
                     class="border rounded p-1 text-xs bg-blue-700 text-white"
                 >
                     <option value="product">🛍 Product</option>
@@ -1122,7 +1123,9 @@
                     placeholder="Ask me anything..."
                     class="flex-1 p-2 border-none focus:outline-none"
                 />
-                <button class="bg-blue-600 text-white px-4">Send</button>
+                <button type="submit" class="bg-blue-600 text-white px-4">
+                    Send
+                </button>
             </form>
         </div>
         <button
