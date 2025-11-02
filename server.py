@@ -744,6 +744,21 @@ def inventory_dashboard():
     return dashboard_html
 
 
+@app.route("/admin/inventory-insights")
+def inventory_insights():
+    if not session.get("admin_logged_in"):
+        return redirect("/admin/login")
+
+    from generate_inventory_insights import generate_inventory_insights
+
+    generate_inventory_insights()
+
+    with open("inventory_insights.txt", "r", encoding="utf-8") as f:
+        content = f.read()
+
+    return f"<pre>{content}</pre>"
+
+
 @app.route("/admin/profit-report")
 def profit_report():
     if not session.get("admin_logged_in"):
@@ -900,6 +915,75 @@ def manage_single_vendor_product(product_id):
         save_vendor_products(vendor_id, products)
         return jsonify({"message": "Product deleted successfully"})
 
+
+@app.route("/api/refund", methods=["POST"])
+def refund_handler():
+    user_message = request.json.get("message", "")
+    user_email = request.json.get("email", "")
+    import subprocess, json
+
+    try:
+        result = subprocess.run(
+            ["node", "src/ai/intentRouter.js", user_message, user_email],
+            capture_output=True,
+            text=True,
+        )
+        response = result.stdout.strip()
+    except Exception as e:
+        response = json.dumps({"error": str(e)})
+    return jsonify({"reply": response})
+
+
+@app.route("/api/order", methods=["POST"])
+def order_and_coupon_handler():
+    user_message = request.json.get("message", "")
+    import subprocess, json
+
+    try:
+        result = subprocess.run(
+            ["node", "src/ai/orderAndCouponAssistant.js", user_message],
+            capture_output=True,
+            text=True,
+        )
+        response = result.stdout.strip()
+    except Exception as e:
+        response = json.dumps({"error": str(e)})
+    return jsonify({"reply": response})
+
+
+@app.route("/chat", methods=["POST"])
+def chat():
+    user_message = request.json.get("message", "")
+    import subprocess, json
+
+    try:
+        result = subprocess.run(
+            ["node", "src/services/chatbotAssistant.js", user_message],
+            capture_output=True,
+            text=True,
+        )
+        response = result.stdout.strip()
+    except Exception as e:
+        response = json.dumps({"error": str(e)})
+    return jsonify({"reply": response})
+
+
+import threading
+import subprocess
+
+
+def refresh_cj_token_periodically():
+    try:
+        subprocess.run(["node", "src/services/tokenRefresher.js"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error refreshing CJ token: {e}")
+    except FileNotFoundError:
+        print("Error: 'node' command not found. Please install Node.js.")
+
+
+# Schedule the token refresh to run every 90 minutes
+threading.Timer(5400, refresh_cj_token_periodically).start()
+print("🕒 CJ token auto-refresh scheduled every 90 minutes")
 
 if __name__ == "__main__":
     print("Starting Flask server on http://127.0.0.1:5000 ...")
