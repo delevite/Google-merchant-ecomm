@@ -896,6 +896,7 @@ def manage_single_vendor_product(product_id):
             break
 
     if product_index is None:
+.
         return "Product not found", 404
 
     if request.method == "PUT":
@@ -967,24 +968,39 @@ def chat():
         response = json.dumps({"error": str(e)})
     return jsonify({"reply": response})
 
+@app.route('/api/customer/orders', methods=['GET'])
+def api_customer_orders():
+    email = session.get('user_email') or request.args.get('email')
+    if not email:
+        return jsonify({'error':'Unauthorized or missing email'}), 401
+    orders = _load_json(ORDERS_FILE)
+    user_orders = [o for o in orders if o.get('email') == email]
+    return jsonify(user_orders)
 
-import threading
-import subprocess
+@app.route('/api/customer/summary', methods=['GET'])
+def api_customer_summary():
+    email = session.get('user_email') or request.args.get('email')
+    if not email:
+        return jsonify({'error':'Unauthorized or missing email'}), 401
+    orders = _load_json(ORDERS_FILE)
+    loyalty = _load_json(LOYALTY_FILE)
+    user_orders = [o for o in orders if o.get('email') == email]
+    total_spent = sum(float(o.get('price',0) or 0) for o in user_orders)
+    total_orders = len(user_orders)
+    points = loyalty.get(email, {}).get('points', 0)
+    coupon_usage = [o.get('coupon') for o in user_orders if o.get('coupon')]
+    return jsonify({
+        'total_spent': total_spent,
+        'total_orders': total_orders,
+        'points': points,
+        'coupon_usage': coupon_usage
+    })
 
-
-def refresh_cj_token_periodically():
-    try:
-        subprocess.run(["node", "src/services/tokenRefresher.js"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Error refreshing CJ token: {e}")
-    except FileNotFoundError:
-        print("Error: 'node' command not found. Please install Node.js.")
-
-
-# Schedule the token refresh to run every 90 minutes
-threading.Timer(5400, refresh_cj_token_periodically).start()
-print("🕒 CJ token auto-refresh scheduled every 90 minutes")
-
-if __name__ == "__main__":
-    print("Starting Flask server on http://127.0.0.1:5000 ...")
-    app.run(debug=True, host="0.0.0.0", port=5000)
+@app.route('/api/customer/refunds', methods=['GET'])
+def api_customer_refunds():
+    email = session.get('user_email') or request.args.get('email')
+    if not email:
+        return jsonify({'error':'Unauthorized or missing email'}), 401
+    refunds = _load_json(os.path.join("logs", "refunds.json"))
+    user_refunds = [r for r in refunds if r.get('email') == email]
+    return jsonify(user_refunds)

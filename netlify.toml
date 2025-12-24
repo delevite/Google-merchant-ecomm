@@ -1,0 +1,21 @@
+# netlify.toml
+
+[build]
+  # This command will be run to build your site.
+  # We don't have a separate build step for the frontend, so we can leave this empty
+  # or use it to install python dependencies.
+  command = "pip install -r requirements.txt"
+  # This is the directory that Netlify will deploy.
+  publish = "site/"
+  # Directory for serverless functions
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
