@@ -4,7 +4,7 @@
   # This command will be run to build your site.
   # We don't have a separate build step for the frontend, so we can leave this empty
   # or use it to install python dependencies.
-  command = "pip install -r requirements.txt"
+  command = "pip install -r requirements.txt && python build.py"
   # This is the directory that Netlify will deploy.
   publish = "site/"
   # Directory for serverless functions
