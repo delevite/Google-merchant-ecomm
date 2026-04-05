@@ -1,0 +1,26 @@
+{
+  "name": "google-merchant-ecomm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test_env.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delevite/Google-merchant-ecomm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/delevite/Google-merchant-ecomm/issues"
+  },
+  "homepage": "https://github.com/delevite/Google-merchant-ecomm#readme",
+  "dependencies": {
+    "axios": "^1.14.0",
+    "dotenv": "^17.4.1",
+    "nodemailer": "^8.0.4"
+  }
+}
