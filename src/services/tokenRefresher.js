@@ -8,8 +8,6 @@ const CJ_REFRESH_URL =
   "https://developers.cjdropshipping.com/api2.0/v1/token/refresh";
 const TOKEN_FILE = "./tmp/cj_token_cache.json";
 
-import { sendAlert } from "../utils/notifier.js";
-
 export async function refreshCJToken() {
   try {
     const response = await axios.post(CJ_REFRESH_URL, {
@@ -48,4 +46,10 @@ export async function refreshCJToken() {
     console.error("⚠️ Error refreshing CJ token:", err.message);
     await sendAlert(`Error during CJ refresh: ${err.message}`);
   }
+}
+
+// Allow standalone execution
+import { fileURLToPath } from 'url';
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    refreshCJToken();
 }

@@ -431,6 +431,7 @@
                         id="modalImage"
                         src=""
                         alt=""
+                        onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20fill%3D%22%23eaeaea%22%20width%3D%22200%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23666%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20dy%3D%225%22%20font-weight%3D%22bold%22%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%3EImage%20Unavailable%3C%2Ftext%3E%3C%2Fsvg%3E';"
                         class="w-full h-64 object-cover rounded mb-4"
                     />
                     <h3
@@ -879,11 +880,11 @@
                         "bg-gradient-to-br from-pink-100 via-yellow-100 to-green-100 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition border-2 border-yellow-200";
                     productDiv.innerHTML = `
             <div class='relative'>
-              <img src='${p.image}' alt='${highlight(
+              <img src="${p.image}" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%20viewBox%3D%220%200%20200%20200%22%3E%3Crect%20fill%3D%22%23eaeaea%22%20width%3D%22200%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23666%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20dy%3D%225%22%20font-weight%3D%22bold%22%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%3EImage%20Unavailable%3C%2Ftext%3E%3C%2Fsvg%3E';" alt="${highlight(
                   titleEn,
                   searchTerm,
-              )}' class='w-full h-48 object-cover rounded-t-2xl border-b-2 border-yellow-100'>
-              <div class='absolute top-2 left-2 flex flex-wrap'>${stockBadge}${categoryBadge}${shippingBadge}</div>
+              ).replace(/"/g, '&quot;')}" class="w-full h-48 object-cover rounded-t-2xl border-b-2 border-yellow-100">
+              <div class="absolute top-2 left-2 flex flex-wrap">${stockBadge}${categoryBadge}${shippingBadge}</div>
             </div>
             <div class='p-4 flex flex-col justify-between min-h-[210px]'>
               <h3 class='text-xl font-extrabold mb-1 flex items-center text-pink-800 drop-shadow lang-en'>${highlight(
@@ -906,7 +907,7 @@
               <p class='text-gray-900 text-sm mb-1'>${brandDisplay}</p>
               <p class='text-gray-900 text-sm mb-2 lang-en'>${descEn}</p>
               <p class='text-gray-900 text-sm mb-2 lang-zh hidden'>${descZh}</p>
-              <a href='/product?title=${encodeURIComponent(p.title)}' target='_blank' class='relative group bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 text-white py-3 px-6 rounded-full shadow-xl font-extrabold text-lg tracking-wide text-center transition-all duration-200 border-2 border-white hover:from-green-600 hover:to-purple-700 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300'>
+              <a href="${p.url}" target="_blank" class="relative group bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 text-white py-3 px-6 rounded-full shadow-xl font-extrabold text-lg tracking-wide text-center transition-all duration-200 border-2 border-white hover:from-green-600 hover:to-purple-700 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
                 <span class="inline-flex items-center gap-2">
                   <svg class="w-5 h-5 text-white opacity-80 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A2 2 0 0 0 7.48 19h9.04a2 2 0 0 0 1.83-1.3L21 13M7 13V6a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v7"/></svg>
                   <span class="lang-en">Buy Now</span>

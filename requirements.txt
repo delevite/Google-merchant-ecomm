@@ -6,3 +6,10 @@ matplotlib
 reportlab
 Werkzeug
 gunicorn
+# Phase 3: Merchant API Integration
+google-cloud-merchant
+schedule
+# Phase 4: Native Checkout & AI Agent Support
+paystack-sdk
+python-json-logger
+uuid

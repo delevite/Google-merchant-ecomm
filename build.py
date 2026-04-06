@@ -62,6 +62,8 @@ def main():
     try:
         # Run generation scripts
         run_script("generate_blog.py")
+        # Phase 2: generate_gmc_feed.py now creates UCP-enhanced feeds by default
+        # (Use --legacy flag to generate standard GMC feeds for backwards compatibility)
         run_script("generate_gmc_feed.py")
         run_script("generate_rss.py")
 

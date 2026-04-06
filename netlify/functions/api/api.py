@@ -10,6 +10,7 @@ from flask import (
 )
 from flask_cors import CORS
 import io
+import logging
 from collections import defaultdict
 from werkzeug.security import generate_password_hash
 import os
@@ -28,8 +29,43 @@ import base64
 from reportlab.lib.pagesizes import letter
 import traceback
 
+# --- Phase 3: Merchant API Integration ---
+try:
+    from src.merchant_api import get_merchant_client, get_merchant_scheduler
+    MERCHANT_API_ENABLED = os.getenv("MERCHANT_API_ENABLED", "True").lower() == "true"
+except ImportError:
+    MERCHANT_API_ENABLED = False
+    logger.warning("Phase 3: Merchant API module not available")
 
-app = Flask(__name__)
+# Initialize Merchant API client
+_merchant_client = None
+if MERCHANT_API_ENABLED:
+    try:
+        _merchant_client = get_merchant_client()
+        if _merchant_client:
+            logger.info("✓ Phase 3: Merchant API client initialized")
+    except Exception as e:
+        logger.warning(f"Phase 3: Could not initialize Merchant API: {e}")
+
+# --- Phase 4: Native Checkout & AI Agent Support ---
+try:
+    from src.mcp_server import mcp_bp
+    from src.a2a_router import A2ARouter
+    from src.checkout_service import CheckoutService
+    from src.conversion_tracker import ConversionTracker
+    PHASE4_ENABLED = True
+    logger.info("✓ Phase 4: All modules imported successfully")
+except ImportError as e:
+    PHASE4_ENABLED = False
+    logger.warning(f"Phase 4: Could not import modules: {e}")
+
+# Initialize Phase 4 components
+_a2a_router = None
+_checkout_service = None
+_conversion_tracker = None
+
+
+app = Flask(__name__, static_folder=os.path.join(os.getcwd(), "static"))
 CORS(app)
 app.secret_key = os.environ.get(
     "ADMIN_SECRET_KEY", "changeme"
@@ -37,6 +73,17 @@ app.secret_key = os.environ.get(
 
 # Load environment variables from a .env file
 load_dotenv()
+
+# --- Phase 4: Initialize Components ---
+if PHASE4_ENABLED:
+    try:
+        _a2a_router = A2ARouter(merchant_client=_merchant_client)
+        _checkout_service = CheckoutService(_a2a_router, merchant_client=_merchant_client)
+        _conversion_tracker = ConversionTracker()
+        app.register_blueprint(mcp_bp)
+        logger.info("✓ Phase 4: Components initialized and MCP blueprint registered")
+    except Exception as e:
+        logger.warning(f"Phase 4: Could not initialize components: {e}")
 
 # --- Gemini API Setup ---
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
@@ -92,8 +139,43 @@ def serve_tag_page_generic(tag_slug):
     )
 
 
-ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "password")
+# --- Phase 1: Admin Authentication with Security ---
+ADMIN_CREDS_FILE = os.path.join(os.getcwd(), "admin_creds.json")
+
+def _ensure_admin_creds():
+    """Initialize admin credentials file with hashed password if not exists."""
+    if not os.path.exists(ADMIN_CREDS_FILE):
+        # Use environment variables or defaults, BUT store hashed password
+        default_username = os.environ.get("ADMIN_USERNAME", "admin")
+        default_password = os.environ.get("ADMIN_PASSWORD", "password")
+        hashed_pw = generate_password_hash(default_password)
+        admin_data = {
+            "username": default_username,
+            "password_hash": hashed_pw,
+            "created_at": datetime.now().isoformat()
+        }
+        _save_json(ADMIN_CREDS_FILE, admin_data)
+
+
+def _get_admin_creds():
+    """Load admin credentials from file."""
+    try:
+        if os.path.exists(ADMIN_CREDS_FILE):
+            with open(ADMIN_CREDS_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except json.JSONDecodeError:
+        pass
+    # Fallback to environment variables (for backwards compatibility)
+    return {
+        "username": os.environ.get("ADMIN_USERNAME", "admin"),
+        "password_hash": generate_password_hash(os.environ.get("ADMIN_PASSWORD", "password"))
+    }
+
+
+_ensure_admin_creds()
+ADMIN_CREDS = _get_admin_creds()
+ADMIN_USERNAME = ADMIN_CREDS.get("username", "admin")
+ADMIN_PASSWORD_HASH = ADMIN_CREDS.get("password_hash", generate_password_hash("password"))
 
 # Serve static files from the 'site' directory if requested with /site/ prefix
 
@@ -106,6 +188,48 @@ def serve_from_site_prefixed(filename):
 
 
 UPLOAD_HISTORY_FILE = os.path.join(os.getcwd(), "upload_history.json")
+
+# --- Phase 1: Data Persistence Files --- 
+DATA_DIR = os.path.join(os.getcwd(), "data")
+ORDERS_FILE = os.path.join(DATA_DIR, "orders.json")
+LOYALTY_FILE = os.path.join(DATA_DIR, "loyalty.json")
+
+
+def _ensure_data_files():
+    """Initialize data directory and required files if they don't exist."""
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
+    if not os.path.exists(ORDERS_FILE):
+        with open(ORDERS_FILE, "w", encoding="utf-8") as f:
+            json.dump([], f)
+    if not os.path.exists(LOYALTY_FILE):
+        with open(LOYALTY_FILE, "w", encoding="utf-8") as f:
+            json.dump({}, f)
+
+
+def _load_json(filepath):
+    """Safely load JSON from file; return empty list or dict if file doesn't exist."""
+    try:
+        if os.path.exists(filepath):
+            with open(filepath, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except (json.JSONDecodeError, IOError):
+        pass
+    # Return default based on expected structure
+    if "loyalty" in filepath.lower():
+        return {}
+    return []
+
+
+def _save_json(filepath, data):
+    """Safely save data to JSON file."""
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+
+# Initialize data files on startup
+_ensure_data_files()
 
 
 @app.after_request
@@ -121,6 +245,10 @@ def set_security_headers(response):
 def index():
     # Serve the landing page HTML
     return send_from_directory(os.getcwd(), "landing_page.html")
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(app.static_folder, "favicon.ico", mimetype="image/vnd.microsoft.icon")
 
 
 @app.route("/feed.csv")
@@ -209,7 +337,8 @@ def admin_login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
-        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+        # Use check_password_hash for secure comparison
+        if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
             session["admin_logged_in"] = True
             return redirect("/admin")
         return render_template_string(
@@ -308,26 +437,32 @@ def change_credentials():
     new_pass = data.get("password")
     if not new_user or not new_pass:
         return jsonify({"error": "Username and password required"}), 400
-    # Save to a file for persistence (in production, use a secure method)
-    with open(
-        os.path.join(os.getcwd(), "admin_creds.json"), "w", encoding="utf-8"
-    ) as f:
-        json.dump({"username": new_user, "password": new_pass}, f)
-    global ADMIN_USERNAME, ADMIN_PASSWORD
+    # Save hashed password (security improvement)
+    hashed_pw = generate_password_hash(new_pass)
+    admin_data = {
+        "username": new_user,
+        "password_hash": hashed_pw,
+        "updated_at": datetime.now().isoformat()
+    }
+    _save_json(ADMIN_CREDS_FILE, admin_data)
+    global ADMIN_USERNAME, ADMIN_PASSWORD_HASH
     ADMIN_USERNAME = new_user
-    ADMIN_PASSWORD = new_pass
+    ADMIN_PASSWORD_HASH = hashed_pw
     return jsonify({"message": "Credentials updated. Please log in again."})
 
 
 @app.before_request
 def load_admin_creds():
-    creds_path = os.path.join(os.getcwd(), "admin_creds.json")
-    global ADMIN_USERNAME, ADMIN_PASSWORD
-    if os.path.exists(creds_path):
-        with open(creds_path, "r", encoding="utf-8") as f:
-            creds = json.load(f)
-            ADMIN_USERNAME = creds.get("username", ADMIN_USERNAME)
-            ADMIN_PASSWORD = creds.get("password", ADMIN_PASSWORD)
+    """Load admin credentials from file (called before each request)."""
+    global ADMIN_USERNAME, ADMIN_PASSWORD_HASH
+    if os.path.exists(ADMIN_CREDS_FILE):
+        try:
+            with open(ADMIN_CREDS_FILE, "r", encoding="utf-8") as f:
+                creds = json.load(f)
+                ADMIN_USERNAME = creds.get("username", ADMIN_USERNAME)
+                ADMIN_PASSWORD_HASH = creds.get("password_hash", ADMIN_PASSWORD_HASH)
+        except (json.JSONDecodeError, IOError):
+            pass
 
 
 @app.route("/admin/products", methods=["GET", "POST", "DELETE"])
@@ -896,7 +1031,6 @@ def manage_single_vendor_product(product_id):
             break
 
     if product_index is None:
-.
         return "Product not found", 404
 
     if request.method == "PUT":
@@ -1004,3 +1138,430 @@ def api_customer_refunds():
     refunds = _load_json(os.path.join("logs", "refunds.json"))
     user_refunds = [r for r in refunds if r.get('email') == email]
     return jsonify(user_refunds)
+
+
+# ============================================================================
+# --- PHASE 3: MERCHANT API INTEGRATION ENDPOINTS ---
+# ============================================================================
+
+@app.route('/api/sync-merchant-api', methods=['POST'])
+def sync_merchant_api():
+    """
+    Trigger real-time synchronization with Merchant Center.
+    
+    POST /api/sync-merchant-api
+    Optional JSON body: { "feed_path": "path/to/feed.tsv" }
+    
+    Returns: {
+        "success": bool,
+        "products_synced": int,
+        "products_failed": int,
+        "duration_seconds": float,
+        "timestamp": ISO timestamp
+    }
+    """
+    if not MERCHANT_API_ENABLED or _merchant_client is None:
+        return jsonify({
+            "error": "Merchant API not enabled or not initialized",
+            "hint": "Check GCP_PROJECT_ID and google-cloud-merchant installation"
+        }), 503
+    
+    try:
+        data = request.get_json() or {}
+        feed_path = data.get("feed_path", "gmc_product_feed.tsv")
+        
+        # Trigger sync
+        success, stats = _merchant_client.sync_products_from_feed(feed_path)
+        
+        response = {
+            "success": success,
+            "products_synced": stats.get("products_synced", 0),
+            "products_failed": stats.get("products_failed", 0),
+            "duration_seconds": stats.get("duration_seconds", 0),
+            "timestamp": stats.get("timestamp", datetime.now().isoformat()),
+            "merchant_id": _merchant_client.merchant_id
+        }
+        
+        if not success:
+            response["error"] = stats.get("error", "Unknown error")
+            return jsonify(response), 500
+        
+        return jsonify(response), 200
+    
+    except Exception as e:
+        return jsonify({
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }), 500
+
+
+@app.route('/api/merchant-insights', methods=['GET'])
+def merchant_insights():
+    """
+    Retrieve performance insights from Merchant Center.
+    
+    GET /api/merchant-insights?days=30
+    
+    Returns: {
+        "period_days": int,
+        "metrics": {
+            "impressions": int,
+            "clicks": int,
+            "orders": int,
+            "revenue": float,
+            "conversion_rate": float
+        },
+        "timestamp": ISO timestamp
+    }
+    """
+    if not MERCHANT_API_ENABLED or _merchant_client is None:
+        return jsonify({
+            "error": "Merchant API not enabled"
+        }), 503
+    
+    try:
+        days = int(request.args.get("days", 30))
+        insights = _merchant_client.get_insights(days=days)
+        return jsonify(insights), 200
+    
+    except ValueError:
+        return jsonify({"error": "Invalid days parameter"}), 400
+    except Exception as e:
+        return jsonify({
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }), 500
+
+
+@app.route('/api/merchant-sync-status', methods=['GET'])
+def merchant_sync_status():
+    """
+    Get status of Merchant API synchronization.
+    
+    GET /api/merchant-sync-status
+    
+    Returns: {
+        "products_synced": int,
+        "products_failed": int,
+        "last_sync_time": ISO timestamp or null,
+        "last_error": string or null,
+        "client_initialized": bool
+    }
+    """
+    if not MERCHANT_API_ENABLED or _merchant_client is None:
+        return jsonify({"error": "Merchant API not enabled"}), 503
+    
+    try:
+        stats = _merchant_client.get_sync_stats()
+        return jsonify(stats), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/merchant-inventory', methods=['GET'])
+def merchant_inventory():
+    """
+    Check current inventory status in Merchant Center.
+    
+    GET /api/merchant-inventory
+    
+    Returns: {
+        "total_products": int,
+        "in_stock": int,
+        "out_of_stock": int,
+        "last_sync": ISO timestamp,
+        "warnings": [list of warnings]
+    }
+    """
+    if not MERCHANT_API_ENABLED or _merchant_client is None:
+        return jsonify({"error": "Merchant API not enabled"}), 503
+    
+    try:
+        status = _merchant_client.get_inventory_status()
+        return jsonify(status), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/phase-3-info', methods=['GET'])
+def phase_3_info():
+    """
+    Get Phase 3 integration status and information.
+    
+    GET /api/phase-3-info
+    
+    Returns: {
+        "phase_3_enabled": bool,
+        "merchant_api_available": bool,
+        "project_id": string or null,
+        "merchant_id": string or null,
+        "features": {
+            "real_time_sync": bool,
+            "insights_reporting": bool,
+            "inventory_tracking": bool
+        }
+    }
+    """
+    from src.merchant_api import MERCHANT_API_AVAILABLE
+    
+    return jsonify({
+        "phase_3_enabled": MERCHANT_API_ENABLED,
+        "merchant_api_available": MERCHANT_API_AVAILABLE,
+        "project_id": os.getenv("GCP_PROJECT_ID", None),
+        "merchant_id": os.getenv("GCP_MERCHANT_ID") or os.getenv("GMC_MERCHANT_ID", None),
+        "features": {
+            "real_time_sync": MERCHANT_API_ENABLED,
+            "insights_reporting": MERCHANT_API_ENABLED,
+            "inventory_tracking": MERCHANT_API_ENABLED
+        },
+        "endpoints": {
+            "sync": "POST /api/sync-merchant-api",
+            "insights": "GET /api/merchant-insights?days=30",
+            "status": "GET /api/merchant-sync-status",
+            "inventory": "GET /api/merchant-inventory"
+        }
+    }), 200
+
+
+# ===========================================================================
+# Phase 4: Native Checkout & AI Agent Support Endpoints
+# ===========================================================================
+
+@app.route('/api/native-checkout', methods=['POST'])
+def native_checkout_endpoint():
+    """
+    Execute complete native checkout flow (A2A transaction).
+    
+    POST /api/native-checkout
+    
+    Body: {
+        "agent_id": "agent-123",
+        "user_id": "user-456",
+        "items": [{"product_id": "prod-1", "quantity": 2}],
+        "payment_method": "paystack",
+        "session_id": "ses-789" (optional),
+        "metadata": {...}
+    }
+    
+    Returns: {
+        "success": bool,
+        "order_id": string,
+        "transaction_id": string,
+        "total": float,
+        "estimated_delivery": ISO datetime
+    }
+    """
+    if not PHASE4_ENABLED or not _checkout_service:
+        return jsonify({"error": "Phase 4 not enabled"}), 503
+    
+    try:
+        data = request.get_json()
+        
+        success, result = _checkout_service.native_checkout(
+            data['agent_id'],
+            data['user_id'],
+            data['items'],
+            data.get('payment_method', 'paystack'),
+            data.get('metadata')
+        )
+        
+        if success and _conversion_tracker:
+            # Track conversion
+            session_id = data.get('session_id')
+            if session_id:
+                _conversion_tracker.track_conversion(
+                    session_id,
+                    result['order_id'],
+                    result['total'],
+                    len(data['items'])
+                )
+        
+        return jsonify(result), 200 if success else 400
+    
+    except Exception as e:
+        logger.error(f"Checkout error: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/conversion/session/start', methods=['POST'])
+def start_conversion_session():
+    """
+    Start tracking user session from AI agent.
+    
+    POST /api/conversion/session/start
+    
+    Body: {
+        "agent_id": "agent-123",
+        "user_id": "user-456",
+        "context": {...}
+    }
+    
+    Returns: {
+        "session_id": string
+    }
+    """
+    if not PHASE4_ENABLED or not _conversion_tracker:
+        return jsonify({"error": "Phase 4 not enabled"}), 503
+    
+    try:
+        data = request.get_json()
+        
+        session_id = _conversion_tracker.start_session(
+            data['agent_id'],
+            data['user_id'],
+            data.get('context')
+        )
+        
+        return jsonify({"session_id": session_id}), 200
+    
+    except Exception as e:
+        logger.error(f"Session start error: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/conversion/session/<session_id>/stats', methods=['GET'])
+def get_session_stats(session_id):
+    """
+    Get conversion statistics for a session.
+    
+    GET /api/conversion/session/{session_id}/stats
+    
+    Returns: {
+        "session_id": string,
+        "agent_id": string,
+        "user_id": string,
+        "duration_seconds": float,
+        "event_count": int,
+        "converted": bool,
+        "order_id": string or null,
+        "events": [...]
+    }
+    """
+    if not PHASE4_ENABLED or not _conversion_tracker:
+        return jsonify({"error": "Phase 4 not enabled"}), 503
+    
+    try:
+        stats = _conversion_tracker.get_session_stats(session_id)
+        return jsonify(stats), 200
+    
+    except Exception as e:
+        logger.error(f"Session stats error: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/conversion/agent/<agent_id>/metrics', methods=['GET'])
+def get_agent_metrics(agent_id):
+    """
+    Get AI agent performance metrics.
+    
+    GET /api/conversion/agent/{agent_id}/metrics?days=30
+    
+    Returns: {
+        "agent_id": string,
+        "period_days": int,
+        "sessions": int,
+        "conversions": int,
+        "conversion_rate": float,
+        "total_revenue": float,
+        "avg_order_value": float,
+        "events": int
+    }
+    """
+    if not PHASE4_ENABLED or not _conversion_tracker:
+        return jsonify({"error": "Phase 4 not enabled"}), 503
+    
+    try:
+        days = request.args.get('days', 30, type=int)
+        metrics = _conversion_tracker.get_agent_metrics(agent_id, days)
+        return jsonify(metrics), 200
+    
+    except Exception as e:
+        logger.error(f"Agent metrics error: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/conversion/agents/top', methods=['GET'])
+def get_top_agents():
+    """
+    Get top performing agents by conversion rate.
+    
+    GET /api/conversion/agents/top?limit=10&days=30
+    
+    Returns: [
+        {
+            "agent_id": string,
+            "sessions": int,
+            "conversions": int,
+            "conversion_rate": float
+        },
+        ...
+    ]
+    """
+    if not PHASE4_ENABLED or not _conversion_tracker:
+        return jsonify({"error": "Phase 4 not enabled"}), 503
+    
+    try:
+        limit = request.args.get('limit', 10, type=int)
+        days = request.args.get('days', 30, type=int)
+        agents = _conversion_tracker.get_top_agents(limit, days)
+        return jsonify(agents), 200
+    
+    except Exception as e:
+        logger.error(f"Top agents error: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/phase-4-info', methods=['GET'])
+def phase_4_info():
+    """
+    Get Phase 4 implementation status.
+    
+    GET /api/phase-4-info
+    
+    Returns: {
+        "phase_4_enabled": bool,
+        "components": {
+            "mcp_server": bool,
+            "a2a_router": bool,
+            "checkout_service": bool,
+            "conversion_tracker": bool
+        },
+        "features": [
+            "mcp_tools",
+            "native_checkout",
+            "a2a_transactions",
+            "conversion_tracking"
+        ],
+        "endpoints": {...},
+        "mcp_tools_count": int
+    }
+    """
+    from src.mcp_server import MCPToolRegistry
+    
+    mcp_registry = MCPToolRegistry() if PHASE4_ENABLED else None
+    
+    return jsonify({
+        "phase_4_enabled": PHASE4_ENABLED,
+        "components": {
+            "mcp_server": mcp_bp is not None,
+            "a2a_router": _a2a_router is not None,
+            "checkout_service": _checkout_service is not None,
+            "conversion_tracker": _conversion_tracker is not None
+        },
+        "features": [
+            "mcp_tools",
+            "native_checkout",
+            "a2a_transactions",
+            "conversion_tracking"
+        ],
+        "endpoints": {
+            "mcp_tools": "GET /api/mcp/tools",
+            "mcp_execute": "POST /api/mcp/execute",
+            "checkout": "POST /api/native-checkout",
+            "session_start": "POST /api/conversion/session/start",
+            "session_stats": "GET /api/conversion/session/{session_id}/stats",
+            "agent_metrics": "GET /api/conversion/agent/{agent_id}/metrics",
+            "top_agents": "GET /api/conversion/agents/top"
+        },
+        "mcp_tools_count": len(mcp_registry.get_tools()) if mcp_registry else 0
+    }), 200
