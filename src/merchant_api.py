@@ -38,6 +38,14 @@ except ImportError:
     MERCHANT_API_AVAILABLE = False
     logger.warning("google-cloud-merchant not installed. Phase 3 features disabled.")
 
+# Schedule import for periodic sync
+try:
+    import schedule
+    SCHEDULE_AVAILABLE = True
+except ImportError:
+    SCHEDULE_AVAILABLE = False
+    schedule = None
+
 
 class MerchantAPIClient:
     """
@@ -304,9 +312,11 @@ class MerchantSyncScheduler:
     
     def start(self):
         """Start periodic sync scheduler."""
+        if not SCHEDULE_AVAILABLE:
+            logger.warning("schedule module not installed. Use pip install schedule")
+            return False
+        
         try:
-            import schedule
-            
             logger.info(f"🕐 Starting Merchant sync scheduler (every {self.sync_interval_minutes} minutes)")
             
             # Schedule periodic sync
@@ -316,8 +326,8 @@ class MerchantSyncScheduler:
             logger.info("✓ Merchant sync scheduler running")
             
             return True
-        except ImportError:
-            logger.warning("schedule module not installed. Use pip install schedule")
+        except Exception as e:
+            logger.error(f"Failed to start scheduler: {e}")
             return False
     
     def _sync_task(self):
